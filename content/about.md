@@ -8,16 +8,28 @@ draft: false
 
 This comes from the file `content/about.md`.
 
-This is a website for the final project for MA[46]15 Data Science with R by Team TEAMNAME.
+This is a website for the final project for MA[46]15 Data Science with R by Team Transformers.
 The members of this team are below.
 
-## Luis Iberico
+## Allison Aaron
 
-Luis is a Ph.D. student in Stats and is the Teaching Fellow for the course.
 
-## Dan Sussman
 
-Dan is a professor in the Math/Stat department and is the instructor for the course.
+## Pei Guo
+
+
+
+## Samantha Chen
+
+
+
+## Sarah Taaher Bonna
+
+Sarah is a Master's student in Computer Science, and is a student in this course.
+
+## Shivangi
+
+
 
 <!-- Please leave in the information below -->
 
