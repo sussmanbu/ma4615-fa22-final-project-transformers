@@ -13,7 +13,7 @@ The members of this team are below.
 
 ## Allison Aaron
 
-
+Allison is a PhD student in Speech, Language, and Hearing Sciences. She is currently conducting research on voice and speech disorders in the Stepp Lab at BU. She has a Master's degree in Speech-Language Pathology.
 
 ## Pei Guo
 
