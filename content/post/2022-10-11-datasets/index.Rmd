@@ -18,44 +18,6 @@ featuredImage: ~
 
 ## Pregnancy and Abortion Rates
 
-Dataset: https://osf.io/td7mk
-
-```{r cleaning dataset for pregnancy and abortion rates}
-suppressPackageStartupMessages(library(tidyverse))
-pa_rates <- read.csv("../../../dataset/NationalAndStatePregnancy_PublicUse.csv")
-
-head(pa_rates, 10)
-
-extract_data <- function(pa_rates, age_group) {
-  pa_rates_by_age <- pa_rates %>% select(state, year, contains(age_group)) %>% mutate(age = age_group) %>% select(state, year, age, everything())
-  
-  colnames(pa_rates_by_age)[grepl('pregnancyrate', colnames(pa_rates_by_age))] <- 'pregnancy_rate'
-  colnames(pa_rates_by_age)[grepl('abortionrate', colnames(pa_rates_by_age))] <- 'abortion_rate'
-  colnames(pa_rates_by_age)[grepl('birthrate', colnames(pa_rates_by_age))] <- 'birth_rate'
-  colnames(pa_rates_by_age)[grepl('abortionratio', colnames(pa_rates_by_age))] <- 'abortion_ratio'
-  colnames(pa_rates_by_age)[grepl('pregnancies', colnames(pa_rates_by_age))] <- 'pregnancies'
-  colnames(pa_rates_by_age)[grepl('abortions', colnames(pa_rates_by_age))] <- 'abortions'
-  colnames(pa_rates_by_age)[grepl('miscarriages', colnames(pa_rates_by_age))] <- 'miscarriages'
-  colnames(pa_rates_by_age)[grepl('population', colnames(pa_rates_by_age))] <- 'population'
-  colnames(pa_rates_by_age)[grepl('births', colnames(pa_rates_by_age))] <- 'births'
-  
-  pa_rates_by_age
-}
-
-age_groups <- c("lt15", "1517", "1819", "1519", "lt20", "2024", "2529", "3034", "3539", "40plus")
 
 
-tbl_colnames <- c("state", "year", "pregnancy_rate", "abortion_rate", "birth_rate", "abortion_ratio", "pregnancies", "births", "abortions", "miscarriages", "population")
-
-
-tidy_pa_rates <- as_tibble(matrix(nrow = 0, ncol = length(tbl_colnames)), .name_repair = ~ tbl_colnames)
-
-for (age_group in age_groups) {
-  pa_rates_by_age <- extract_data(pa_rates, age_group)
-  
-  tidy_pa_rates <- rbind(tidy_pa_rates, pa_rates_by_age)
-}
-
-head(tidy_pa_rates, 10)
-```
 
