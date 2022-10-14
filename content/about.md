@@ -28,7 +28,7 @@ Samantha is an Undergraduate student in Data science, and is a student in this c
 Sarah is a Master's student in Computer Science, and is a student in this course.
 
 ## Shivangi
-
+Shivangi is a Master's student in Computer Science with specialization in Data-Centric Computing. She has done her Bachelor's in Engineering with specialization in Information Technology.
 
 
 <!-- Please leave in the information below -->
