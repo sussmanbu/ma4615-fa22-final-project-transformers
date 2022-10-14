@@ -20,7 +20,7 @@ Allison is a PhD student in Speech, Language, and Hearing Sciences. She is curre
 
 
 ## Samantha Chen
-
+Samantha is an Undergraduate student in Data science, and is a student in this course. https://github.com/sjchen23 
 
 
 ## Sarah Taaher Bonna
