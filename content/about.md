@@ -17,7 +17,7 @@ Allison is currently a PhD student in Speech, Language, and Hearing Sciences. Sh
 
 ## Pei Guo
 
-
+Pei is a senior in mathematics with statistics specialization, and a student in this course.
 
 ## Samantha Chen
 Samantha is an Undergraduate student in Data science, and is a student in this course. https://github.com/sjchen23
