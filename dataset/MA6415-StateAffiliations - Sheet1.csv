@@ -1,52 +1,51 @@
-State,Full State Name,Affiliation
-AK,Alaska,Rep
-HI,Hawaii,Demo
-WA,Washington,Demo
-ID,Idaho,Rep
-OR,Oregon,Demo
-CA,California,Demo
-MT,Montana,Rep
-WY,Wyoming,Rep
-NV,Nevada,Demo
-UT,Utah,Rep
-AZ,Arizona,Rep
-ND,North Dakota,Rep
-SD,South Dakota,Rep
-CO,Colorado,Demo
-NM,New Mexico,Demo
-OK,Oklahoma,Rep
-TX,Texas,Rep
-MN,Minnesota,Divided
-IA,Iowa,Rep
-NE,Nebraska,Rep
-KS,Kansas,Rep
-LA,Loiusiana,Rep
-WI,Wisconsin,Rep
-IL,Illinois,Demo
-MO,Missouri,Rep
-AR,Arkansas,Rep
-MS,Mississippi,Rep
-MI,Michigan,Rep
-IN,Indiana,Rep
-KY,Kentucky,Rep
-TN,Tennessee,Rep
-AL,Alabama,Rep
-FL,Florida,Rep
-OH,Ohio,Rep
-WV,West Virginia,Rep
-NC,North Carolina,Rep
-GA,Georgia,Rep
-PA,Pennsylvania,Rep
-VA,Virginia,Divided
-SC,South Carolina,Rep
-VT,Vermont,Demo
-NY,New York,Demo
-NJ,New Jersey,Demo
-DC,District of Columbia,Demo
-MD,Maryland,Demo
-ME,Maine,Demo
-NH,New Hampshire,Rep
-MA,Massachusets,Demo
-CT,Connecticut,Demo
-DE,Delaware,Demo
-RI,Rhode Island,Demo
+State,Full State Name,Affiliation,Geographic Region
+AK,Alaska,Rep,Pacific Coastal
+HI,Hawaii,Dem,Pacific Coastal
+WA,Washington,Dem,Pacific Coastal
+ID,Idaho,Rep,Rocky Mountains
+OR,Oregon,Dem,Pacific Coastal
+CA,California,Dem,Pacific Coastal
+MT,Montana,Rep,Rocky Mountains
+WY,Wyoming,Rep,Rocky Mountains
+NV,Nevada,Dem,Rocky Mountains
+UT,Utah,Rep,Rocky Mountains
+AZ,Arizona,Rep,Southwest
+ND,North Dakota,Rep,Midwest
+SD,South Dakota,Rep,Midwest
+CO,Colorado,Dem,Rocky Mountains
+NM,New Mexico,Dem,Southwest
+OK,Oklahoma,Rep,Southwest
+TX,Texas,Rep,Southwest
+MN,Minnesota,Divided,Midwest
+IA,Iowa,Rep,Midwest
+NE,Nebraska,Rep,Midwest
+KS,Kansas,Rep,Midwest
+LA,Loiusiana,Rep,Southeast
+WI,Wisconsin,Rep,Midwest
+IL,Illinois,Dem,Midwest
+MO,Missouri,Rep,Midwest
+AR,Arkansas,Rep,Southeast
+MS,Mississippi,Rep,Southeast
+MI,Michigan,Rep,Midwest
+IN,Indiana,Rep,Midwest
+KY,Kentucky,Rep,Southeast
+TN,Tennessee,Rep,Southeast
+AL,Alabama,Rep,Southeast
+FL,Florida,Rep,Southeast
+OH,Ohio,Rep,Midwest
+WV,West Virginia,Rep,Southeast
+NC,North Carolina,Rep,Southeast
+GA,Georgia,Rep,Southeast
+PA,Pennsylvania,Rep,Mid-Atlantic
+VA,Virginia,Divided,Southeast
+SC,South Carolina,Rep,Southeast
+VT,Vermont,Dem,New England
+NY,New York,Dem,Mid-Atlantic
+NJ,New Jersey,Dem,Mid-Atlantic
+MD,Maryland,Dem,Mid-Atlantic
+ME,Maine,Dem,New England
+NH,New Hampshire,Rep,New England
+MA,Massachusets,Dem,New England
+CT,Connecticut,Dem,New England
+DE,Delaware,Dem,Mid-Atlantic
+RI,Rhode Island,Dem,New England
