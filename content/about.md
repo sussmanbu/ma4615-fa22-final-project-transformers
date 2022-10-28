@@ -20,6 +20,7 @@ Allison is currently a PhD student in Speech, Language, and Hearing Sciences. Sh
 Pei is a senior in mathematics with statistics specialization, and a student in this course.
 
 ## Samantha Chen
+
 Samantha is an Undergraduate student in Data science, and is a student in this course. https://github.com/sjchen23
 
 
@@ -28,6 +29,7 @@ Samantha is an Undergraduate student in Data science, and is a student in this c
 Sarah is a Master's student in Computer Science, and is a student in this course.
 
 ## Shivangi
+
 Shivangi is a Master's student in Computer Science with specialization in Data-Centric Computing. She has done her Bachelor's in Engineering with specialization in Information Technology.
 
 
