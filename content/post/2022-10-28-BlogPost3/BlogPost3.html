@@ -1,0 +1,447 @@
+---
+title: Blog Post 3
+author: Transformers
+date: '2022-10-28'
+slug: []
+categories: []
+tags: []
+description: ~
+toc: yes
+authors: []
+series: []
+lastmod: '2022-10-28T11:28:05-04:00'
+featuredVideo: ~
+featuredImage: ~
+---
+
+
+<div id="TOC">
+
+</div>
+
+<div id="data-loading-and-cleaning" class="section level2">
+<h2>Data Loading and Cleaning</h2>
+<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+
+# reading the original dataset
+pa_rates &lt;- read_csv(&quot;../../../dataset/NationalAndStatePregnancy_PublicUse.csv&quot;)</code></pre>
+<pre><code>## Rows: 912 Columns: 103
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr   (3): state, notes, versiondate
+## dbl (100): year, pregnancyratelt15, pregnancyrate1517, pregnancyrate1819, pr...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># reading the State Affiliation dataset
+state_aff &lt;- read_csv(&quot;../../../dataset/MA6415-StateAffiliations - Sheet1.csv&quot;)</code></pre>
+<pre><code>## Rows: 50 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (4): State, Full State Name, Affiliation, Geographic Region
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># displaying the inital datasets
+options(dplyr.width = Inf)
+head(pa_rates, 10)</code></pre>
+<pre><code>## # A tibble: 10 × 103
+##    state  year pregnancyratelt15 pregnancyrate1517 pregnancyrate1819
+##    &lt;chr&gt; &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+##  1 AL     1988              21.3              78.3              156.
+##  2 AL     1992              23.6              76.3              173.
+##  3 AL     1996              18.5              66.2              156.
+##  4 AL     2000              11.9              53.7              141.
+##  5 AL     2005               8.7              38.6              119.
+##  6 AL     2006               9.3              40.3              128.
+##  7 AL     2007               8.6              41.3              125.
+##  8 AL     2008               9.7              38.4              122.
+##  9 AL     2009               9                37.4              113.
+## 10 AL     2010               7.4              33.9              103.
+##    pregnancyrate1519 pregnancyratelt20 pregnancyrate2024 pregnancyrate2529
+##                &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+##  1             110.              114.               186.              152.
+##  2             116.              121.               184.              155 
+##  3             102.              106                177.              143.
+##  4              89.8              92.1              187.              159.
+##  5              70.8              72.5              166.              155.
+##  6              75.3              77.1              172.              159.
+##  7              74.9              76.6              175.              161.
+##  8              73.1              74.9              171.              161.
+##  9              69.2              70.8              161.              155.
+## 10              62.8              64.2              149.              152.
+##    pregnancyrate3034 pregnancyrate3539 pregnancyrate40plus abortionratelt15
+##                &lt;dbl&gt;             &lt;dbl&gt;               &lt;dbl&gt;            &lt;dbl&gt;
+##  1              87.2              31.9                 6.1              8.6
+##  2              87.2              32                   6.5              8.6
+##  3              90.5              34.6                 6.9              6  
+##  4              96.1              37.6                 7.2              3.8
+##  5             100.               40.7                 8.3              2.9
+##  6             101.               42.1                 8.4              2.9
+##  7             104.               43.2                 8.3              3.2
+##  8             104.               42.1                 8.2              3.3
+##  9             104.               40.4                 8.6              2.6
+## 10             102.               40.2                 9.1              2.8
+##    abortionrate1517 abortionrate1819 abortionrate1519 abortionratelt20
+##               &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1             24               41.8             31.4             32.9
+##  2             19.1             38.8             27.2             28.9
+##  3             12.5             30.9             19.9             21  
+##  4              9.3             24.3             15.5             16.2
+##  5              7               19.2             11.9             12.5
+##  6              7.1             19.3             11.9             12.5
+##  7              6.8             18.1             11.3             11.9
+##  8              6.7             18               11.3             12  
+##  9              6.4             15.5             10.2             10.7
+## 10              5.7             13.8              9.1              9.6
+##    abortionrate2024 abortionrate2529 abortionrate3034 abortionrate3539
+##               &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1             40.5             25.4             14.5              7.4
+##  2             38.1             22.5             12                6.9
+##  3             34.6             19.7             10.9              5.6
+##  4             29.6             20.3             10.2              5.4
+##  5             23.2             16.9             10.2              4.9
+##  6             23.6             17.1              9.7              4.9
+##  7             24.1             17.6              9.9              5  
+##  8             23.1             17.5              9.9              4.8
+##  9             21.9             16.3              9.6              5.2
+## 10             20.8             16                9.5              4.6
+##    abortionrate40plus birthratelt15 birthrate1517 birthrate1819 birthrate1519
+##                 &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+##  1                2.2           9.9          43.3          91.4          63.3
+##  2                2.1          11.7          46.1         109.           72  
+##  3                1.8           9.9          43.7         102.           67.1
+##  4                1.6           6.4          36.2          95.1          60.6
+##  5                1.4           4.6          25.7          81.3          48.1
+##  6                1.5           5.1          27.1          89.4          51.8
+##  7                1.3           4.2          28.1          87.8          52.1
+##  8                1.3           5.1          25.8          85.6          50.5
+##  9                1.4           5.1          25.4          79.8          48.3
+## 10                1.3           3.6          23            72.9          44  
+##    birthratelt20 birthrate2024 birthrate2529 birthrate3034 birthrate3539
+##            &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+##  1          65.1          118.          104.          59.3          19.8
+##  2          74.3          119.          109.          61.6          20.4
+##  3          69.1          115.          101.          65.4          23.7
+##  4          61.9          129.          114.          70.7          26.4
+##  5          49            117.          114.          74.4          29.4
+##  6          52.8          121.          117.          75.1          30.6
+##  7          52.9          124.          118.          78            31.4
+##  8          51.5          122.          118.          78            30.7
+##  9          49.2          114.          114.          77.7          28.8
+## 10          44.7          105.          112.          76.1          29.3
+##    birthrate40plus abortionratiolt15 abortionratio1517 abortionratio1819
+##              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+##  1             3.1              866.              554.              457.
+##  2             3.5              734.              415.              356.
+##  3             4.1              605.              285.              303.
+##  4             4.5              585.              257.              255.
+##  5             5.6              626.              274.              236.
+##  6             5.7              567.              261.              216.
+##  7             5.7              756.              243.              206.
+##  8             5.6              642.              258.              210 
+##  9             5.9              508.              250.              194.
+## 10             6.3              790.              248.              189.
+##    abortionratio1519 abortionratiolt20 abortionratio2024 abortionratio2529
+##                &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+##  1              496.              506.              342.              245 
+##  2              378.              389.              321.              207.
+##  3              296               305.              300.              195.
+##  4              256.              262.              230.              179.
+##  5              248               255.              198               149.
+##  6              230.              236.              194.              147.
+##  7              218.              226.              195.              149.
+##  8              225.              232.              190.              148.
+##  9              211.              217.              193.              142.
+## 10              207.              216.              199.              143.
+##    abortionratio3034 abortionratio3539 abortionratio40plus pregnancieslt15
+##                &lt;dbl&gt;             &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;
+##  1              245.              376.                709.             610
+##  2              195.              337.                596.             700
+##  3              166.              234.                452.             580
+##  4              145.              203.                358.             370
+##  5              137               168.                259              280
+##  6              129.              161.                260.             300
+##  7              127.              158.                230.             280
+##  8              127.              158.                231.             300
+##  9              124.              182.                244.             280
+## 10              126.              155.                214.             230
+##    pregnancies1517 pregnancies1819 pregnancies1519 pregnancieslt20
+##              &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;
+##  1            7440           10560           18000           18610
+##  2            6820           10890           17710           18410
+##  3            6370           10120           16490           17070
+##  4            5050            9360           14410           14780
+##  5            3740            7710           11440           11730
+##  6            4000            8400           12400           12700
+##  7            4130            8390           12520           12790
+##  8            3810            8570           12380           12690
+##  9            3680            8070           11750           12030
+## 10            3280            7210           10490           10710
+##    pregnancies2024 pregnancies2529 pregnancies3034 pregnancies3539
+##              &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;
+##  1           30410           25890           14470            4820
+##  2           30390           24210           14820            5380
+##  3           27620           22430           14650            6100
+##  4           29180           23900           14690            6500
+##  5           27130           22830           15040            6290
+##  6           27950           24490           14780            6610
+##  7           28610           25140           15210            6870
+##  8           28160           25360           15300            6740
+##  9           26710           24530           15460            6440
+## 10           25170           23990           15490            6290
+##    pregnancies40plus abortionslt15 abortions1517 abortions1819 abortions1519
+##                &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+##  1               800           250          2280          2830          5110
+##  2               990           250          1710          2440          4150
+##  3              1150           190          1200          2000          3200
+##  4              1280           120           870          1610          2490
+##  5              1440            90           680          1240          1930
+##  6              1440            90           700          1260          1960
+##  7              1390           100           680          1210          1890
+##  8              1330           100           660          1260          1920
+##  9              1380            80           620          1110          1730
+## 10              1440            90           550           970          1520
+##    abortionslt20 abortions2024 abortions2529 abortions3034 abortions3539
+##            &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+##  1          5360          6600          4320          2410          1120
+##  2          4400          6290          3520          2040          1150
+##  3          3390          5420          3090          1760           980
+##  4          2610          4620          3060          1560           930
+##  5          2020          3790          2490          1530           760
+##  6          2050          3840          2640          1420           770
+##  7          1990          3940          2750          1440           790
+##  8          2020          3800          2760          1450           780
+##  9          1810          3640          2570          1430           840
+## 10          1610          3520          2520          1450           710
+##    abortions40plus birthslt15 births1517 births1819 births1519 birthslt20
+##              &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1             290        285       4112       6200      10312      10597
+##  2             320        347       4116       6844      10960      11307
+##  3             310        311       4207       6600      10807      11118
+##  4             290        201       3403       6324       9727       9928
+##  5             250        150       2490       5281       7771       7921
+##  6             250        163       2690       5847       8537       8700
+##  7             220        136       2815       5881       8696       8832
+##  8             210        160       2569       5990       8559       8719
+##  9             230        160       2493       5712       8205       8365
+## 10             210        110       2224       5119       7343       7453
+##    births2024 births2529 births3034 births3539 births40plus miscarriageslt15
+##         &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;
+##  1      19293      17617       9846       2987          405               80
+##  2      19562      16955      10474       3428          534               90
+##  3      18052      15863      10595       4182          678               80
+##  4      20084      17111      10806       4566          804               50
+##  5      19134      16743      11138       4546          971               40
+##  6      19766      17989      11007       4804          966               40
+##  7      20228      18434      11356       4998          956               40
+##  8      19980      18603      11422       4906          916               40
+##  9      18918      18086      11571       4598          937               40
+## 10      17745      17683      11578       4590         1001               30
+##    miscarriages1517 miscarriages1819 miscarriages1519 miscarriageslt20
+##               &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1             1050             1520             2570             2660
+##  2              990             1610             2610             2700
+##  3              960             1520             2480             2560
+##  4              770             1430             2190             2250
+##  5              570             1180             1750             1790
+##  6              610             1300             1900             1950
+##  7              630             1300             1930             1970
+##  8              580             1320             1900             1950
+##  9              560             1250             1810             1850
+## 10              500             1120             1620             1650
+##    miscarriages2024 miscarriages2529 miscarriages3034 miscarriages3539
+##               &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1             4520             3950             2210              710
+##  2             4540             3740             2300              800
+##  3             4150             3480             2300              930
+##  4             4480             3730             2320             1010
+##  5             4210             3600             2380              990
+##  6             4340             3860             2340             1040
+##  7             4440             3960             2410             1080
+##  8             4380             4000             2430             1060
+##  9             4150             3870             2460             1000
+## 10             3900             3790             2460              990
+##    miscarriages40plus populationlt15 population1517 population1819
+##                 &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+##  1                110          28846          95042          67806
+##  2                140          29578          89378          62837
+##  3                170          31436          96187          64756
+##  4                190          31188          93964          66492
+##  5                220          32408          96757          64944
+##  6                220          32100          99281          65427
+##  7                210          32115         100067          66944
+##  8                200          31534          99429          69946
+##  9                210          31312          98244          71623
+## 10                220          30943          96667          70194
+##    population1519 populationlt20 population2024 population2529 population3034
+##             &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+##  1         162848         162848         163053         169778         165953
+##  2         152215         152215         164977         156176         169904
+##  3         160943         160943         156405         156680         161922
+##  4         160456         160456         156233         150616         152816
+##  5         161701         161701         163672         147499         149728
+##  6         164708         164708         162871         153897         146533
+##  7         167011         167011         163425         156497         145591
+##  8         169375         169375         164263         157839         146382
+##  9         169867         169867         166287         157961         148915
+## 10         166861         166861         169146         157432         152163
+##    population3539 population40plus population1544 abortionstotal birthstotal
+##             &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+##  1         150994           132391         945017          20100       60745
+##  2         168060           152130         963462          17720       62260
+##  3         176144           167319         979413          14940       60488
+##  4         172909           177209         970239          13060       63299
+##  5         154736           173653         950989          10840       60453
+##  6         157188           170861         956058          10980       63232
+##  7         159044           166904         958472          11130       64804
+##  8         160006           162815         960680          11020       64546
+##  9         159486           159544         962060          10530       62475
+## 10         156465           158649         960716          10030       60050
+##    pregnancyratetotal birthratetotal abortionratetotal abortionratiototal
+##                 &lt;dbl&gt;          &lt;dbl&gt;             &lt;dbl&gt;              &lt;dbl&gt;
+##  1              100.            64.3              21.3               331.
+##  2               97.8           64.6              18.4               285.
+##  3               90.9           61.8              15.3               247 
+##  4               93.1           65.2              13.5               206.
+##  5               88.8           63.6              11.4               179.
+##  6               92             66.1              11.5               174.
+##  7               93.9           67.6              11.6               172.
+##  8               93.2           67.2              11.5               171.
+##  9               90             64.9              10.9               168.
+## 10               86.5           62.5              10.4               167.
+##    miscarriagestotal pregnanciestotal
+##                &lt;dbl&gt;            &lt;dbl&gt;
+##  1             14160            95000
+##  2             14220            94200
+##  3             13590            89020
+##  4             13970            90320
+##  5             13170            84470
+##  6             13740            87960
+##  7             14070            90010
+##  8             14010            89580
+##  9             13550            86550
+## 10             13010            83100
+##    notes                                                                        
+##    &lt;chr&gt;                                                                        
+##  1 Abortion estimate based on the number of abortions among all women in the st…
+##  2 &lt;NA&gt;                                                                         
+##  3 &lt;NA&gt;                                                                         
+##  4 &lt;NA&gt;                                                                         
+##  5 &lt;NA&gt;                                                                         
+##  6 &lt;NA&gt;                                                                         
+##  7 &lt;NA&gt;                                                                         
+##  8 &lt;NA&gt;                                                                         
+##  9 &lt;NA&gt;                                                                         
+## 10 &lt;NA&gt;                                                                         
+##    versiondate
+##    &lt;chr&gt;      
+##  1 1 Mar 2021 
+##  2 1 Mar 2021 
+##  3 1 Mar 2021 
+##  4 1 Mar 2021 
+##  5 1 Mar 2021 
+##  6 1 Mar 2021 
+##  7 1 Mar 2021 
+##  8 1 Mar 2021 
+##  9 1 Mar 2021 
+## 10 1 Mar 2021</code></pre>
+<pre class="r"><code>head(state_aff, 10)</code></pre>
+<pre><code>## # A tibble: 10 × 4
+##    State `Full State Name` Affiliation `Geographic Region`
+##    &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;              
+##  1 AK    Alaska            Rep         Pacific Coastal    
+##  2 HI    Hawaii            Dem         Pacific Coastal    
+##  3 WA    Washington        Dem         Pacific Coastal    
+##  4 ID    Idaho             Rep         Rocky Mountains    
+##  5 OR    Oregon            Dem         Pacific Coastal    
+##  6 CA    California        Dem         Pacific Coastal    
+##  7 MT    Montana           Rep         Rocky Mountains    
+##  8 WY    Wyoming           Rep         Rocky Mountains    
+##  9 NV    Nevada            Dem         Rocky Mountains    
+## 10 UT    Utah              Rep         Rocky Mountains</code></pre>
+<pre class="r"><code># Tidying the data using pivot longer
+pa_rates1 &lt;- pa_rates %&gt;% select(state:population40plus)
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = pregnancyratelt15:pregnancyrate40plus, names_to = &quot;temp&quot;, values_to = &quot;Pregnancy Rate&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;PR&quot;,&quot;Age&quot;), sep = 13)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-PR)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = abortionratelt15:abortionrate40plus, names_to = &quot;temp&quot;, values_to = &quot;Abortion Rate&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;AR&quot;,&quot;ARAge&quot;), sep = 12)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(ARAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-AR, -ARAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = birthratelt15:birthrate40plus, names_to = &quot;temp&quot;, values_to = &quot;Birth Rate&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;BR&quot;,&quot;BRAge&quot;), sep = 9)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(BRAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-BR, -BRAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = abortionratiolt15:abortionratio40plus, names_to = &quot;temp&quot;, values_to = &quot;Abortion Ratio&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;AR&quot;,&quot;ARAge&quot;), sep = 13)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(ARAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-AR, -ARAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = pregnancieslt15:pregnancies40plus, names_to = &quot;temp&quot;, values_to = &quot;Pregnancies&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;P&quot;,&quot;PAge&quot;), sep = 11)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(PAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-P, -PAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = abortionslt15:abortions40plus, names_to = &quot;temp&quot;, values_to = &quot;Abortions&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;A&quot;,&quot;AAge&quot;), sep = 9)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(AAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-A, -AAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = birthslt15:births40plus, names_to = &quot;temp&quot;, values_to = &quot;Births&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;B&quot;,&quot;BAge&quot;), sep = 6)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(BAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-B, -BAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = miscarriageslt15:miscarriages40plus, names_to = &quot;temp&quot;, values_to = &quot;Miscarriages&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;M&quot;,&quot;MAge&quot;), sep = 12)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(MAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-M, -MAge)
+
+pa_rates1 &lt;- pa_rates1 %&gt;% pivot_longer(cols = populationlt15:population40plus, names_to = &quot;temp&quot;, values_to = &quot;Population&quot;, names_repair = &quot;minimal&quot;)
+pa_rates1 &lt;- pa_rates1 %&gt;% separate(temp, c(&quot;P&quot;,&quot;PAge&quot;), sep = 10)
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(PAge==Age)
+pa_rates1 &lt;- pa_rates1 %&gt;% select(-P, -PAge)
+
+# Updating the Age column
+pa_rates1 &lt;- pa_rates1 %&gt;% mutate(Age = str_c(substr(pa_rates1$Age, 1, 2), substr(pa_rates1$Age, 3, 4), sep = &quot;-&quot;))
+pa_rates1 &lt;- pa_rates1 %&gt;% mutate(Age = str_replace(pa_rates1$Age, &quot;lt-15&quot;, &quot;&lt;15&quot;))
+pa_rates1 &lt;- pa_rates1 %&gt;% mutate(Age = str_replace(pa_rates1$Age, &quot;40-pl&quot;, &quot;40&gt;&quot;))
+pa_rates1 &lt;- pa_rates1 %&gt;% filter(Age!=&quot;15-19&quot;, Age!=&quot;lt-20&quot;)
+
+# Displaying the updated dataset
+head(pa_rates1, 10)</code></pre>
+<pre><code>## # A tibble: 10 × 12
+##    state  year Age   `Pregnancy Rate` `Abortion Rate` `Birth Rate`
+##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt;
+##  1 AL     1988 &lt;15               21.3             8.6          9.9
+##  2 AL     1988 15-17             78.3            24           43.3
+##  3 AL     1988 18-19            156.             41.8         91.4
+##  4 AL     1988 20-24            186.             40.5        118. 
+##  5 AL     1988 25-29            152.             25.4        104. 
+##  6 AL     1988 30-34             87.2            14.5         59.3
+##  7 AL     1988 35-39             31.9             7.4         19.8
+##  8 AL     1988 40&gt;                6.1             2.2          3.1
+##  9 AL     1992 &lt;15               23.6             8.6         11.7
+## 10 AL     1992 15-17             76.3            19.1         46.1
+##    `Abortion Ratio` Pregnancies Abortions Births Miscarriages Population
+##               &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+##  1             866.         610       250    285           80      28846
+##  2             554.        7440      2280   4112         1050      95042
+##  3             457.       10560      2830   6200         1520      67806
+##  4             342.       30410      6600  19293         4520     163053
+##  5             245        25890      4320  17617         3950     169778
+##  6             245.       14470      2410   9846         2210     165953
+##  7             376.        4820      1120   2987          710     150994
+##  8             709.         800       290    405          110     132391
+##  9             734.         700       250    347           90      29578
+## 10             415.        6820      1710   4116          990      89378</code></pre>
+</div>
+<div id="equitable-data" class="section level2">
+<h2>Equitable Data</h2>
+<p>The equity principles most relevant to our data set are beneficence and respect for persons. On the principle of beneficence, we are aware of how sensitive the topic can be, potential risks of re-identification, transparency, and how publication could be misconstrued against people and communities. Firstly, we acknowledge that the topic of abortion/pregnancy/miscarrages can be a very sensitive one to the general public, as well as a highly politicized topic given the recent upheaval following the Supreme Court overturning Roe v Wade. Therefore, any interpretation of this topic could potentially harm communities so we must present our findings carefully and thoughtfully, as we do not want our findings to be misinterpreted in a harmful way. Secondly, data about abortions and miscarrages has potential to unintentionally expose sensitive information about individuals that could be harmful to them. Luckily, our specific data set does not contain any personally identifiable information, with the information only going as far as statewide and age being in ranges. Finally, there are some clear limitations we have on what we can do because of the data set that we chose. As stated before, our data set deals with statewide data with age ranges instead of every year, so we are missing a lot of information that could give us more insight onto the data. Our analysis is limited because we do not have information like demographics, context surrounding each pregnancy/abortion, health of the mother, and socio-economic status.</p>
+<p>On the principle of respect for persons we understand the importance of informed consent and transparency on what the plans are for the data after the conclusion of our project. Because of the sensitivity of our topic, we believe that informed consent is essential because the data does include teenagers who deserve special consideration and protection. It is important that they understand the purpose of the information collected about them and how that information is intended to be used. We also want to acknowledge that future data analysis should use datasets that explicitly include marginalized groups - our transparency about this significant limitation is critical. Our intention with this project is to share information with community members in a clear and digestible way with our intentions being transparent.</p>
+</div>
