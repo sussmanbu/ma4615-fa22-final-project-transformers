@@ -1,0 +1,21 @@
+---
+title: Blog Post 4
+author: Transformers
+date: '2022-11-04'
+slug: []
+categories: []
+tags: []
+description: ~
+toc: yes
+authors: []
+series: []
+lastmod: '2022-11-04T07:38:30-04:00'
+featuredVideo: ~
+featuredImage: ~
+---
+
+#Initial Exploratory Data Analysis
+
+
+
+#Statistical Modeling 
