@@ -17,7 +17,31 @@ featuredImage: ~
 #Initial Exploratory Data Analysis
 
 ```{r}
-pa_rates1 %>% group_by(state) %>% summarise(AverageAbortionRate = mean(`Abortion Rate`, na.rm=TRUE)) %>% inner_join(state_aff) %>% ggplot() + stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + coord_flip() + scale_fill_viridis_d()
+colnames(pa_rates1) <- c('state', 'year', 'Age', 'PregnancyRate', 'AbortionRate', 'BirthRate', 'AbortionRatio', 'Pregnancies', 'Abortions', 'Births', 'Miscarriages', 'Population')
+pa_rates1 %>% group_by(state) %>% summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %>% inner_join(state_aff) %>% ggplot() + stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + coord_flip() + scale_fill_viridis_d(option = "cividis") + labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + ggthemes::theme_economist() +theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.position = 'right', legend.text = element_text(size = 8))
 ```
+Based off of our bar chart, the top 6 states with the highest abortion rates are all Democratic affiliated. Out of the 15 states with the highest abortion rates, 13 are Democratic affiliated, 2 are Republican affiliated, and one is divided between the two. The 15 states with the lowest abortion rate are all Republican affiliated, except for one that is divided.
+
+```{r}
+pa_rates1 %>% group_by(year, Age) %>% summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% ungroup() %>% ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + geom_line() + labs(title = 'Average Pregnancy Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group") + ggthemes::theme_economist() +theme(legend.position = 'right', legend.text = element_text(size = 8)) + scale_color_viridis_d(option = "turbo")
+```
+It seems like that prior to 2000, the age group with the highest average pregnancy rate was 20-24 year olds, with 25-29 year olds being the second highest. After 2000, the average pregnancy rate of 25-29 year olds became the highest, with the average pregnancy rate of 20-24 year olds decreasing to third most by 2017. The age groups with the lowest pregnancy rates are 40> and 15 year olds. The average pregnancy rate of 15-17 year olds and 18-19 year olds has been on a steady decline since 1973. The average pregnancy rate of 30-34 year olds and 35-39 year olds has been increasing since 1973.
 
 #Statistical Modeling 
+```{r}
+library(modelr)
+
+teenPregData <- pa_rates1 %>% group_by(year, Age) %>% summarise(AveragePregRate = mean(`PregnancyRate`, na.rm = TRUE)) %>% filter(Age %in% c("<15", "15-17", "18-19")) 
+
+teenPregMod <- lm(AveragePregRate ~ year, data = teenPregData)
+
+beta <- coef(teenPregMod)
+
+teenPregData <- teenPregData %>% add_predictions(teenPregMod)
+
+teenPregData %>% ggplot(aes(x = year)) + geom_point(aes(y = AveragePregRate, color = as.factor(Age))) + geom_line(aes(y = pred), data = teenPregData, color = "red", size = 1) + labs(title = 'Average Pregnancy Rate of Teenagers from 1973 to 2017', x = '\nYear', y = 'Average Pregnancy Rate\n', color = "Age Group") + ggthemes::theme_economist() +theme(legend.position = 'right', legend.text = element_text(size = 8)) + scale_color_viridis_d(option = "plasma")
+```
+
+```{r}
+teenPregData %>% add_residuals(teenPregMod) %>% ggplot(aes(year, resid)) + geom_ref_line(h=0) + geom_point(aes(color = as.factor(Age))) + labs(title = 'Residuals for Teen Pregnancy Model', x = '\nYear', y = 'Residual\n', color = "Age Group") + ggthemes::theme_economist() +theme(legend.position = 'right', legend.text = element_text(size = 8)) + scale_color_viridis_d(option = "plasma")
+```
