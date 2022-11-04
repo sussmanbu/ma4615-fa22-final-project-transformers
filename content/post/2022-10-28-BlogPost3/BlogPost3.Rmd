@@ -23,6 +23,7 @@ pa_rates <- read_csv("../../../dataset/NationalAndStatePregnancy_PublicUse.csv")
 
 # reading the State Affiliation dataset
 state_aff <- read_csv("../../../dataset/MA6415-StateAffiliations - Sheet1.csv")
+state_aff <- state_aff %>% rename("state" = "State")
 
 # displaying the inital datasets
 options(dplyr.width = Inf)

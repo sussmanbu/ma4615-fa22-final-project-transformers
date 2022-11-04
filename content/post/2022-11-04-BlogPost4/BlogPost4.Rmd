@@ -16,6 +16,8 @@ featuredImage: ~
 
 #Initial Exploratory Data Analysis
 
-test
+```{r}
+pa_rates1 %>% group_by(state) %>% summarise(AverageAbortionRate = mean(`Abortion Rate`, na.rm=TRUE)) %>% inner_join(state_aff) %>% ggplot() + stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + coord_flip() + scale_fill_viridis_d()
+```
 
 #Statistical Modeling 
