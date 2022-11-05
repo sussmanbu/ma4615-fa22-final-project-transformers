@@ -14,7 +14,7 @@ featuredVideo: ~
 featuredImage: ~
 ---
 
-#Initial Exploratory Data Analysis
+#Initial Exploratory Data Analysis (2 Initial Plots)
 
 ```{r}
 colnames(pa_rates1) <- c('state', 'year', 'Age', 'PregnancyRate', 'AbortionRate', 'BirthRate', 'AbortionRatio', 'Pregnancies', 'Abortions', 'Births', 'Miscarriages', 'Population')
