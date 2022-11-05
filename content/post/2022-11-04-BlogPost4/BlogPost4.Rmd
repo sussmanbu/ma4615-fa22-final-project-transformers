@@ -14,9 +14,11 @@ featuredVideo: ~
 featuredImage: ~
 ---
 
-#Initial Exploratory Data Analysis (2 Initial Plots)
+#Initial Exploratory Data Analysis (Our Initial Plots)
 
 ```{r}
+read_csv("../../../dataset/pa_rates1.csv")
+
 colnames(pa_rates1) <- c('state', 'year', 'Age', 'PregnancyRate', 'AbortionRate', 'BirthRate', 'AbortionRatio', 'Pregnancies', 'Abortions', 'Births', 'Miscarriages', 'Population')
 pa_rates1 %>% group_by(state) %>% summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %>% inner_join(state_aff) %>% ggplot() + stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + coord_flip() + scale_fill_viridis_d(option = "cividis") + labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + ggthemes::theme_economist() +theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.position = 'right', legend.text = element_text(size = 8))
 ```
@@ -27,7 +29,7 @@ pa_rates1 %>% group_by(year, Age) %>% summarise(AveragePregRate = mean(Pregnancy
 ```
 It seems like that prior to 2000, the age group with the highest average pregnancy rate was 20-24 year olds, with 25-29 year olds being the second highest. After 2000, the average pregnancy rate of 25-29 year olds became the highest, with the average pregnancy rate of 20-24 year olds decreasing to third most by 2017. The age groups with the lowest pregnancy rates are 40> and 15 year olds. The average pregnancy rate of 15-17 year olds and 18-19 year olds has been on a steady decline since 1973. The average pregnancy rate of 30-34 year olds and 35-39 year olds has been increasing since 1973.
 
-#Statistical Modeling 
+#Statistical Modeling   
 ```{r}
 library(modelr)
 

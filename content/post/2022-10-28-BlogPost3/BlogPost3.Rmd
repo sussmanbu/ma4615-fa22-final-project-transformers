@@ -84,6 +84,9 @@ pa_rates1 <- pa_rates1 %>% filter(Age!="15-19", Age!="lt-20")
 
 # Displaying the updated dataset
 head(pa_rates1, 10)
+
+# Saving pa_rates1 to dataset folder
+write_csv(pa_rates1, "../../../dataset/pa_rates1.csv")
 ```
 
 ## Equitable Data

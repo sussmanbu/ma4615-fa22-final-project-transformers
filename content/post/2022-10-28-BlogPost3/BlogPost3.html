@@ -42,7 +42,9 @@ state_aff &lt;- read_csv(&quot;../../../dataset/MA6415-StateAffiliations - Sheet
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code># displaying the inital datasets
+<pre class="r"><code>state_aff &lt;- state_aff %&gt;% rename(&quot;state&quot; = &quot;State&quot;)
+
+# displaying the inital datasets
 options(dplyr.width = Inf)
 head(pa_rates, 10)</code></pre>
 <pre><code>## # A tibble: 10 × 103
@@ -348,7 +350,7 @@ head(pa_rates, 10)</code></pre>
 ## 10 1 Mar 2021</code></pre>
 <pre class="r"><code>head(state_aff, 10)</code></pre>
 <pre><code>## # A tibble: 10 × 4
-##    State `Full State Name` Affiliation `Geographic Region`
+##    state `Full State Name` Affiliation `Geographic Region`
 ##    &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;              
 ##  1 AK    Alaska            Rep         Pacific Coastal    
 ##  2 HI    Hawaii            Dem         Pacific Coastal    
@@ -439,6 +441,8 @@ head(pa_rates1, 10)</code></pre>
 ##  8             709.         800       290    405          110     132391
 ##  9             734.         700       250    347           90      29578
 ## 10             415.        6820      1710   4116          990      89378</code></pre>
+<pre class="r"><code># Saving pa_rates1 to dataset folder
+write_csv(pa_rates1, &quot;../../../dataset/pa_rates1.csv&quot;)</code></pre>
 </div>
 <div id="equitable-data" class="section level2">
 <h2>Equitable Data</h2>
