@@ -1,0 +1,69 @@
+---
+title: Blog Post 4
+author: Transformers
+date: '2022-11-04'
+slug: []
+categories: []
+tags: []
+description: ~
+toc: yes
+authors: []
+series: []
+lastmod: '2022-11-04T07:38:30-04:00'
+featuredVideo: ~
+featuredImage: ~
+---
+
+
+<div id="TOC">
+
+</div>
+
+<p>#Initial Exploratory Data Analysis (Our Initial Plots)</p>
+<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+pa_rates1 &lt;- read_csv(&quot;../../../dataset/pa_rates1.csv&quot;)</code></pre>
+<pre><code>## Rows: 7296 Columns: 12
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (2): state, Age
+## dbl (10): year, Pregnancy Rate, Abortion Rate, Birth Rate, Abortion Ratio, P...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>state_aff &lt;- read_csv(&quot;../../../dataset/MA6415-StateAffiliations - Sheet1.csv&quot;)</code></pre>
+<pre><code>## Rows: 50 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (4): State, Full State Name, Affiliation, Geographic Region
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>state_aff &lt;- state_aff %&gt;% rename(&quot;state&quot; = &quot;State&quot;)
+
+colnames(pa_rates1) &lt;- c(&#39;state&#39;, &#39;year&#39;, &#39;Age&#39;, &#39;PregnancyRate&#39;, &#39;AbortionRate&#39;, &#39;BirthRate&#39;, &#39;AbortionRatio&#39;, &#39;Pregnancies&#39;, &#39;Abortions&#39;, &#39;Births&#39;, &#39;Miscarriages&#39;, &#39;Population&#39;)
+pa_rates1 %&gt;% group_by(state) %&gt;% summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %&gt;% inner_join(state_aff) %&gt;% ggplot() + stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = &quot;bar&quot;) + coord_flip() + scale_fill_viridis_d(option = &quot;cividis&quot;) + labs(title = &#39;Average Abortion Rate by State Affiliation&#39;, x = &#39;State\n&#39;, y = &#39;\nAverage Abortion Rate&#39;, fill = &quot;Affliation&quot;) + ggthemes::theme_economist() +theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.position = &#39;right&#39;, legend.text = element_text(size = 8))</code></pre>
+<pre><code>## Joining, by = &quot;state&quot;
+## No summary function supplied, defaulting to `mean_se()`</code></pre>
+<p><img src="/post/2022-11-04-BlogPost4/BlogPost4_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+Based off of our bar chart, the top 6 states with the highest abortion rates are all Democratic affiliated. Out of the 15 states with the highest abortion rates, 13 are Democratic affiliated, 2 are Republican affiliated, and one is divided between the two. The 15 states with the lowest abortion rate are all Republican affiliated, except for one that is divided.</p>
+<pre class="r"><code>pa_rates1 %&gt;% group_by(year, Age) %&gt;% summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %&gt;% ungroup() %&gt;% ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + geom_line() + labs(title = &#39;Average Pregnancy Rate by Age Group from 1973 to 2017&#39;, x = &#39;Year&#39;, y = &#39;Average Pregnancy Rate&#39;, color = &quot;Age Group&quot;) + ggthemes::theme_economist() +theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + scale_color_viridis_d(option = &quot;turbo&quot;)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="/post/2022-11-04-BlogPost4/BlogPost4_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+It seems like that prior to 2000, the age group with the highest average pregnancy rate was 20-24 year olds, with 25-29 year olds being the second highest. After 2000, the average pregnancy rate of 25-29 year olds became the highest, with the average pregnancy rate of 20-24 year olds decreasing to third most by 2017. The age groups with the lowest pregnancy rates are 40&gt; and 15 year olds. The average pregnancy rate of 15-17 year olds and 18-19 year olds has been on a steady decline since 1973. The average pregnancy rate of 30-34 year olds and 35-39 year olds has been increasing since 1973.</p>
+<p>#Statistical Modeling</p>
+<pre class="r"><code>library(modelr)
+
+teenPregData &lt;- pa_rates1 %&gt;% group_by(year, Age) %&gt;% summarise(AveragePregRate = mean(`PregnancyRate`, na.rm = TRUE)) %&gt;% filter(Age %in% c(&quot;&lt;15&quot;, &quot;15-17&quot;, &quot;18-19&quot;)) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>teenPregMod &lt;- lm(AveragePregRate ~ year, data = teenPregData)
+
+beta &lt;- coef(teenPregMod)
+
+teenPregData &lt;- teenPregData %&gt;% add_predictions(teenPregMod)
+
+teenPregData %&gt;% ggplot(aes(x = year)) + geom_point(aes(y = AveragePregRate, color = as.factor(Age))) + geom_line(aes(y = pred), data = teenPregData, color = &quot;red&quot;, size = 1) + labs(title = &#39;Average Pregnancy Rate of Teenagers from 1973 to 2017&#39;, x = &#39;\nYear&#39;, y = &#39;Average Pregnancy Rate\n&#39;, color = &quot;Age Group&quot;) + ggthemes::theme_economist() +theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
+<p><img src="/post/2022-11-04-BlogPost4/BlogPost4_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>teenPregData %&gt;% add_residuals(teenPregMod) %&gt;% ggplot(aes(year, resid)) + geom_ref_line(h=0) + geom_point(aes(color = as.factor(Age))) + labs(title = &#39;Residuals for Teen Pregnancy Model&#39;, x = &#39;\nYear&#39;, y = &#39;Residual\n&#39;, color = &quot;Age Group&quot;) + ggthemes::theme_economist() +theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
+<p><img src="/post/2022-11-04-BlogPost4/BlogPost4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
