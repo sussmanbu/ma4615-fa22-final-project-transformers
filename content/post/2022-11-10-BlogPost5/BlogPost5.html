@@ -1,0 +1,42 @@
+---
+title: Blog Post 5
+author: Transformers
+date: '2022-11-10'
+slug: []
+categories: []
+tags: []
+description: ~
+toc: yes
+authors: []
+series: []
+lastmod: '2022-11-10T07:38:30-04:00'
+featuredVideo: ~
+featuredImage: ~
+---
+
+
+<div id="TOC">
+
+</div>
+
+<p>#Blog Post 5 Instructions
+One of the requirements for your project is that you bring together multiple datasets to enable a more in depth analysis. This could be including weather data based on dates, including demographic data based on location, among many other possibilities.
+For this week’s blog post, please describe the datasets you are combining, how you are combining them, and what your initial findings were. Also, were there any difficulties in combining the data? If you haven’t finished combining datasets, that is fine, just discuss where you are in the process and what your next steps are.</p>
+<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+pa_rates1 &lt;- read_csv(&quot;../../../dataset/pa_rates1.csv&quot;)</code></pre>
+<pre><code>## Rows: 7296 Columns: 12
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (2): state, Age
+## dbl (10): year, Pregnancy Rate, Abortion Rate, Birth Rate, Abortion Ratio, P...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>state_aff &lt;- read_csv(&quot;../../../dataset/MA6415-StateAffiliations - Sheet1.csv&quot;)</code></pre>
+<pre><code>## Rows: 50 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (4): State, Full State Name, Affiliation, Geographic Region
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
