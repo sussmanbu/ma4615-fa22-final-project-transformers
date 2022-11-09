@@ -22,4 +22,3 @@ For this week’s blog post, please describe the datasets you are combining, how
 suppressPackageStartupMessages(library(tidyverse))
 pa_rates1 <- read_csv("../../../dataset/pa_rates1.csv")
 state_aff <- read_csv("../../../dataset/MA6415-StateAffiliations - Sheet1.csv")
-state_aff <- state_aff %>% rename("state" = "State")
