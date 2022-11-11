@@ -1,7 +1,7 @@
 ---
 title: Blog Post 5
 author: Transformers
-date: '2022-11-09'
+date: '2022-11-11'
 slug: []
 categories: []
 tags: []
@@ -9,7 +9,7 @@ description: ~
 toc: yes
 authors: []
 series: []
-lastmod: '2022-11-09T07:38:30-04:00'
+lastmod: '2022-11-11T07:38:30-04:00'
 featuredVideo: ~
 featuredImage: ~
 ---
@@ -20,6 +20,19 @@ For this week’s blog post, please describe the datasets you are combining, how
 
 ```{r}
 suppressPackageStartupMessages(library(tidyverse))
-pa_rates1 <- read_csv("../../../dataset/pa_rates1.csv")
-state_aff <- read_csv("../../../dataset/MA6415-StateAffiliations - Sheet1.csv")
+load("../../../dataset/abortionDataClean.RData")
+load("../../../dataset/MaxStateAff.RData")
+
+abortionDataClean %>% 
+  group_by(state) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %>%
+  inner_join(MaxStateAff) %>% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = "cividis") + 
+  labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.position = 'right', legend.text = element_text(size = 8))
+```
 
