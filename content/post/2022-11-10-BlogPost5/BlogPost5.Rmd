@@ -20,6 +20,21 @@ For this week’s blog post, please describe the datasets you are combining, how
 
 ```{r}
 suppressPackageStartupMessages(library(tidyverse))
-pa_rates1 <- read_csv("../../../dataset/pa_rates1.csv")
-state_aff <- read_csv("../../../dataset/MA6415-StateAffiliations - Sheet1.csv")
+load("../../../dataset/abortionDataClean.RData")
+load("../../../dataset/MaxStateAff.RData")
 
+abortionDataClean %>% 
+  group_by(state) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %>%
+  inner_join(MaxStateAff) %>% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = "cividis") + 
+  labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.position = 'right', legend.text = element_text(size = 8))
+```
+
+The dataset that we combined with out original dataset is about the state level constituency returns for U.S. presidential elections from 1976 to 2020. With this dataset, we created a new State Affiliation data set with two columns, one for state abbreviations and the second for political affiliation(Democrat, Republican, or Divided). In order to combine this new dataset with our original one, we used a join with the shared state column and used this new dataset of three columns, state, average abortion rate, and affiliation, to create the plot above.
+From the plot, we see some differences in affiliation of some states from the plot that we created in last week's post. These states being: Neveda, Florida, Michigan, Pennsylvania, North Carolina, Colorado, Ohio, Iowa, and Wisconsin.
