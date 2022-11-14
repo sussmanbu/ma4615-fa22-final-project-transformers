@@ -19,24 +19,25 @@ featuredImage: ~
 
 </div>
 
-<p>#Blog Post 5 Prompt
-One of the requirements for your project is that you bring together multiple datasets to enable a more in depth analysis. This could be including weather data based on dates, including demographic data based on location, among many other possibilities.
-For this week’s blog post, please describe the datasets you are combining, how you are combining them, and what your initial findings were. Also, were there any difficulties in combining the data? If you haven’t finished combining datasets, that is fine, just discuss where you are in the process and what your next steps are.</p>
+<p>#Blog Post 5
+Description of the datasets you are combining, how we are combining them, and what our initial findings were.</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
-pa_rates1 &lt;- read_csv(&quot;../../../dataset/pa_rates1.csv&quot;)</code></pre>
-<pre><code>## Rows: 7296 Columns: 12
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr  (2): state, Age
-## dbl (10): year, Pregnancy Rate, Abortion Rate, Birth Rate, Abortion Ratio, P...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>state_aff &lt;- read_csv(&quot;../../../dataset/MA6415-StateAffiliations - Sheet1.csv&quot;)</code></pre>
-<pre><code>## Rows: 50 Columns: 4
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (4): State, Full State Name, Affiliation, Geographic Region
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+load(&quot;../../../dataset/abortionDataClean.RData&quot;)
+load(&quot;../../../dataset/MaxStateAff.RData&quot;)
+
+abortionDataClean %&gt;% 
+  group_by(state) %&gt;% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %&gt;%
+  inner_join(MaxStateAff) %&gt;% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = &quot;bar&quot;) + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = &quot;cividis&quot;) + 
+  labs(title = &#39;Average Abortion Rate by State Affiliation&#39;, x = &#39;State\n&#39;, y = &#39;\nAverage Abortion Rate&#39;, fill = &quot;Affliation&quot;) + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.position = &#39;right&#39;, legend.text = element_text(size = 8))</code></pre>
+<pre><code>## Joining, by = &quot;state&quot;
+## No summary function supplied, defaulting to `mean_se()`</code></pre>
+<p><img src="/post/2022-11-10-BlogPost5/BlogPost5_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>The dataset that we combined with out original dataset is about the state level constituency returns for U.S. presidential elections from 1976 to 2020. With this dataset, we created a new State Affiliation data set with two columns, one for state abbreviations and the second for political affiliation(Democrat, Republican, or Divided). In order to combine this new dataset with our original one, we used a join with the shared state column and used this new dataset of three columns, state, average abortion rate, and affiliation, to create the plot above.
+From the plot, we see some differences in affiliation of some states from the plot that we created in last week’s post. These states being: Neveda, Florida, Michigan, Pennsylvania, North Carolina, Colorado, Ohio, Iowa, and Wisconsin.</p>
