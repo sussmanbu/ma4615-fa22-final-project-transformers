@@ -9,10 +9,10 @@ draft: false
 
 ## Rubric: On this page
 
-Where/how to find data (link to original data source): 
+* Where/how to find data (link to original data source): 
  https://osf.io/td7mk: More details regarding the dataset can be found here: https://osf.io/kthnf/
  
-Why was the data collected/curated? Who put it together?:
+* Why was the data collected/curated? Who put it together?:
 This dataset is by the Guttmacher Institute, a policy institution focused on “advancing sexual and reproductive health and rights (SRHR) worldwide.” [1] It displays data related to pregnancies, births, abortions and miscarriages for each state in the United States from 1988 to 2017. 
 
 * Describe the different data files used and what each variable means. 

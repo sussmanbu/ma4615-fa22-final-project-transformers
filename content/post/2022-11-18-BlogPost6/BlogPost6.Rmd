@@ -17,14 +17,23 @@ featuredImage: ~
 #Blog Post 6 
 This blog post is to describe our thoughts and progress on the interactive. We hope to use this to see the big picture trends and to “zoom in” on subsets or individual data points.
 
-We would like to have the user first input their personal information (either state, age, or both), so that they can "zoom in" to the relevant data points to them.
-
+We will be using Shiny to develop our interactive. We would like to have the user first input their personal information (state or political affiliation), so that they can "zoom in" to the relevant data points to them. Then we can build on the combined dataset/plot from Blog Post 5 (see below). However, we would like to add year (and maybe age) to this visual, so users can observe the chronological and age-related trend that is most relevant to them.
 
 ```{r}
 suppressPackageStartupMessages(library(tidyverse))
 load("../../../dataset/abortionDataClean.RData")
 load("../../../dataset/MaxStateAff.RData")
 
-
+abortionDataClean %>% 
+  group_by(state) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %>%
+  inner_join(MaxStateAff) %>% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = "cividis") + 
+  labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10),legend.posit)
 ```
 
