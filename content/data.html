@@ -12,60 +12,108 @@ draft: false
 
 </div>
 
-<p>This comes from the file <code>content/data.Rmd</code>.</p>
-<p>Your first steps in this project will be to find data to work on.</p>
-<p>I recommend trying to find data that interests you and that you are knowledgeable about. A bad example would be if you have no interest in video games but your data set is about video games. I also recommend finding data that is related to current events, social justice, and other areas that have an impact.</p>
-<p>You are <strong>not</strong> allowed to work on COVID data.</p>
-<p>Initially, you will study <em>one dataset</em> but later you will need to combine that data with another dataset. For this reason, I recommend finding data that has some date and/or location components. These types of data are conducive to interesting visualizations and analysis and you can also combine this data with other data that also has a date or location variable.
-Data from the census, weather data, economic data, are all relatively easy to combine with other data with time/location components.</p>
-<div id="where-to-keep-data" class="section level2">
-<h2>Where to keep data?</h2>
-<p>Below 50mb: In <code>dataset</code> folder</p>
-<p>Above 50mb: In <code>dataset_ignore</code> folder. This folder will be ignored by <code>git</code> so you’ll have to manually sync these files across your team.</p>
-<div id="sharing-your-data" class="section level3">
-<h3>Sharing your data</h3>
-<p>For small datasets (&lt;50mb), you can use the <code>dataset</code> folder that is tracked by github. Add the files just like you would any other file.</p>
-<p><strong>Do not</strong> use a folder named <code>data</code>.
+<div id="rubric-on-this-page" class="section level2">
+<h2>Rubric: On this page</h2>
+<p>Where/how to find data (link to original data source):
+<a href="https://osf.io/td7mk" class="uri">https://osf.io/td7mk</a>: More details regarding the dataset can be found here: <a href="https://osf.io/kthnf/" class="uri">https://osf.io/kthnf/</a></p>
+<p>Why was the data collected/curated? Who put it together?:
+This dataset is by the Guttmacher Institute, a policy institution focused on “advancing sexual and reproductive health and rights (SRHR) worldwide.” [1] It displays data related to pregnancies, births, abortions and miscarriages for each state in the United States from 1988 to 2017.</p>
+<ul>
+<li>Describe the different data files used and what each variable means.
+<ul>
+<li>If you have many variables then only describe the most relevant ones and summarize the rest.</li>
+</ul></li>
+</ul>
+<p>There are 912 rows and 50 columns in this dataset. For each row (observation), the state, year, and statistics for the various age groups are given. For each age group, there is statistics for pregnancy rate, abortion rate, birth rate, abortion ratio (Number of abortions per 1000 births), number of pregnancies, miscarriages, abortions, births and the population of women. The age groups of the women are as follows: less than 15, 15 - 17, 18 - 19, 15 - 19, less than 20, 20 - 24, 25 - 29, 30 - 34, 35 - 29 and 40 plus. The data was originally collected because the Guttmacher Institute believed that “ Documenting pregnancy, birth and abortion rates over time and by age-group helps illustrate broadly how people’s reproductive lives have changed over the past four decades.” [2] The counts of births by age were obtained from the National Center for Health Statistics, which “provides annual counts of births in the United States, as compiled in the National Vital Statistics System from data derived from birth certificates.” [2] The counts of abortions by state were from the Guttmacher Institute’s “periodic national Abortion Provider Census.” [2], Centers for Disease Control and Prevention Abortion Surveillance Reports and data from state health departments [3]. The population of women was obtained from the Census Bureau [3].</p>
+<p>[1] “About”. guttmacher.org. <a href="https://www.guttmacher.org/about" class="uri">https://www.guttmacher.org/about</a> (accessed Oct 12, 2022)
+[2] I. Maddow-Zimet and K. Kost. “Pregnancies, Births and Abortions in the United States, 1973–2017: National and State Trends by Age”. guttmacher.org. <a href="https://www.guttmacher.org/report/pregnancies-births-abortions-in-united-states-1973-2017" class="uri">https://www.guttmacher.org/report/pregnancies-births-abortions-in-united-states-1973-2017</a> (accessed Oct. 12, 2022)
+[3] I. Maddow-Zimet and K. Kost. “Pregnancies, Births and Abortions in the
+United States, 1973–2017: National and State Trends by Age Methodology Appendix”. guttmacher.org. <a href="https://www.guttmacher.org/sites/default/files/report_downloads/pregnancies-births-abortions-us-1973-2017-method-appendix.pdf" class="uri">https://www.guttmacher.org/sites/default/files/report_downloads/pregnancies-births-abortions-us-1973-2017-method-appendix.pdf</a> (accessed Oct. 12, 2022)</p>
+<ul>
+<li>Describe any cleaning you had to do for your data.
+<ul>
+<li><p>You <em>must</em> include a link to your <code>load_and_clean_data.R</code> file.</p></li>
+<li><p>Also, describe any additional R packages you used outside of those covered in class.</p></li>
+<li><p>Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.</p></li>
+<li><p>Some repetition of what you do in your <code>load_and_clean_data.R</code> file is fine and encouraged if it helps explain what you did.</p></li>
+</ul></li>
+<li>Organization, clarity, cleanliness of the page
+<ul>
+<li>Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.</li>
+</ul></li>
+</ul>
+<table style="width:65%;">
+<colgroup>
+<col width="65%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">This comes from the file <code>content/data.Rmd</code>.</td>
+</tr>
+<tr class="even">
+<td align="left">Your first steps in this project will be to find data to work on.</td>
+</tr>
+<tr class="odd">
+<td align="left">I recommend trying to find data that interests you and that you are knowledgeable about. A bad example would be if you have no interest in video games but your data set is about video games. I also recommend finding data that is related to current events, social justice, and other areas that have an impact.</td>
+</tr>
+<tr class="even">
+<td align="left">You are <strong>not</strong> allowed to work on COVID data.</td>
+</tr>
+<tr class="odd">
+<td align="left">Initially, you will study <em>one dataset</em> but later you will need to combine that data with another dataset. For this reason, I recommend finding data that has some date and/or location components. These types of data are conducive to interesting visualizations and analysis and you can also combine this data with other data that also has a date or location variable.
+Data from the census, weather data, economic data, are all relatively easy to combine with other data with time/location components.</td>
+</tr>
+<tr class="even">
+<td align="left">## Where to keep data?</td>
+</tr>
+<tr class="odd">
+<td align="left">Below 50mb: In <code>dataset</code> folder</td>
+</tr>
+<tr class="even">
+<td align="left">Above 50mb: In <code>dataset_ignore</code> folder. This folder will be ignored by <code>git</code> so you’ll have to manually sync these files across your team.</td>
+</tr>
+<tr class="odd">
+<td align="left">### Sharing your data</td>
+</tr>
+<tr class="even">
+<td align="left">For small datasets (&lt;50mb), you can use the <code>dataset</code> folder that is tracked by github. Add the files just like you would any other file.</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Do not</strong> use a folder named <code>data</code>.
 This folder is reserved by <code>hugo</code>.
-If you create a folder named <code>data</code> this will cause problems.</p>
-<p>For larger datasets, you’ll need to create a new folder in the project root directory named <code>dataset-ignore</code>. This will be ignored by git (based off the <code>.gitignore</code> file in the project root directory) which will help you avoid issues with Github’s size limits. Your team will have to manually make sure the data files in <code>dataset-ignore</code> are synced across team members.</p>
-<p>Your <a href="/load_and_clean_data.R">load_and_clean_data.R</a> file is how you will load and clean your data. Here is a an example of a very simple one.</p>
-<pre class="r"><code>source(
-  here::here(&quot;static&quot;, &quot;load_and_clean_data.R&quot;),
-  echo = TRUE # Use echo=FALSE or omit it to avoid code output  
-)</code></pre>
-<pre><code>## 
-## &gt; library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-## ✔ tibble  3.1.8     ✔ dplyr   1.0.9
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.1
-## ✔ readr   2.1.2     ✔ forcats 0.5.1
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre><code>## 
-## &gt; loan_data &lt;- read_csv(here::here(&quot;dataset&quot;, &quot;loan_refusal.csv&quot;))</code></pre>
-<pre><code>## Rows: 20 Columns: 5
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (1): bank
-## dbl (4): min, white, himin, hiwhite
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## 
-## &gt; loan_data_clean &lt;- loan_data
-## 
-## &gt; write_csv(loan_data_clean, file = here::here(&quot;dataset&quot;, 
-## +     &quot;loan_refusal_clean.csv&quot;))
-## 
-## &gt; save(loan_data_clean, file = here::here(&quot;dataset/loan_refusal.RData&quot;))</code></pre>
-<p>Note how I use the <code>here::here</code> function from the <a href="https://here.r-lib.org/articles/here.html"><code>here</code> package</a> to avoid path problems.
+If you create a folder named <code>data</code> this will cause problems.</td>
+</tr>
+<tr class="even">
+<td align="left">For larger datasets, you’ll need to create a new folder in the project root directory named <code>dataset-ignore</code>. This will be ignored by git (based off the <code>.gitignore</code> file in the project root directory) which will help you avoid issues with Github’s size limits. Your team will have to manually make sure the data files in <code>dataset-ignore</code> are synced across team members.</td>
+</tr>
+<tr class="odd">
+<td align="left">Your <a href="/load_and_clean_data.R">load_and_clean_data.R</a> file is how you will load and clean your data. Here is a an example of a very simple one.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>r source( here::here("static", "load_and_clean_data.R"), echo = TRUE # Use echo=FALSE or omit it to avoid code output )</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>## ## &gt; library(tidyverse)</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ── ## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10 ## ✔ tidyr   1.2.0      ✔ stringr 1.4.1 ## ✔ readr   2.1.2      ✔ forcats 0.5.2 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag()    masks stats::lag()</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>## ## &gt; loan_data &lt;- read_csv(here::here("dataset", "loan_refusal.csv"))</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>## Rows: 20 Columns: 5 ## ── Column specification ──────────────────────────────────────────────────────── ## Delimiter: "," ## chr (1): bank ## dbl (4): min, white, himin, hiwhite ## ## ℹ Use `spec()` to retrieve the full column specification for this data. ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>## ## &gt; loan_data_clean &lt;- loan_data ## ## &gt; write_csv(loan_data_clean, file = here::here("dataset", ## +     "loan_refusal_clean.csv")) ## ## &gt; save(loan_data_clean, file = here::here("dataset/loan_refusal.RData"))</code></td>
+</tr>
+<tr class="even">
+<td align="left">Note how I use the <code>here::here</code> function from the <a href="https://here.r-lib.org/articles/here.html"><code>here</code> package</a> to avoid path problems.
 This function is used to specify directories within the project’s root directory.
-You should never use absolute paths (eg. <code>/Users/danielsussman/path/to/project/</code> or <code>C:\\MA415\\Final_Project\\</code>) and using <code>here</code> ensures that it doesn’t matter what the current working directory is as long as you have this RStudio Project open.</p>
-<hr />
-</div>
+You should never use absolute paths (eg. <code>/Users/danielsussman/path/to/project/</code> or <code>C:\\MA415\\Final_Project\\</code>) and using <code>here</code> ensures that it doesn’t matter what the current working directory is as long as you have this RStudio Project open.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="files-in-static" class="section level2">
 <h2>Files in static</h2>
@@ -83,30 +131,4 @@ To link to this file, you can use <code>[cleaning script](/load_and_clean_data.R
 <p>If you are using a shiny interactive, you’ll need to keep that in a separate folder (i.e. not in <code>static</code> or <code>content</code>). For the shiny interactive you’ll need to publish the app on <code>shinyapps.io</code> where the app can be run. When you publish, make sure to include any data sets you are loading in among the files you publish since those datasets will need to be loaded by your app.</p>
 <hr />
 </div>
-</div>
-<div id="rubric-on-this-page" class="section level2">
-<h2>Rubric: On this page</h2>
-<p>you will</p>
-<ul>
-<li>Describe where/how to find data.
-<ul>
-<li>You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.</li>
-<li>Why was the data collected/curated? Who put it together? (This is important, if you don’t know why it was collected then that might not be a good dataset to look at.</li>
-</ul></li>
-<li>Describe the different data files used and what each variable means.
-<ul>
-<li>If you have many variables then only describe the most relevant ones and summarize the rest.</li>
-</ul></li>
-<li>Describe any cleaning you had to do for your data.
-<ul>
-<li>You <em>must</em> include a link to your <code>load_and_clean_data.R</code> file.</li>
-<li>Also, describe any additional R packages you used outside of those covered in class.</li>
-<li>Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.</li>
-<li>Some repetition of what you do in your <code>load_and_clean_data.R</code> file is fine and encouraged if it helps explain what you did.</li>
-</ul></li>
-<li>Organization, clarity, cleanliness of the page
-<ul>
-<li>Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.</li>
-</ul></li>
-</ul>
 </div>
