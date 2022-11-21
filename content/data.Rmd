@@ -48,10 +48,10 @@ Because Roe v. Wade is a highly politicized issue with largely Democratic suppor
 Cleaning script [load_and_clean_data.R](/load_and_clean_data.R) file: We used tidyverse and modelr packages for cleaning and exploratory data analysis.
 
 ```{r}
-#source(
-#  here::here("static", "load_and_clean_data.R"),
-#  echo = FALSE # Use echo=FALSE or omit it to avoid code output  
-#)
+source(
+  here::here("static", "load_and_clean_data.R"),
+  echo = FALSE # Use echo=FALSE or omit it to avoid code output  
+)
 ```
 <br><br>
 Our steps for cleaning the data included:
