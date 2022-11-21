@@ -45,7 +45,7 @@ Because Roe v. Wade is a highly politicized issue with largely Democratic suppor
 
 ## Cleaning Our Data
 
-[cleaning script](../static/load_and_clean_data.R) to our `load_and_clean_data.R` file: 
+[cleaning script](/Users/allisonaaron/Desktop/Data Science in R/ma4615-fa22-final-project-transformers/static/load_and_clean_data.R) to our `load_and_clean_data.R` file: 
 We used tidyverse and modelr packages for cleaning and exploratory data analysis.
  
 Our steps for cleaning the data included:
