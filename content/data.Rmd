@@ -3,96 +3,61 @@ title: Data
 description:
 toc: true
 featuredVideo:
-featuredImage: images/data-import-cheatsheet-thumbs.png
+featuredImage: images/transformers.png
 draft: false
 ---
 
+# Datasets 
+
+## Dataset 1  
+[Link](https://osf.io/td7mk) to Original Dataset on National and State Pregnancy from 1988 - 2017:  More details regarding the dataset can be found [here](https://osf.io/kthnf/). 
+<br><br>
+
+This dataset is by the Guttmacher Institute, a policy institution focused on “advancing sexual and reproductive health and rights (SRHR) worldwide.” [1] It displays data related to pregnancies, births, abortions and miscarriages for each state in the United States from 1988 to 2017. 
+<br><br>
+  
+There are 912 rows and 50 columns in this dataset. For each row (observation), the state, year, and statistics for the various age groups are given. For each age group, there is statistics for pregnancy rate, abortion rate, birth rate, abortion ratio (Number of abortions per 1000 births), number of pregnancies, miscarriages, abortions, births and the population of women. The age groups of the women are as follows: less than 15, 15 - 17, 18 - 19, 15  - 19, less than 20, 20 - 24, 25 - 29, 30 - 34, 35 - 29 and 40 plus. 
+<br><br>
+
+The data was originally collected because the Guttmacher Institute believed that “Documenting pregnancy, birth and abortion rates over time and by age-group helps illustrate broadly how people’s reproductive lives have changed over the past four decades.” [2] The counts of births by age were obtained from the National Center for Health Statistics, which “provides annual counts of births in the United States, as compiled in the National Vital Statistics System from data derived from birth certificates.” [2] The counts of abortions by state were from the Guttmacher Institute’s “periodic national Abortion Provider Census.” [2],  Centers for Disease Control and Prevention Abortion Surveillance Reports and data from state health departments [3]. The population of women was obtained from the Census Bureau [3].
+<br><br>
+
+References
+<br>
+[1] “About”. guttmacher.org. https://www.guttmacher.org/about (accessed Oct 12, 2022)
+
+[2] I. Maddow-Zimet and K. Kost. “Pregnancies, Births and Abortions in the United States, 1973–2017: National and State Trends by Age”. guttmacher.org. https://www.guttmacher.org/report/pregnancies-births-abortions-in-united-states-1973-2017 (accessed Oct. 12, 2022)
+
+[3] I. Maddow-Zimet and K. Kost. “Pregnancies, Births and Abortions in the
+United States, 1973–2017: National and State Trends by Age Methodology Appendix”. guttmacher.org. https://www.guttmacher.org/sites/default/files/report_downloads/pregnancies-births-abortions-us-1973-2017-method-appendix.pdf (accessed Oct. 12, 2022)
 
 
-This comes from the file `content/data.Rmd`.
-
-Your first steps in this project will be to find data to work on.
-
-I recommend trying to find data that interests you and that you are knowledgeable about. A bad example would be if you have no interest in video games but your data set is about video games. I also recommend finding data that is related to current events, social justice, and other areas that have an impact.
-
-You are __not__ allowed to work on COVID data.
-
-Initially, you will study _one dataset_ but later you will need to combine that data with another dataset. For this reason, I recommend finding data that has some date and/or location components. These types of data are conducive to interesting visualizations and analysis and you can also combine this data with other data that also has a date or location variable.
-Data from the census, weather data, economic data, are all relatively easy to combine with other data with time/location components.
+## Dataset 2 
 
 
-## Where to keep data?
+[Link](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/42MVDX) to original dataset on "state-level returns for elections to the U.S. presidency from 1976 to 2020."
+<br><br>
 
+This dataset is collected by the MIT Election Data and Science Lab, 2017, and is a part of the Harvard Dataverse. The original dataset has 15 columns and 8579 rows. Columns of interest include year, state, state abbreviation, political party details, candidate votes, and total votes.
+<br><br>
 
-Below 50mb: In `dataset` folder
+Because Roe v. Wade is a highly politicized issue with largely Democratic support for Roe v. Wade (Pro-choice) and Republican support against Roe v. Wade (Pro-life), we wanted to include political affiliations in our analysis. This additional dataset allowed for us to investigate state-level pregnancy and abortion data based on the dominating political affiliation as determined by state-wide presidential election results. 
 
-Above 50mb: In `dataset_ignore` folder. This folder will be ignored by `git` so you'll have to manually sync these files across your team.
+## Cleaning Our Data
 
-### Sharing your data
-
-
-For small datasets (<50mb), you can use the `dataset` folder that is tracked by github. Add the files just like you would any other file.
-
-**Do not** use a folder named `data`.
-This folder is reserved by `hugo`.
-If you create a folder named `data` this will cause problems.
-
-For larger datasets, you'll need to create a new folder in the project root directory named `dataset-ignore`. This will be ignored by git (based off the `.gitignore` file in the project root directory) which will help you avoid issues with Github's size limits. Your team will have to manually make sure the data files in `dataset-ignore` are synced across team members.
-
-Your [load_and_clean_data.R](/load_and_clean_data.R) file is how you will load and clean your data. Here is a an example of a very simple one.
-
-```{r}
-source(
-  here::here("static", "load_and_clean_data.R"),
-  echo = TRUE # Use echo=FALSE or omit it to avoid code output  
-)
-```
-
-Note how I use the `here::here` function from the [`here` package](https://here.r-lib.org/articles/here.html) to avoid path problems.
-This function is used to specify directories within the project's root directory.
-You should never use absolute paths (eg. `/Users/danielsussman/path/to/project/` or `C:\\MA415\\Final_Project\\`) and using `here` ensures that it doesn't matter what the current working directory is as long as you have this RStudio Project open.
-
-----
-
-
-
-## Files in static
-
-### `load_and_clean_data.R`
-
-The idea behind this file is that someone coming to your website could largely replicate your analyses after running this script on the original data sets to clean them.
-This file might create a derivative data set that you then use for your subsequent analysis.
-Note that you don't need to run this script from every post/page.
-Instead, you can load in the results of this script, which could be plain text files or `.RData` files. In your data page you'll describe how these results were created. If you have a very large data set, you might save smaller data sets that you can use for exploration purposes.
-To link to this file, you can use `[cleaning script](/load_and_clean_data.R)`. 
-
-
-When you are loading in data, I recommend using the `here::here` function to specify the file path. This function is used to specify a path relative to your project's root directory. Hence, you can read a file using eg, `read_csv(here::here("dataset/data_file.csv"))`.
-
-
-### Shiny Interactive
-
-If you are using a shiny interactive, you'll need to keep that in a separate folder (i.e. not in `static` or `content`). For the shiny interactive you'll need to publish the app on `shinyapps.io` where the app can be run. When you publish, make sure to include any data sets you are loading in among the files you publish since those datasets will need to be loaded by your app. 
-
-
-
-
-
-----
-
-## Rubric: On this page
-
-you will
-
-* Describe where/how to find data.
-  * You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.
-  * Why was the data collected/curated? Who put it together? (This is important, if you don't know why it was collected then that might not be a good dataset to look at.
-* Describe the different data files used and what each variable means. 
-  * If you have many variables then only describe the most relevant ones and summarize the rest.
-* Describe any cleaning you had to do for your data.
-  * You *must* include a link to your `load_and_clean_data.R` file.
-  * Also, describe any additional R packages you used outside of those covered in class.
+[cleaning script](/Users/allisonaaron/Desktop/Data Science in R/ma4615-fa22-final-project-transformers/static/load_and_clean_data.R) to our `load_and_clean_data.R` file: 
+We used tidyverse and modelr packages for cleaning and exploratory data analysis.
+ 
+Our steps for cleaning the data included:
+1. Remove overlaps in age column
+2. Split the columns with age in it to create a column for age. 
+3. Make age as a factor.
+4. Modify age data so that it is more easily interpretable (Added hyphen to separate the the upper and lower limits)
+5. Combine dataset 2 with dataset 1 to create a new State Affiliation dataset with two columns; one for state abbreviations and the second for political affiliation (Democrat, Republican, or Divided). To do this, we used a join with the shared state column and used this new dataset of three columns, state, average abortion rate, and affiliation.
+ 
   * Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.
+  
   * Some repetition of what you do in your `load_and_clean_data.R` file is fine and encouraged if it helps explain what you did.
+  
 * Organization, clarity, cleanliness of the page
   * Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.
