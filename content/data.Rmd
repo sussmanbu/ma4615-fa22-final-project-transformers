@@ -69,7 +69,7 @@ For dataset 1
 For dataset 2
 1. Select presidential candidates belonging to the Democrat and Republican party. This is because, historically, candidates from these 2 parties get the majority of the votes from the people.
 
-2. For each year and each state, we compared the percentage of people who voted for the Democrat and the Republican candidate. If the difference in the percentages was greater than or equal to 0.1%, then the party with more votes is selected as the dominating political party for that state. Otherwise, that state is considered to be divided for that year. This data is saved in stateAffData.csv.
+2. For each year and each state, we compared the percentage of people who voted for the Democrat and the Republican candidate. If the difference in the percentages was greater than or equal to 5%, then the party with more votes is selected as the dominating political party for that state. Otherwise, that state is considered to be divided for that year. This data is saved in stateAffData.csv.
 
 3. To get the overall political affiliation of all the states, we compared the number of years the state was Democrat, Republican or divided over the years, and took the affiliation with the largest number. This data is saved in MaxStateAffData.csv.
 <br><br>

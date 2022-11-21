@@ -1,16 +1,16 @@
 library(tidyverse)
+library(knitr)
 
 ## CLEANING THE ABORTION DATA
-abortionData <- here::here("dataset", "NationalAndStatePregnancy_PublicUse.csv")
+abortionData <- read_csv(here::here("dataset", "NationalAndStatePregnancy_PublicUse.csv"))
 
 # Tidying the data using pivot longer
-abortionDataClean <- abortionData %>% 
-  select(state:population40plus)
+abortionDataClean <- abortionData %>% select(state:population40plus)
 
 abortionDataClean <- 
   abortionDataClean %>% 
-  pivot_longer(cols = pregnancyratelt15:pregnancyrate40plus, names_to = "temp", values_to = "PregnancyRate", names_repair = "minimal") %>% 
-  separate(temp, c("PR","Age"), sep = 13) %>% 
+  pivot_longer(cols = pregnancyratelt15:pregnancyrate40plus, names_to = "temp", values_to = "PregnancyRate", names_repair = "minimal") %>%
+  separate(temp, c("PR","Age"), sep = 13) %>%
   select(-PR)
 
 abortionDataClean <- 
@@ -101,20 +101,27 @@ stateAff_data_clean <-
 
 stateAff_data_clean <- 
   read_csv(here::here("dataset", "1976-2020-president.csv"), 
-                                col_types = cols_only(year = col_integer(), 
-                                                      state = col_character(), 
-                                                      state_po = col_character(), 
-                                                      candidatevotes = col_integer(), 
-                                                      totalvotes = col_integer(), 
-                                                      party_simplified = col_character())) %>% 
+           skip = 1, 
+           col_types = cols_only(year = col_integer(),
+                                 state = col_character(),
+                                 state_po = col_character(),
+                                 candidatevotes = col_integer(),
+                                 totalvotes = col_integer(),
+                                 party_simplified = col_character())) %>% 
   filter(party_simplified %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
   mutate(Vote_Rate = candidatevotes/totalvotes) 
 
 stateAff_data_clean <- 
   stateAff_data_clean %>% 
   filter(Vote_Rate > 0.001) %>% 
-  select(year:state_po, party_simplified:Vote_Rate) %>% 
-  pivot_wider(names_from = party_simplified, values_from = Vote_Rate)
+  select(year:state_po, party_simplified:Vote_Rate) 
+
+stateAff_data_clean <- 
+  stateAff_data_clean %>%
+  group_by(party_simplified) %>%
+  mutate(row = row_number()) %>%
+  pivot_wider(names_from = party_simplified, values_from = Vote_Rate) %>%
+  select(-row)
 
 stateAff_data_clean <- 
   stateAff_data_clean %>% 
