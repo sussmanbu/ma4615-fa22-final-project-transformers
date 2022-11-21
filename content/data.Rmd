@@ -43,10 +43,9 @@ This dataset is collected by the MIT Election Data and Science Lab, 2017, and is
 
 Because Roe v. Wade is a highly politicized issue with largely Democratic support for Roe v. Wade (Pro-choice) and Republican support against Roe v. Wade (Pro-life), we wanted to include political affiliations in our analysis. This additional dataset allowed for us to investigate state-level pregnancy and abortion data based on the dominating political affiliation as determined by state-wide presidential election results. 
 
-## Cleaning Our Data.
+## Cleaning Our Data
 
-[cleaning script](/load_and_clean_data.R)
-[Link](___) to our `load_and_clean_data.R` file: 
+[cleaning script](../static/load_and_clean_data.R) to our `load_and_clean_data.R` file: 
 We used tidyverse and modelr packages for cleaning and exploratory data analysis.
  
 Our steps for cleaning the data included:
@@ -62,77 +61,3 @@ Our steps for cleaning the data included:
   
 * Organization, clarity, cleanliness of the page
   * Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.
-
-
-----------------------------------------------
-This comes from the file `content/data.Rmd`.
-
-Your first steps in this project will be to find data to work on.
-
-I recommend trying to find data that interests you and that you are knowledgeable about. A bad example would be if you have no interest in video games but your data set is about video games. I also recommend finding data that is related to current events, social justice, and other areas that have an impact.
-
-You are __not__ allowed to work on COVID data.
-
-Initially, you will study _one dataset_ but later you will need to combine that data with another dataset. For this reason, I recommend finding data that has some date and/or location components. These types of data are conducive to interesting visualizations and analysis and you can also combine this data with other data that also has a date or location variable.
-Data from the census, weather data, economic data, are all relatively easy to combine with other data with time/location components.
-
-
-## Where to keep data?
-
-
-Below 50mb: In `dataset` folder
-
-Above 50mb: In `dataset_ignore` folder. This folder will be ignored by `git` so you'll have to manually sync these files across your team.
-
-### Sharing your data
-
-
-For small datasets (<50mb), you can use the `dataset` folder that is tracked by github. Add the files just like you would any other file.
-
-**Do not** use a folder named `data`.
-This folder is reserved by `hugo`.
-If you create a folder named `data` this will cause problems.
-
-For larger datasets, you'll need to create a new folder in the project root directory named `dataset-ignore`. This will be ignored by git (based off the `.gitignore` file in the project root directory) which will help you avoid issues with Github's size limits. Your team will have to manually make sure the data files in `dataset-ignore` are synced across team members.
-
-Your [load_and_clean_data.R](/load_and_clean_data.R) file is how you will load and clean your data. Here is a an example of a very simple one.
-
-```{r}
-source(
-  here::here("static", "load_and_clean_data.R"),
-  echo = TRUE # Use echo=FALSE or omit it to avoid code output  
-)
-```
-
-Note how I use the `here::here` function from the [`here` package](https://here.r-lib.org/articles/here.html) to avoid path problems.
-This function is used to specify directories within the project's root directory.
-You should never use absolute paths (eg. `/Users/danielsussman/path/to/project/` or `C:\\MA415\\Final_Project\\`) and using `here` ensures that it doesn't matter what the current working directory is as long as you have this RStudio Project open.
-
-----
-
-
-
-## Files in static
-
-### `load_and_clean_data.R`
-
-The idea behind this file is that someone coming to your website could largely replicate your analyses after running this script on the original data sets to clean them.
-This file might create a derivative data set that you then use for your subsequent analysis.
-Note that you don't need to run this script from every post/page.
-Instead, you can load in the results of this script, which could be plain text files or `.RData` files. In your data page you'll describe how these results were created. If you have a very large data set, you might save smaller data sets that you can use for exploration purposes.
-To link to this file, you can use `[cleaning script](/load_and_clean_data.R)`. 
-
-
-When you are loading in data, I recommend using the `here::here` function to specify the file path. This function is used to specify a path relative to your project's root directory. Hence, you can read a file using eg, `read_csv(here::here("dataset/data_file.csv"))`.
-
-
-### Shiny Interactive
-
-If you are using a shiny interactive, you'll need to keep that in a separate folder (i.e. not in `static` or `content`). For the shiny interactive you'll need to publish the app on `shinyapps.io` where the app can be run. When you publish, make sure to include any data sets you are loading in among the files you publish since those datasets will need to be loaded by your app. 
-
-
-
-
-
-----
-
