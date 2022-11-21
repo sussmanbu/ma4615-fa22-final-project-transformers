@@ -45,14 +45,27 @@ Because Roe v. Wade is a highly politicized issue with largely Democratic suppor
 
 ## Cleaning Our Data
 
-[cleaning script](/Users/allisonaaron/Desktop/Data Science in R/ma4615-fa22-final-project-transformers/static/load_and_clean_data.R) to our `load_and_clean_data.R` file: 
-We used tidyverse and modelr packages for cleaning and exploratory data analysis.
+Cleaning script [load_and_clean_data.R](/load_and_clean_data.R) file: We used tidyverse and modelr packages for cleaning and exploratory data analysis.
+
+```{r}
+source(
+  here::here("static", "load_and_clean_data.R"),
+  echo = FALSE # Use echo=FALSE or omit it to avoid code output  
+)
+```
  
 Our steps for cleaning the data included:
+For dataset 1
+
 1. Remove overlaps in age column
 2. Split the columns with age in it to create a column for age. 
 3. Make age as a factor.
 4. Modify age data so that it is more easily interpretable (Added hyphen to separate the the upper and lower limits)
+
+For dataset 2
+1. Select presidential candidates belonging to the Democrat and Republican party. This is because, historically, candidates from these 2 parties get the majority of the votes from the people.
+2. For each year and each state, we compared the percentage of people who voted for the Democrat and the Republican candidate. If the difference in the percentages was greater than or equal to 0.1%, then the party with more votes is selected as the dominating political party for that state. Otherwise, that state is considered to be divided for that year.
+
 5. Combine dataset 2 with dataset 1 to create a new State Affiliation dataset with two columns; one for state abbreviations and the second for political affiliation (Democrat, Republican, or Divided). To do this, we used a join with the shared state column and used this new dataset of three columns, state, average abortion rate, and affiliation.
  
   * Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.
