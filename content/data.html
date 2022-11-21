@@ -1,0 +1,97 @@
+---
+title: Data
+description:
+toc: true
+featuredVideo:
+featuredImage: images/transformers.png
+draft: false
+---
+
+
+<div id="TOC">
+
+</div>
+
+<div id="datasets" class="section level1">
+<h1>Datasets</h1>
+<div id="dataset-1" class="section level2">
+<h2>Dataset 1</h2>
+<p><a href="https://osf.io/td7mk">Link</a> to Original Dataset on National and State Pregnancy from 1988 - 2017: More details regarding the dataset can be found <a href="https://osf.io/kthnf/">here</a>.
+<br><br></p>
+<p>This dataset is by the Guttmacher Institute, a policy institution focused on “advancing sexual and reproductive health and rights (SRHR) worldwide.” [1] It displays data related to pregnancies, births, abortions and miscarriages for each state in the United States from 1988 to 2017.
+<br><br></p>
+<p>There are 912 rows and 50 columns in this dataset. For each row (observation), the state, year, and statistics for the various age groups are given. For each age group, there is statistics for pregnancy rate, abortion rate, birth rate, abortion ratio (Number of abortions per 1000 births), number of pregnancies, miscarriages, abortions, births and the population of women. The age groups of the women are as follows: less than 15, 15 - 17, 18 - 19, 15 - 19, less than 20, 20 - 24, 25 - 29, 30 - 34, 35 - 29 and 40 plus.
+<br><br></p>
+<p>The data was originally collected because the Guttmacher Institute believed that “Documenting pregnancy, birth and abortion rates over time and by age-group helps illustrate broadly how people’s reproductive lives have changed over the past four decades.” [2] The counts of births by age were obtained from the National Center for Health Statistics, which “provides annual counts of births in the United States, as compiled in the National Vital Statistics System from data derived from birth certificates.” [2] The counts of abortions by state were from the Guttmacher Institute’s “periodic national Abortion Provider Census.” [2], Centers for Disease Control and Prevention Abortion Surveillance Reports and data from state health departments [3]. The population of women was obtained from the Census Bureau [3].
+<br><br></p>
+<p>References
+<br>
+[1] “About”. guttmacher.org. <a href="https://www.guttmacher.org/about" class="uri">https://www.guttmacher.org/about</a> (accessed Oct 12, 2022)</p>
+<p>[2] I. Maddow-Zimet and K. Kost. “Pregnancies, Births and Abortions in the United States, 1973–2017: National and State Trends by Age”. guttmacher.org. <a href="https://www.guttmacher.org/report/pregnancies-births-abortions-in-united-states-1973-2017" class="uri">https://www.guttmacher.org/report/pregnancies-births-abortions-in-united-states-1973-2017</a> (accessed Oct. 12, 2022)</p>
+<p>[3] I. Maddow-Zimet and K. Kost. “Pregnancies, Births and Abortions in the
+United States, 1973–2017: National and State Trends by Age Methodology Appendix”. guttmacher.org. <a href="https://www.guttmacher.org/sites/default/files/report_downloads/pregnancies-births-abortions-us-1973-2017-method-appendix.pdf" class="uri">https://www.guttmacher.org/sites/default/files/report_downloads/pregnancies-births-abortions-us-1973-2017-method-appendix.pdf</a> (accessed Oct. 12, 2022)</p>
+</div>
+<div id="dataset-2" class="section level2">
+<h2>Dataset 2</h2>
+<p><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/42MVDX">Link</a> to original dataset on “state-level returns for elections to the U.S. presidency from 1976 to 2020.”
+<br><br></p>
+<p>This dataset is collected by the MIT Election Data and Science Lab, 2017, and is a part of the Harvard Dataverse. The original dataset has 15 columns and 8579 rows. Columns of interest include year, state, state abbreviation, political party details, candidate votes, and total votes.
+<br><br></p>
+<p>Because Roe v. Wade is a highly politicized issue with largely Democratic support for Roe v. Wade (Pro-choice) and Republican support against Roe v. Wade (Pro-life), we wanted to include political affiliations in our analysis. This additional dataset allowed for us to investigate state-level pregnancy and abortion data based on the dominating political affiliation as determined by state-wide presidential election results.</p>
+</div>
+<div id="cleaning-our-data" class="section level2">
+<h2>Cleaning Our Data</h2>
+<p>Cleaning script <a href="/load_and_clean_data.R">load_and_clean_data.R</a> file: We used tidyverse and modelr packages for cleaning and exploratory data analysis.</p>
+<pre class="r"><code>source(
+  here::here(&quot;static&quot;, &quot;load_and_clean_data.R&quot;),
+  echo = FALSE # Use echo=FALSE or omit it to avoid code output  
+)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.0      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## Rows: 912 Columns: 103
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr   (3): state, notes, versiondate
+## dbl (100): year, pregnancyratelt15, pregnancyrate1517, pregnancyrate1819, pr...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
+<pre><code>## Rows: 8578 Columns: 1
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;state&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><br><br>
+Our steps for cleaning the data included:
+<br><br>
+For dataset 1
+<br>
+1. Remove overlaps in age column</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Split the columns with age in it to create a column for age.</p></li>
+<li><p>Make age as a factor.</p></li>
+<li><p>Modify age data so that it is more easily interpretable (Added hyphen to separate the the upper and lower limits)
+<br><br>
+For dataset 2</p></li>
+<li><p>Select presidential candidates belonging to the Democrat and Republican party. This is because, historically, candidates from these 2 parties get the majority of the votes from the people.</p></li>
+<li><p>For each year and each state, we compared the percentage of people who voted for the Democrat and the Republican candidate. If the difference in the percentages was greater than or equal to 5%, then the party with more votes is selected as the dominating political party for that state. Otherwise, that state is considered to be divided for that year. This data is saved in stateAffData.csv.</p></li>
+<li><p>To get the overall political affiliation of all the states, we compared the number of years the state was Democrat, Republican or divided over the years, and took the affiliation with the largest number. This data is saved in MaxStateAffData.csv.
+<br><br>
+Combining Datasets
+<br></p></li>
+<li><p>Combine MaxStateAff dataset with dataset 1 to create a new State Affiliation dataset with two columns; one for state abbreviations and the second for political affiliation (Democrat, Republican, or Divided). To do this, we used a join with the shared state column and used this new dataset of three columns, state, average abortion rate, and affiliation.</p></li>
+</ol>
+</div>
+</div>
