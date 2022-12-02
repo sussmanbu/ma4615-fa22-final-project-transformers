@@ -19,7 +19,95 @@ featuredImage: ~
 
 </div>
 
-<p>Ideas for continued Exploratory Data Analysis:
-*This post is to discuss how we are continuing our exploratory data analysis.</p>
-<p>To polish our visualizations and tables:
-*Think about titles, captions, annotations, highlights. Look into ggpubr for tools to improve your figures and look into some of the options for displaying tables using <a href="https://gallery.htmlwidgets.org/" class="uri">https://gallery.htmlwidgets.org/</a>.</p>
+<div id="ideas-for-continued-exploratory-data-analysis" class="section level1">
+<h1>Ideas for Continued Exploratory Data Analysis:</h1>
+<p>*This post is to discuss how we are continuing our exploratory data analysis.</p>
+<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(sf))
+suppressPackageStartupMessages(library(tmap))
+suppressPackageStartupMessages(library(dplyr))</code></pre>
+<pre class="r"><code>us_states &lt;- st_read(&quot;../../../dataset/cb_2019_us_state_20m/cb_2019_us_state_20m.shp&quot;, quiet = TRUE)
+
+not_included &lt;-
+  c(&quot;Guam&quot;, &quot;Commonwealth of the Northern Mariana Islands&quot;,
+    &quot;American Samoa&quot;, &quot;Puerto Rico&quot;, &quot;United States Virgin Islands&quot;)
+
+us_states &lt;- us_states %&gt;%
+  filter(!(NAME %in% not_included))
+
+print(us_states)</code></pre>
+<pre><code>## Simple feature collection with 51 features and 9 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -179.1743 ymin: 18.91747 xmax: 179.7739 ymax: 71.35256
+## Geodetic CRS:  NAD83
+## First 10 features:
+##    STATEFP  STATENS    AFFGEOID GEOID STUSPS         NAME LSAD        ALAND
+## 1       53 01779804 0400000US53    53     WA   Washington   00 172117954267
+## 2       46 01785534 0400000US46    46     SD South Dakota   00 196346195316
+## 3       39 01085497 0400000US39    39     OH         Ohio   00 105823701267
+## 4       01 01779775 0400000US01    01     AL      Alabama   00 131174192284
+## 5       05 00068085 0400000US05    05     AR     Arkansas   00 134776580080
+## 6       35 00897535 0400000US35    35     NM   New Mexico   00 314197253999
+## 7       48 01779801 0400000US48    48     TX        Texas   00 676668210823
+## 8       06 01779778 0400000US06    06     CA   California   00 403660088482
+## 9       21 01779786 0400000US21    21     KY     Kentucky   00 102282218059
+## 10      13 01705317 0400000US13    13     GA      Georgia   00 149484604230
+##         AWATER                       geometry
+## 1  12549727444 MULTIPOLYGON (((-123.2371 4...
+## 2   3383460688 MULTIPOLYGON (((-104.0577 4...
+## 3  10274036690 MULTIPOLYGON (((-82.86334 4...
+## 4   4593183334 MULTIPOLYGON (((-88.46866 3...
+## 5   2956395922 MULTIPOLYGON (((-94.61792 3...
+## 6    727781442 MULTIPOLYGON (((-109.0492 3...
+## 7  18991880422 MULTIPOLYGON (((-106.6234 3...
+## 8  20305454540 MULTIPOLYGON (((-118.594 33...
+## 9   2372611005 MULTIPOLYGON (((-89.54443 3...
+## 10  4420380296 MULTIPOLYGON (((-85.60516 3...</code></pre>
+<pre class="r"><code>epsg_us &lt;- 2163
+us_states &lt;- st_transform(us_states, epsg_us)</code></pre>
+<pre class="r"><code>geog_loc &lt;- read_csv(&quot;../../../dataset/StateGeography.csv&quot;)
+
+states_geog &lt;- inner_join(us_states, geog_loc, by = c(&quot;STUSPS&quot; = &quot;State&quot;, &quot;NAME&quot; = &quot;FullStateName&quot;))
+
+print(states_geog)</code></pre>
+<pre><code>## Simple feature collection with 48 features and 10 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -5770078 ymin: -2112499 xmax: 2523583 ymax: 3913840
+## Projected CRS: NAD27 / US National Atlas Equal Area
+## First 10 features:
+##    STATEFP  STATENS    AFFGEOID GEOID STUSPS         NAME LSAD        ALAND
+## 1       53 01779804 0400000US53    53     WA   Washington   00 172117954267
+## 2       46 01785534 0400000US46    46     SD South Dakota   00 196346195316
+## 3       39 01085497 0400000US39    39     OH         Ohio   00 105823701267
+## 4       01 01779775 0400000US01    01     AL      Alabama   00 131174192284
+## 5       05 00068085 0400000US05    05     AR     Arkansas   00 134776580080
+## 6       35 00897535 0400000US35    35     NM   New Mexico   00 314197253999
+## 7       48 01779801 0400000US48    48     TX        Texas   00 676668210823
+## 8       06 01779778 0400000US06    06     CA   California   00 403660088482
+## 9       21 01779786 0400000US21    21     KY     Kentucky   00 102282218059
+## 10      13 01705317 0400000US13    13     GA      Georgia   00 149484604230
+##         AWATER GeographicRegion                       geometry
+## 1  12549727444  Pacific Coastal MULTIPOLYGON (((-1681560 65...
+## 2   3383460688          Midwest MULTIPOLYGON (((-319747 770...
+## 3  10274036690          Midwest MULTIPOLYGON (((1414275 -21...
+## 4   4593183334        Southeast MULTIPOLYGON (((1093779 -13...
+## 5   2956395922        Southeast MULTIPOLYGON (((483066 -927...
+## 6    727781442        Southwest MULTIPOLYGON (((-860478.2 -...
+## 7  18991880422        Southwest MULTIPOLYGON (((-629594.3 -...
+## 8  20305454540  Pacific Coastal MULTIPOLYGON (((-1719948 -1...
+## 9   2372611005        Southeast MULTIPOLYGON (((935265.2 -8...
+## 10  4420380296        Southeast MULTIPOLYGON (((1311335 -99...</code></pre>
+<pre class="r"><code>tm_shape(states_geog) + tm_polygons() + 
+  tm_text(&quot;STUSPS&quot;) +
+  tm_layout(frame = FALSE, scale = 5)</code></pre>
+<p><img src="/post/2022-12-2-BlogPost7/BlogPost7_files/figure-html/plot%20map-1.png" width="7680" /></p>
+</div>
+<div id="polishing-our-visualizations-and-tables" class="section level1">
+<h1>Polishing our Visualizations and Tables:</h1>
+<ul>
+<li>Because presentation is important when communicating science, we know that it is crucial to spend time adding titles, captions, and other tools make our graphs as clear and user-friendly as possible.</li>
+</ul>
+<p>*Think about titles, captions, annotations, highlights. Look into ggpubr for tools to improve your figures and look into some of the options for displaying tables using <a href="https://gallery.htmlwidgets.org/" class="uri">https://gallery.htmlwidgets.org/</a>.</p>
+</div>

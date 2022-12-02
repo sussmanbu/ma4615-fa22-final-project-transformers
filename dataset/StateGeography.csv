@@ -1,0 +1,51 @@
+State,FullStateName,GeographicRegion
+AK,Alaska,Pacific Coastal
+HI,Hawaii,Pacific Coastal
+WA,Washington,Pacific Coastal
+ID,Idaho,Rocky Mountains
+OR,Oregon,Pacific Coastal
+CA,California,Pacific Coastal
+MT,Montana,Rocky Mountains
+WY,Wyoming,Rocky Mountains
+NV,Nevada,Rocky Mountains
+UT,Utah,Rocky Mountains
+AZ,Arizona,Southwest
+ND,North Dakota,Midwest
+SD,South Dakota,Midwest
+CO,Colorado,Rocky Mountains
+NM,New Mexico,Southwest
+OK,Oklahoma,Southwest
+TX,Texas,Southwest
+MN,Minnesota,Divided,Midwest
+IA,Iowa,Midwest
+NE,Nebraska,Midwest
+KS,Kansas,Midwest
+LA,Loiusiana,Southeast
+WI,Wisconsin,Midwest
+IL,Illinois,Midwest
+MO,Missouri,Midwest
+AR,Arkansas,Southeast
+MS,Mississippi,Southeast
+MI,Michigan,Midwest
+IN,Indiana,Midwest
+KY,Kentucky,Southeast
+TN,Tennessee,Southeast
+AL,Alabama,Southeast
+FL,Florida,Southeast
+OH,Ohio,Midwest
+WV,West Virginia,Southeast
+NC,North Carolina,Southeast
+GA,Georgia,Southeast
+PA,Pennsylvania,Mid-Atlantic
+VA,Virginia,Divided,Southeast
+SC,South Carolina,Southeast
+VT,Vermont,New England
+NY,New York,Mid-Atlantic
+NJ,New Jersey,Mid-Atlantic
+MD,Maryland,Mid-Atlantic
+ME,Maine,New England
+NH,New Hampshire,New England
+MA,Massachusets,New England
+CT,Connecticut,New England
+DE,Delaware,Mid-Atlantic
+RI,Rhode Island,New England
