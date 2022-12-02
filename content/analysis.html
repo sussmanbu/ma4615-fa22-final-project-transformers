@@ -13,101 +13,110 @@ draft: false
 </div>
 
 <p>This comes from the file <code>content/analysis.Rmd</code>.</p>
-<div id="data-analysis" class="section level2">
-<h2>Data Analysis</h2>
+<div id="data-analysis" class="section level1">
+<h1>Data Analysis</h1>
 <ul>
 <li>Because Roe v. Wade is a highly politicized issue that has gained media attention that has varied over the years, we wanted to analyze pregnancy and abortion rates in the context of political affiliation and chronological year. In addition to political affiliation and changes over time, we are also interested in how these changing factors influence pregnancy and abortion rates by year.</li>
 <li>We are interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the mother within the context of political affiliation.</li>
 <li>Our main questions that we hope to answer with our analysis and data modeling are: How does state’s party affiliation affect abortion rates, births, and miscarriages? How have the age of pregnant mothers and abortion rates changed over time?</li>
 </ul>
-</div>
-<div id="graph-1-average-abortion-rate-by-state-affiliation" class="section level2">
-<h2>Graph 1: Average Abortion Rate By State Affiliation</h2>
+<div id="initial-analysis" class="section level2">
+<h2>Initial Analysis</h2>
+<div id="graph-1-average-abortion-rate-by-state-affiliation" class="section level3">
+<h3>Graph 1: Average Abortion Rate By State Affiliation</h3>
+<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+load(here::here(&quot;dataset&quot;, &quot;abortionDataClean.RData&quot;))
+load(here::here(&quot;dataset&quot;, &quot;MaxStateAff.RData&quot;))
+
+abortionDataClean %&gt;% 
+  group_by(state) %&gt;% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %&gt;% 
+  inner_join(MaxStateAff) %&gt;% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = &quot;bar&quot;) + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = &quot;cividis&quot;) + 
+  labs(title = &#39;Average Abortion Rate by State Affiliation&#39;, x = &#39;State\n&#39;, y = &#39;\nAverage Abortion Rate&#39;, fill = &quot;Affliation&quot;) + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = &#39;right&#39;, legend.text = element_text(size = 8))</code></pre>
+<pre><code>## Joining, by = &quot;state&quot;
+## No summary function supplied, defaulting to `mean_se()`</code></pre>
+<p><img src="/analysis_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>echo = FALSE</code></pre>
 <ul>
 <li><p>We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).</p></li>
 <li><p>From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated.</p></li>
 </ul>
 </div>
-<div id="graph-2-average-pregnancy-rate-by-age-group" class="section level2">
-<h2>Graph 2: Average Pregnancy Rate by Age group</h2>
+<div id="graph-2-average-pregnancy-rate-by-age-group" class="section level3">
+<h3>Graph 2: Average Pregnancy Rate by Age group</h3>
+<pre class="r"><code>abortionDataClean %&gt;% 
+  group_by(year, Age) %&gt;% 
+  summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %&gt;% 
+  ungroup() %&gt;% 
+  ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
+  geom_line() + 
+  labs(title = &#39;Average Pregnancy Rate by Age Group from 1973 to 2017&#39;, x = &#39;Year&#39;, y = &#39;Average Pregnancy Rate&#39;, color = &quot;Age Group&quot;) + 
+  ggthemes::theme_economist() +
+  theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) +
+  scale_color_viridis_d(option = &quot;turbo&quot;)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="/analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>echo = FALSE</code></pre>
 <p>Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years.</p>
 <p>From our graph, we can see each age group as its own line that we can look at individually or all together.</p>
 </div>
-<div id="graph-3-more-precise-look-at-average-pregnancy-rate-by-state-affiliation" class="section level2">
-<h2>Graph 3: More Precise Look at Average Pregnancy Rate By State Affiliation</h2>
 </div>
 <div id="modeling" class="section level2">
 <h2>Modeling</h2>
-<ul>
-<li>Breadth of the DA
-<ul>
-<li>Make sure that you ask enough initial questions to explore the different variables in your data.</li>
-<li>i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?</li>
-</ul></li>
-<li>Depth of the DA
-<ul>
-<li>When you answer one question, usually more questions arise as well.</li>
-<li>The depth of the DA is about coming up with and exploring the answers to these questions, often iterating the process a few times.</li>
-</ul></li>
-<li>Modeling and Inference
-<ul>
-<li>You should also include some kind of formal statistical model and/or inference. This could be a linear regression, logistic regression, hypothesis testing etc.</li>
-<li>Explain the techniques you used for validating your results.</li>
-<li>Describe the results of your modelling and make sure to give a sense of the uncertainty in your estimates and conclusions.</li>
-</ul></li>
-<li>Explain the flaws and limitations of your analysis
-<ul>
-<li>Are there some assumptions that you needed to make that might not hold? Is there other data that would help to answer your questions? …</li>
-</ul></li>
-<li>Clarity Figures
-<ul>
-<li>Are your figures/tables/results easy to read, informative, without problems like overplotting, hard-to-read labels, etc?</li>
-<li>Each figure should provide a key insight. Too many figures or other data summaries can detract from this.</li>
-</ul></li>
-<li>Clarity of Explanations
-<ul>
-<li>Do you introduce why you are doing each analysis?</li>
-<li>How well do you explain each figure/result?</li>
-<li>Do you provide interpretations that suggest further analysis or explanations for observed phenomenon?</li>
-</ul></li>
-<li>Organization and cleanliness.
-<ul>
-<li>Make sure to remove excessive warnings, use clean easy-to-read code, organize with sections or multiple pages, use bullets, etc.</li>
-</ul></li>
-</ul>
-<p>We describe here our detailed data analysis.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.0      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>print(getwd())</code></pre>
-<pre><code>## [1] &quot;/Users/allisonaaron/Desktop/Data Science in R/ma4615-fa22-final-project-transformers/content&quot;</code></pre>
-<pre class="r"><code>data &lt;- read_csv(here::here(&quot;dataset/loan_refusal_clean.csv&quot;))</code></pre>
-<pre><code>## Rows: 20 Columns: 5
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (1): bank
-## dbl (4): min, white, himin, hiwhite
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>load(here::here(&quot;dataset/loan_refusal.RData&quot;))
-print(ls())</code></pre>
-<pre><code>## [1] &quot;data&quot;            &quot;loan_data_clean&quot;</code></pre>
+<div id="graph-3-average-pregnancy-rate-of-teenagers-over-the-last-50-years" class="section level3">
+<h3>Graph 3: Average Pregnancy Rate of Teenagers over the last 50 years</h3>
+<pre class="r"><code>library(modelr)
+
+teenPregData &lt;- 
+  abortionDataClean %&gt;% 
+  group_by(year, Age) %&gt;% 
+  summarise(AveragePregRate = mean(`PregnancyRate`, na.rm = TRUE)) %&gt;% 
+  filter(Age %in% c(&quot;&lt;15&quot;, &quot;15-17&quot;, &quot;18-19&quot;)) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>teenPregMod &lt;- 
+  lm(AveragePregRate ~ year, data = teenPregData)
+
+beta &lt;- 
+  coef(teenPregMod)
+
+teenPregData &lt;- 
+  teenPregData %&gt;% 
+  add_predictions(teenPregMod)
+
+teenPregData %&gt;% 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = AveragePregRate, color = as.factor(Age))) + 
+  geom_line(aes(y = pred), data = teenPregData, color = &quot;red&quot;, size = 1) + 
+  labs(title = &#39;Average Pregnancy Rate of Teenagers from 1973 to 2017&#39;, x = &#39;\nYear&#39;, y = &#39;Average Pregnancy Rate\n&#39;, color = &quot;Age Group&quot;) + 
+  ggthemes::theme_economist() +
+  theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + 
+  scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
+<p><img src="/analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>echo = FALSE</code></pre>
+<p>Stuff about this graph</p>
 </div>
-<div id="note-on-attribution" class="section level2">
-<h2>Note on Attribution</h2>
-<p>If you are directly quoting from a source, please make that clear. You can show quotes using <code>&gt;</code> like this</p>
-<pre><code>&gt; To be or not to be.</code></pre>
-<blockquote>
-<p>To be or not to be.</p>
-</blockquote>
-<p>Also, make sure to provide a link or citation to where you are quoting from.</p>
-<hr />
-<p><strong>NOTE</strong>: Your Data Analysis can be broken up into multiple pages if that helps with your organization.</p>
+<div id="graph-4-residuals-for-teen-pregnancy-modelchange-the-heading-for-this-one" class="section level3">
+<h3>Graph 4: Residuals for Teen Pregnancy Model(Change the heading for this one)</h3>
+<pre class="r"><code>teenPregData %&gt;% 
+  add_residuals(teenPregMod) %&gt;% 
+  ggplot(aes(year, resid)) + 
+  geom_ref_line(h=0) + 
+  geom_point(aes(color = as.factor(Age))) + 
+  labs(title = &#39;Residuals for Teen Pregnancy Model&#39;, x = &#39;\nYear&#39;, y = &#39;Residual\n&#39;, color = &quot;Age Group&quot;) + 
+  ggthemes::theme_economist() +
+  theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + 
+  scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
+<p><img src="/analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>echo = FALSE</code></pre>
+<p>Stuff about this graph</p>
+</div>
+</div>
 </div>
