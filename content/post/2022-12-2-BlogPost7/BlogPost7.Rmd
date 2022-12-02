@@ -1,7 +1,7 @@
 ---
 title: Blog Post 7
 author: Transformers
-date: '2022-12-2'
+date: '2022-12-02'
 slug: []
 categories: []
 tags: []
@@ -9,7 +9,7 @@ description: ~
 toc: yes
 authors: []
 series: []
-lastmod: '2022-12-2T07:38:30-04:00'
+lastmod: '2022-12-02T07:38:30-04:00'
 featuredVideo: ~
 featuredImage: ~
 ---
