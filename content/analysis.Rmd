@@ -3,7 +3,7 @@ title: Analysis
 description:
 toc: true
 featuredVideo:
-featuredImage: https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg
+featuredImage: images/Woman_analysis.jpeg
 draft: false
 ---
 
@@ -17,9 +17,9 @@ This comes from the file `content/analysis.Rmd`.
 
 ## Graph 1: Average Abortion Rate By State Affiliation
 
-We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).
+* We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).
 
-From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated.
+* From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated.
 
 ## Graph 2: Average Pregnancy Rate by Age group 
 
