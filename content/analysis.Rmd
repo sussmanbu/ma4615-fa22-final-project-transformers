@@ -13,6 +13,25 @@ This comes from the file `content/analysis.Rmd`.
 
 * Because Roe v. Wade is a highly politicized issue that has gained media attention that has varied over the years, we wanted to analyze pregnancy and abortion rates in the context of political affiliation and chronological year. In addition to political affiliation and changes over time, we are also interested in how these changing factors influence pregnancy and abortion rates by year. 
 * We are interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the mother within the context of political affiliation. 
+* Our main questions that we hope to answer with our analysis and data modeling are: How does state's party affiliation affect abortion rates, births, and miscarriages? How have the age of pregnant mothers and abortion rates changed over time?
+
+## Graph 1: Average Abortion Rate By State Affiliation
+
+We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).
+
+From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated.
+
+## Graph 2: Average Pregnancy Rate by Age group 
+
+Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years. 
+
+From our graph, we can see each age group as its own line that we can look at individually or all together. 
+
+## Graph 3: More Precise Look at Average Pregnancy Rate By State Affiliation
+
+## Modeling
+
+
 * Breadth of the DA
   * Make sure that you ask enough initial questions to explore the different variables in your data.
   * i.e. Do you explore more than just one or two variables? Do you explore a few different relationships or many?
