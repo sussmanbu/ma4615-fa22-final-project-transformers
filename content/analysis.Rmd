@@ -19,7 +19,7 @@ This comes from the file `content/analysis.Rmd`.
 
 ### Graph 1: Average Abortion Rate By State Affiliation
 
-```{r}
+```{r, echo = FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 load(here::here("dataset", "abortionDataClean.RData"))
 load(here::here("dataset", "MaxStateAff.RData"))
@@ -35,8 +35,6 @@ abortionDataClean %>%
   labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
   ggthemes::theme_economist() +
   theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
-
-echo = FALSE
 ```
 
 * We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).
@@ -45,7 +43,7 @@ echo = FALSE
 
 ### Graph 2: Average Pregnancy Rate by Age group 
 
-```{r}
+```{r, echo = FALSE}
 abortionDataClean %>% 
   group_by(year, Age) %>% 
   summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
@@ -56,8 +54,6 @@ abortionDataClean %>%
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) +
   scale_color_viridis_d(option = "turbo")
-
-echo = FALSE
 ```
 
 Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years. 
@@ -68,7 +64,7 @@ From our graph, we can see each age group as its own line that we can look at in
 
 ### Graph 3: Average Pregnancy Rate of Teenagers over the last 50 years
 
-```{r}
+```{r, echo = FALSE}
 library(modelr)
 
 teenPregData <- 
@@ -95,15 +91,13 @@ teenPregData %>%
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
   scale_color_viridis_d(option = "plasma")
-
-echo = FALSE
 ```
 
 Stuff about this graph
 
 ### Graph 4: Residuals for Teen Pregnancy Model(Change the heading for this one)
 
-```{r}
+```{r, echo = FALSE}
 teenPregData %>% 
   add_residuals(teenPregMod) %>% 
   ggplot(aes(year, resid)) + 
@@ -113,8 +107,6 @@ teenPregData %>%
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
   scale_color_viridis_d(option = "plasma")
-
-echo = FALSE
 ```
 
 Stuff about this graph

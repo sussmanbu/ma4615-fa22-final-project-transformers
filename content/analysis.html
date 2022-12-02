@@ -24,25 +24,9 @@ draft: false
 <h2>Initial Analysis</h2>
 <div id="graph-1-average-abortion-rate-by-state-affiliation" class="section level3">
 <h3>Graph 1: Average Abortion Rate By State Affiliation</h3>
-<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
-load(here::here(&quot;dataset&quot;, &quot;abortionDataClean.RData&quot;))
-load(here::here(&quot;dataset&quot;, &quot;MaxStateAff.RData&quot;))
-
-abortionDataClean %&gt;% 
-  group_by(state) %&gt;% 
-  summarise(AverageAbortionRate = mean(AbortionRate, na.rm=TRUE)) %&gt;% 
-  inner_join(MaxStateAff) %&gt;% 
-  ggplot() + 
-  stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = &quot;bar&quot;) + 
-  coord_flip() + 
-  scale_fill_viridis_d(option = &quot;cividis&quot;) + 
-  labs(title = &#39;Average Abortion Rate by State Affiliation&#39;, x = &#39;State\n&#39;, y = &#39;\nAverage Abortion Rate&#39;, fill = &quot;Affliation&quot;) + 
-  ggthemes::theme_economist() +
-  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = &#39;right&#39;, legend.text = element_text(size = 8))</code></pre>
 <pre><code>## Joining, by = &quot;state&quot;
 ## No summary function supplied, defaulting to `mean_se()`</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<pre class="r"><code>echo = FALSE</code></pre>
 <ul>
 <li><p>We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).</p></li>
 <li><p>From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated.</p></li>
@@ -50,20 +34,9 @@ abortionDataClean %&gt;%
 </div>
 <div id="graph-2-average-pregnancy-rate-by-age-group" class="section level3">
 <h3>Graph 2: Average Pregnancy Rate by Age group</h3>
-<pre class="r"><code>abortionDataClean %&gt;% 
-  group_by(year, Age) %&gt;% 
-  summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %&gt;% 
-  ungroup() %&gt;% 
-  ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
-  geom_line() + 
-  labs(title = &#39;Average Pregnancy Rate by Age Group from 1973 to 2017&#39;, x = &#39;Year&#39;, y = &#39;Average Pregnancy Rate&#39;, color = &quot;Age Group&quot;) + 
-  ggthemes::theme_economist() +
-  theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) +
-  scale_color_viridis_d(option = &quot;turbo&quot;)</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<pre class="r"><code>echo = FALSE</code></pre>
 <p>Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years.</p>
 <p>From our graph, we can see each age group as its own line that we can look at individually or all together.</p>
 </div>
@@ -72,50 +45,14 @@ abortionDataClean %&gt;%
 <h2>Modeling</h2>
 <div id="graph-3-average-pregnancy-rate-of-teenagers-over-the-last-50-years" class="section level3">
 <h3>Graph 3: Average Pregnancy Rate of Teenagers over the last 50 years</h3>
-<pre class="r"><code>library(modelr)
-
-teenPregData &lt;- 
-  abortionDataClean %&gt;% 
-  group_by(year, Age) %&gt;% 
-  summarise(AveragePregRate = mean(`PregnancyRate`, na.rm = TRUE)) %&gt;% 
-  filter(Age %in% c(&quot;&lt;15&quot;, &quot;15-17&quot;, &quot;18-19&quot;)) </code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<pre class="r"><code>teenPregMod &lt;- 
-  lm(AveragePregRate ~ year, data = teenPregData)
-
-beta &lt;- 
-  coef(teenPregMod)
-
-teenPregData &lt;- 
-  teenPregData %&gt;% 
-  add_predictions(teenPregMod)
-
-teenPregData %&gt;% 
-  ggplot(aes(x = year)) + 
-  geom_point(aes(y = AveragePregRate, color = as.factor(Age))) + 
-  geom_line(aes(y = pred), data = teenPregData, color = &quot;red&quot;, size = 1) + 
-  labs(title = &#39;Average Pregnancy Rate of Teenagers from 1973 to 2017&#39;, x = &#39;\nYear&#39;, y = &#39;Average Pregnancy Rate\n&#39;, color = &quot;Age Group&quot;) + 
-  ggthemes::theme_economist() +
-  theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + 
-  scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r"><code>echo = FALSE</code></pre>
 <p>Stuff about this graph</p>
 </div>
 <div id="graph-4-residuals-for-teen-pregnancy-modelchange-the-heading-for-this-one" class="section level3">
 <h3>Graph 4: Residuals for Teen Pregnancy Model(Change the heading for this one)</h3>
-<pre class="r"><code>teenPregData %&gt;% 
-  add_residuals(teenPregMod) %&gt;% 
-  ggplot(aes(year, resid)) + 
-  geom_ref_line(h=0) + 
-  geom_point(aes(color = as.factor(Age))) + 
-  labs(title = &#39;Residuals for Teen Pregnancy Model&#39;, x = &#39;\nYear&#39;, y = &#39;Residual\n&#39;, color = &quot;Age Group&quot;) + 
-  ggthemes::theme_economist() +
-  theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + 
-  scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<pre class="r"><code>echo = FALSE</code></pre>
 <p>Stuff about this graph</p>
 </div>
 </div>
