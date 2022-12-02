@@ -36,7 +36,7 @@ not_included <-
 us_states <- us_states %>%
   filter(!(NAME %in% not_included))
 
-print(us_states)
+# print(us_states)
 ```
 
 ```{r convert to EPSG 2163}
@@ -45,21 +45,100 @@ epsg_us <- 2163
 us_states <- st_transform(us_states, epsg_us)
 ```
 
-```{r join geographic location with states data, warning=FALSE, message=FALSE}
+```{r join US states, geographic location and state affiliation datasets, warning=FALSE, message=FALSE}
 
 geog_loc <- read_csv("../../../dataset/StateGeography.csv")
 
+load("../../../dataset/MaxStateAff.RData")
+
 states_geog <- inner_join(us_states, geog_loc, by = c("STUSPS" = "State", "NAME" = "FullStateName"))
 
-print(states_geog)
+states_geog_aff <- inner_join(states_geog, MaxStateAff, by = c("STUSPS" = "state"))
+
+# print(states_geog_aff)
 ```
 
-```{r plot map, fig.width=80, fig.height=80}
+```{r calculate overall abortion rate for each state}
 
-tm_shape(states_geog) + tm_polygons() + 
-  tm_text("STUSPS") +
-  tm_layout(frame = FALSE, scale = 5)
+load("../../../dataset/abortionDataClean.RData")
+
+state_abortion_rate <- abortionDataClean %>% 
+  replace(is.na(.), 0) %>% 
+  group_by(state) %>% 
+  select(state, Abortions, Population) %>% 
+  mutate(state, total_population = sum(Population), total_abortions = sum(Abortions), overall_abortion_rate = total_abortions/total_population) %>% 
+  select(state, total_abortions, total_population, overall_abortion_rate)
+
+state_abortion_rate <- state_abortion_rate[!duplicated(state_abortion_rate$state), ]
+
+# print(state_abortion_rate)
 ```
+
+```{r join overall abortion rate dataset with state, geographic location and political affiliation dataset, warning=FALSE, message=FALSE}
+
+state_data <- inner_join(states_geog_aff, state_abortion_rate, by = c("STUSPS" = "state")) %>%
+  select(NAME, STUSPS, GeographicRegion, Affiliation, overall_abortion_rate, geometry)
+
+# print(state_data)
+
+```
+
+
+```{r plot map by state, fig.width=80, fig.height=80, warning=FALSE, message=FALSE}
+
+tmap_mode("view")
+colours <- c("#00AEF3", "#808080", "#E81B23")
+
+tm_shape(state_data) + tm_polygons(col = "overall_abortion_rate", title = "Overall Abortion Rate by State") +
+  tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
+  
+tm_shape(state_data) + tm_polygons(col = "Affiliation", title = "Political Affiliation by State", palette = colours) +
+  tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
+```
+
+```{r load region data, warning=FALSE, message=FALSE}
+
+us_regions <- st_read("../../../dataset/cb_2018_us_division_20m/cb_2018_us_division_20m.shp", quiet = TRUE) %>% 
+  st_transform(epsg_us)
+
+```
+
+
+```{r get overall abortion data by region, warning=FALSE, message=FALSE}
+
+region_abortion_rate <- inner_join(states_geog_aff, abortionDataClean, by = c("STUSPS" = "state")) %>% 
+  replace(is.na(.), 0) %>% 
+  group_by(GeographicRegion) %>% 
+  select(GeographicRegion, Abortions, Population) %>% 
+  mutate(GeographicRegion, total_population = sum(Population), total_abortions = sum(Abortions), overall_abortion_rate = total_abortions/total_population) %>% 
+  select(GeographicRegion, total_abortions, total_population, overall_abortion_rate) %>% 
+  st_drop_geometry()
+
+region_abortion_rate <- region_abortion_rate[!duplicated(region_abortion_rate$GeographicRegion), ]
+
+
+region_abortion_rate <- region_abortion_rate[!duplicated(region_abortion_rate$GeographicRegion), ]
+
+region_abortion_rate <- st_set_geometry(region_abortion_rate, us_regions$geometry)
+
+# print(region_abortion_rate)
+
+```
+
+
+```{r plot map by geographic location, fig.width=80, fig.height=80, warning=FALSE, message=FALSE}
+
+region_data <- region_abortion_rate %>% 
+   select(GeographicRegion, overall_abortion_rate, geometry)
+
+tmap_mode("view")
+
+tm_shape(region_data) + tm_polygons(col = "overall_abortion_rate", title = "Overall Abortion Rate by Region") +
+  tm_shape(state_data) + tm_borders() +
+  tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
+```
+
+
 
 # Polishing our Visualizations and Tables: 
 * Because presentation is important when communicating science, we know that it is crucial to spend time adding titles, captions, and other tools make our graphs as clear and user-friendly as possible. 

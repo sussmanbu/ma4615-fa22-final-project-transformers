@@ -1,51 +1,51 @@
 State,FullStateName,GeographicRegion
-AK,Alaska,Pacific Coastal
-HI,Hawaii,Pacific Coastal
-WA,Washington,Pacific Coastal
-ID,Idaho,Rocky Mountains
-OR,Oregon,Pacific Coastal
-CA,California,Pacific Coastal
-MT,Montana,Rocky Mountains
-WY,Wyoming,Rocky Mountains
-NV,Nevada,Rocky Mountains
-UT,Utah,Rocky Mountains
-AZ,Arizona,Southwest
-ND,North Dakota,Midwest
-SD,South Dakota,Midwest
-CO,Colorado,Rocky Mountains
-NM,New Mexico,Southwest
-OK,Oklahoma,Southwest
-TX,Texas,Southwest
-MN,Minnesota,Divided,Midwest
-IA,Iowa,Midwest
-NE,Nebraska,Midwest
-KS,Kansas,Midwest
-LA,Loiusiana,Southeast
-WI,Wisconsin,Midwest
-IL,Illinois,Midwest
-MO,Missouri,Midwest
-AR,Arkansas,Southeast
-MS,Mississippi,Southeast
-MI,Michigan,Midwest
-IN,Indiana,Midwest
-KY,Kentucky,Southeast
-TN,Tennessee,Southeast
-AL,Alabama,Southeast
-FL,Florida,Southeast
-OH,Ohio,Midwest
-WV,West Virginia,Southeast
-NC,North Carolina,Southeast
-GA,Georgia,Southeast
-PA,Pennsylvania,Mid-Atlantic
-VA,Virginia,Divided,Southeast
-SC,South Carolina,Southeast
+AK,Alaska,Pacific
+HI,Hawaii,Pacific
+WA,Washington,Pacific
+ID,Idaho,Mountain
+OR,Oregon,Pacific
+CA,California,Pacific
+MT,Montana,Mountain
+WY,Wyoming,Mountain
+NV,Nevada,Mountain
+UT,Utah,Mountain
+AZ,Arizona,Mountain
+ND,North Dakota,West North Central
+SD,South Dakota,West North Central
+CO,Colorado,Mountain
+NM,New Mexico,Mountain
+OK,Oklahoma,West South Central
+TX,Texas,West South Central
+MN,Minnesota,West North Central
+IA,Iowa,West North Central
+NE,Nebraska,West North Central
+KS,Kansas,West North Central
+LA,Loiusiana,West South Central
+WI,Wisconsin,East North Central
+IL,Illinois,East North Central
+MO,Missouri,West North Central
+AR,Arkansas,West South Central
+MS,Mississippi,East South Central
+MI,Michigan,East North Central
+IN,Indiana,East North Central
+KY,Kentucky,East South Central
+TN,Tennessee,East South Central
+AL,Alabama,East South Central
+FL,Florida,South Atlantic
+OH,Ohio,East North Central
+WV,West Virginia,South Atlantic
+NC,North Carolina,South Atlantic
+GA,Georgia,South Atlantic
+PA,Pennsylvania,Middle Atlantic
+VA,Virginia,South Atlantic
+SC,South Carolina,South Atlantic
 VT,Vermont,New England
-NY,New York,Mid-Atlantic
-NJ,New Jersey,Mid-Atlantic
-MD,Maryland,Mid-Atlantic
+NY,New York,Middle Atlantic
+NJ,New Jersey,Middle Atlantic
+MD,Maryland,South Atlantic
 ME,Maine,New England
 NH,New Hampshire,New England
 MA,Massachusets,New England
 CT,Connecticut,New England
-DE,Delaware,Mid-Atlantic
+DE,Delaware,South Atlantic
 RI,Rhode Island,New England
