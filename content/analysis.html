@@ -24,8 +24,6 @@ draft: false
 <h2>Initial Analysis</h2>
 <div id="graph-1-average-abortion-rate-by-state-affiliation" class="section level3">
 <h3>Graph 1: Average Abortion Rate By State Affiliation</h3>
-<pre><code>## Joining, by = &quot;state&quot;
-## No summary function supplied, defaulting to `mean_se()`</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <ul>
 <li><p>We began our analysis by graphing the average abortion rate of each state as a horizontal bar graph with each bar color coded by state affiliation(Democrats, Republicans, or Divided).</p></li>
@@ -34,8 +32,6 @@ draft: false
 </div>
 <div id="graph-2-average-pregnancy-rate-by-age-group" class="section level3">
 <h3>Graph 2: Average Pregnancy Rate by Age group</h3>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years.</p>
 <p>From our graph, we can see each age group as its own line that we can look at individually or all together.</p>
@@ -45,15 +41,13 @@ draft: false
 <h2>Modeling</h2>
 <div id="graph-3-average-pregnancy-rate-of-teenagers-over-the-last-50-years" class="section level3">
 <h3>Graph 3: Average Pregnancy Rate of Teenagers over the last 50 years</h3>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Stuff about this graph</p>
+<p>We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. However, paired with our other visualizations, this linear model provides foundational information regarding the potential relationships between teen pregnancies, abortion, and abortion laws. Importantly, the trend line helps us to visualize what we might see in years to come.</p>
 </div>
-<div id="graph-4-residuals-for-teen-pregnancy-modelchange-the-heading-for-this-one" class="section level3">
-<h3>Graph 4: Residuals for Teen Pregnancy Model(Change the heading for this one)</h3>
+<div id="graph-4-residuals-for-teen-pregnancy-model" class="section level3">
+<h3>Graph 4: Residuals for Teen Pregnancy Model</h3>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Stuff about this graph</p>
+<p>This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates.</p>
 </div>
 </div>
 </div>
