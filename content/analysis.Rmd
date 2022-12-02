@@ -41,13 +41,30 @@ abortionDataClean %>%
 
 * From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated.
 
-### Graph 2: Average Pregnancy Rate by Age group 
+### Graph 2: Average Pregnancy Rate By State Affiliation
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(state) %>% 
+  summarise(AveragePregnancyRate = mean(PregnancyRate, na.rm=TRUE)) %>% 
+  inner_join(MaxStateAff) %>% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AveragePregnancyRate), y = AveragePregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = "cividis") + 
+  labs(title = 'Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
+```
+
+Stuff about Average pregnancy Rate by State Affiliation
+
+### Graph 3: Average Pregnancy Rate by Age group 
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
   group_by(year, Age) %>% 
   summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
-  ungroup() %>% 
   ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
   geom_line() + 
   labs(title = 'Average Pregnancy Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group") + 
@@ -60,9 +77,59 @@ Next, we wanted to see the average pregnancy rate for different age groups over 
 
 From our graph, we can see each age group as its own line that we can look at individually or all together. 
 
+### Graph 4: Average Abortion Rate by Age group 
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(year, Age) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
+  geom_line() + 
+  labs(title = 'Average Abortion Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Abortion Rate', color = "Age Group") + 
+  ggthemes::theme_economist() +
+  theme(legend.position = 'right', legend.text = element_text(size = 8)) +
+  scale_color_viridis_d(option = "turbo")
+```
+
+Stuff about Average Abortion Rate by Age group
+
+### Graph 5: Average Pregnancy Rate by Age group for Different Political Affiliations
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(state, year, Age) %>% 
+  summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  inner_join(MaxStateAff) %>% 
+  filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
+  ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
+  geom_line() + 
+  facet_wrap(~ as.factor(Affiliation)) +
+  labs(title = 'Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
+```
+
+Stuff about Average Pregnancy Rate by Age Group for Differnet Political Affiliations
+
+### Graph 6: Average Abortion Rate by Age group for Different Political Affiliations
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(state, year, Age) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  inner_join(MaxStateAff) %>% 
+  filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
+  ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
+  geom_line() + 
+  facet_wrap(~ as.factor(Affiliation)) +
+  labs(title = 'Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
+```
+
+Stuff about Average Abortion Rate by Age Group for Different Political Affiliations
+
 ## Modeling
 
-### Graph 3: Average Pregnancy Rate of Teenagers over the last 50 years
+### Graph 7: Average Pregnancy Rate of Teenagers over the last 50 years
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 library(modelr)
@@ -95,7 +162,7 @@ teenPregData %>%
 
 We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. However, paired with our other visualizations, this linear model provides foundational information regarding the potential relationships between teen pregnancies, abortion, and abortion laws. Importantly, the trend line helps us to visualize what we might see in years to come.
 
-### Graph 4: Residuals for Teen Pregnancy Model
+### Graph 8: Residuals for Teen Pregnancy Model
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 teenPregData %>% 
