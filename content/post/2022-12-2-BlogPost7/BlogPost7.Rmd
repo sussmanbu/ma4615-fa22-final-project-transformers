@@ -14,99 +14,165 @@ featuredVideo: ~
 featuredImage: ~
 ---
 
-# Ideas for Continued Exploratory Data Analysis:
-*This post is to discuss how we are continuing our exploratory data analysis.
-
-
-```{r setup, warning=FALSE, message=FALSE}
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
 suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(modelr))
 suppressPackageStartupMessages(library(sf))
 suppressPackageStartupMessages(library(tmap))
 suppressPackageStartupMessages(library(dplyr))
+load(here::here("dataset", "abortionDataClean.RData"))
+load(here::here("dataset", "MaxStateAff.RData"))
+us_states <- 
+  st_read(here::here("dataset","cb_2019_us_state_20m/cb_2019_us_state_20m.shp"))
+geog_loc <- 
+  read_csv(here::here("dataset","StateGeography.csv"))
+us_regions <- 
+  st_read(here::here("dataset","cb_2018_us_division_20m/cb_2018_us_division_20m.shp"))
 ```
 
-```{r read shape file}
+# Ideas for Continued Exploratory Data Analysis:
 
-us_states <- st_read("../../../dataset/cb_2019_us_state_20m/cb_2019_us_state_20m.shp", quiet = TRUE)
+## Average Pregnancy Rate By State Affiliation
 
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(state) %>% 
+  summarise(AveragePregnancyRate = mean(PregnancyRate, na.rm=TRUE)) %>% 
+  inner_join(MaxStateAff) %>% 
+  ggplot() + 
+  stat_summary(aes(x = reorder(state, AveragePregnancyRate), y = AveragePregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
+  coord_flip() + 
+  scale_fill_viridis_d(option = "cividis") + 
+  labs(title = 'Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
+  ggthemes::theme_economist() +
+  theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
+```
+
+Stuff about Average pregnancy Rate by State Affiliation
+
+## Average Abortion Rate by Age group 
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(year, Age) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
+  geom_line() + 
+  labs(title = 'Average Abortion Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Abortion Rate', color = "Age Group") + 
+  ggthemes::theme_economist() +
+  theme(legend.position = 'right', legend.text = element_text(size = 8)) +
+  scale_color_viridis_d(option = "turbo")
+```
+
+Stuff about Average Abortion Rate by Age group
+
+## Average Pregnancy Rate by Age group for Different Political Affiliations
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(state, year, Age) %>% 
+  summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  inner_join(MaxStateAff) %>% 
+  filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
+  ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
+  geom_line() + 
+  facet_wrap(~ as.factor(Affiliation)) +
+  labs(title = 'Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
+```
+
+Stuff about Average Pregnancy Rate by Age Group for Differnet Political Affiliations
+
+## Average Abortion Rate by Age group for Different Political Affiliations
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+abortionDataClean %>% 
+  group_by(state, year, Age) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  inner_join(MaxStateAff) %>% 
+  filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
+  ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
+  geom_line() + 
+  facet_wrap(~ as.factor(Affiliation)) +
+  labs(title = 'Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
+```
+
+Stuff about Average Abortion Rate by Age Group for Different Political Affiliations
+
+## Political Affiliation by State
+```{r readshapefile, echo = FALSE, warning = FALSE, message = FALSE}
 not_included <-
   c("Guam", "Commonwealth of the Northern Mariana Islands",
     "American Samoa", "Puerto Rico", "United States Virgin Islands")
 
-us_states <- us_states %>%
+us_states <- 
+  us_states %>%
   filter(!(NAME %in% not_included))
-
-# print(us_states)
 ```
 
-```{r convert to EPSG 2163}
+```{r convert to EPSG 2163, echo = FALSE}
+epsg_us <- 
+  2163
 
-epsg_us <- 2163
-us_states <- st_transform(us_states, epsg_us)
+us_states <- 
+  st_transform(us_states, epsg_us)
 ```
 
-```{r join US states, geographic location and state affiliation datasets, warning=FALSE, message=FALSE}
+```{r join US states, geographic location and state affiliation datasets, warning=FALSE, message=FALSE, echo = FALSE,}
+states_geog <- 
+  inner_join(us_states, geog_loc, by = c("STUSPS" = "State", "NAME" = "FullStateName"))
 
-geog_loc <- read_csv("../../../dataset/StateGeography.csv")
-
-load("../../../dataset/MaxStateAff.RData")
-
-states_geog <- inner_join(us_states, geog_loc, by = c("STUSPS" = "State", "NAME" = "FullStateName"))
-
-states_geog_aff <- inner_join(states_geog, MaxStateAff, by = c("STUSPS" = "state"))
-
-# print(states_geog_aff)
+states_geog_aff <- 
+  inner_join(states_geog, MaxStateAff, by = c("STUSPS" = "state"))
 ```
 
-```{r calculate overall abortion rate for each state}
-
-load("../../../dataset/abortionDataClean.RData")
-
-state_abortion_rate <- abortionDataClean %>% 
+```{r calculate overall abortion rate for each state, echo = FALSE,}
+state_abortion_rate <- 
+  abortionDataClean %>% 
   replace(is.na(.), 0) %>% 
   group_by(state) %>% 
   select(state, Abortions, Population) %>% 
   mutate(state, total_population = sum(Population), total_abortions = sum(Abortions), overall_abortion_rate = total_abortions/total_population) %>% 
   select(state, total_abortions, total_population, overall_abortion_rate)
 
-state_abortion_rate <- state_abortion_rate[!duplicated(state_abortion_rate$state), ]
-
-# print(state_abortion_rate)
+state_abortion_rate <- 
+  state_abortion_rate[!duplicated(state_abortion_rate$state), ]
 ```
 
-```{r join overall abortion rate dataset with state, geographic location and political affiliation dataset, warning=FALSE, message=FALSE}
-
-state_data <- inner_join(states_geog_aff, state_abortion_rate, by = c("STUSPS" = "state")) %>%
+```{r join overall abortion rate dataset with state, geographic location and political affiliation dataset, warning=FALSE, message=FALSE, echo = FALSE,}
+state_data <- 
+  inner_join(states_geog_aff, state_abortion_rate, by = c("STUSPS" = "state")) %>%
   select(NAME, STUSPS, GeographicRegion, Affiliation, overall_abortion_rate, geometry)
-
-# print(state_data)
-
 ```
 
-
-```{r plot map by state, fig.width=80, fig.height=80, warning=FALSE, message=FALSE}
-
+```{r plot map by state, fig.width=80, fig.height=80, warning=FALSE, message=FALSE, echo = FALSE,}
 tmap_mode("view")
-colours <- c("#00AEF3", "#808080", "#E81B23")
+colours <- 
+  c("#00AEF3", "#808080", "#E81B23")
 
-tm_shape(state_data) + tm_polygons(col = "overall_abortion_rate", title = "Overall Abortion Rate by State") +
+tm_shape(state_data) + 
+  tm_polygons(col = "overall_abortion_rate", title = "Overall Abortion Rate by State") +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
   
-tm_shape(state_data) + tm_polygons(col = "Affiliation", title = "Political Affiliation by State", palette = colours) +
+tm_shape(state_data) + 
+  tm_polygons(col = "Affiliation", title = "Political Affiliation by State", palette = colours) +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
 ```
 
-```{r load region data, warning=FALSE, message=FALSE}
+Stuff about map 1
 
-us_regions <- st_read("../../../dataset/cb_2018_us_division_20m/cb_2018_us_division_20m.shp", quiet = TRUE) %>% 
+## Overall Abortion Rate by Region
+
+```{r load region data, warning=FALSE, message=FALSE, echo = FALSE}
+us_regions <- 
+  us_regions %>% 
   st_transform(epsg_us)
-
 ```
 
-
-```{r get overall abortion data by region, warning=FALSE, message=FALSE}
-
-region_abortion_rate <- inner_join(states_geog_aff, abortionDataClean, by = c("STUSPS" = "state")) %>% 
+```{r get overall abortion data by region, warning=FALSE, message=FALSE, echo = FALSE}
+region_abortion_rate <- 
+  inner_join(states_geog_aff, abortionDataClean, by = c("STUSPS" = "state")) %>% 
   replace(is.na(.), 0) %>% 
   group_by(GeographicRegion) %>% 
   select(GeographicRegion, Abortions, Population) %>% 
@@ -114,33 +180,28 @@ region_abortion_rate <- inner_join(states_geog_aff, abortionDataClean, by = c("S
   select(GeographicRegion, total_abortions, total_population, overall_abortion_rate) %>% 
   st_drop_geometry()
 
-region_abortion_rate <- region_abortion_rate[!duplicated(region_abortion_rate$GeographicRegion), ]
+region_abortion_rate <- 
+  region_abortion_rate[!duplicated(region_abortion_rate$GeographicRegion), ]
 
+region_abortion_rate <- 
+  region_abortion_rate[!duplicated(region_abortion_rate$GeographicRegion), ]
 
-region_abortion_rate <- region_abortion_rate[!duplicated(region_abortion_rate$GeographicRegion), ]
-
-region_abortion_rate <- st_set_geometry(region_abortion_rate, us_regions$geometry)
-
-# print(region_abortion_rate)
-
+region_abortion_rate <- 
+  st_set_geometry(region_abortion_rate, us_regions$geometry)
 ```
 
-
-```{r plot map by geographic location, fig.width=80, fig.height=80, warning=FALSE, message=FALSE}
-
-region_data <- region_abortion_rate %>% 
+```{r plot map by geographic location, fig.width=80, fig.height=80, warning=FALSE, message=FALSE, echo = FALSE}
+region_data <- 
+  region_abortion_rate %>% 
    select(GeographicRegion, overall_abortion_rate, geometry)
 
 tmap_mode("view")
 
-tm_shape(region_data) + tm_polygons(col = "overall_abortion_rate", title = "Overall Abortion Rate by Region") +
-  tm_shape(state_data) + tm_borders() +
+tm_shape(region_data) + 
+  tm_polygons(col = "overall_abortion_rate", title = "Overall Abortion Rate by Region") +
+  tm_shape(state_data) + 
+  tm_borders() +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
 ```
 
-
-
-# Polishing our Visualizations and Tables: 
-* Because presentation is important when communicating science, we know that it is crucial to spend time adding titles, captions, and other tools make our graphs as clear and user-friendly as possible. 
-
-*Think about titles, captions, annotations, highlights. Look into ggpubr for tools to improve your figures and look into some of the options for displaying tables using https://gallery.htmlwidgets.org/.
+Stuff about map 2
