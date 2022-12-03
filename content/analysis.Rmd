@@ -7,7 +7,7 @@ featuredImage: images/Woman_analysis.jpeg
 draft: false
 ---
 
-```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE, results = 'hide'}
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(modelr))
 suppressPackageStartupMessages(library(sf))
@@ -16,11 +16,11 @@ suppressPackageStartupMessages(library(dplyr))
 load(here::here("dataset", "abortionDataClean.RData"))
 load(here::here("dataset", "MaxStateAff.RData"))
 us_states <- 
-  st_read(here::here("dataset","cb_2019_us_state_20m/cb_2019_us_state_20m.shp"))
+  st_read(here::here("dataset","cb_2019_us_state_20m/cb_2019_us_state_20m.shp"), quiet = TRUE)
 geog_loc <- 
   read_csv(here::here("dataset","StateGeography.csv"))
 us_regions <- 
-  st_read(here::here("dataset","cb_2018_us_division_20m/cb_2018_us_division_20m.shp"))
+  st_read(here::here("dataset","cb_2018_us_division_20m/cb_2018_us_division_20m.shp"), quiet = TRUE)
 ```
 
 This comes from the file `content/analysis.Rmd`.

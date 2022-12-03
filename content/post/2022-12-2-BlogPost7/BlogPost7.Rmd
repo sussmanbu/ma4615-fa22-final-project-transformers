@@ -14,7 +14,7 @@ featuredVideo: ~
 featuredImage: ~
 ---
 
-```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE, results = 'hide'}
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(modelr))
 suppressPackageStartupMessages(library(sf))
@@ -23,11 +23,11 @@ suppressPackageStartupMessages(library(dplyr))
 load(here::here("dataset", "abortionDataClean.RData"))
 load(here::here("dataset", "MaxStateAff.RData"))
 us_states <- 
-  st_read(here::here("dataset","cb_2019_us_state_20m/cb_2019_us_state_20m.shp"))
+  st_read(here::here("dataset","cb_2019_us_state_20m/cb_2019_us_state_20m.shp"), quiet = TRUE)
 geog_loc <- 
   read_csv(here::here("dataset","StateGeography.csv"))
 us_regions <- 
-  st_read(here::here("dataset","cb_2018_us_division_20m/cb_2018_us_division_20m.shp"))
+  st_read(here::here("dataset","cb_2018_us_division_20m/cb_2018_us_division_20m.shp"), quiet = TRUE)
 ```
 
 # Ideas for Continued Exploratory Data Analysis:
@@ -119,7 +119,7 @@ us_states <-
   st_transform(us_states, epsg_us)
 ```
 
-```{r join US states, geographic location and state affiliation datasets, warning=FALSE, message=FALSE, echo = FALSE,}
+```{r join US states, geographic location and state affiliation datasets, warning=FALSE, message=FALSE, echo = FALSE}
 states_geog <- 
   inner_join(us_states, geog_loc, by = c("STUSPS" = "State", "NAME" = "FullStateName"))
 
