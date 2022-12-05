@@ -48,7 +48,7 @@ abortionDataClean %>%
   theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
 ```
 
-Stuff about Average pregnancy Rate by State Affiliation
+This is an interesting graph. Republican affiliated states are centralized on the graph, with a few divided and Democrat affiliated states sprinkled among them. Democrat affiliated states are densely populated at the top with the highest average pregnancy rate and at the bottom with the lowest average pregnancy rate. Of course there are a few outliers to these general observations, such as the actual highest average abortion rate state being Divided and the second lowest average abortion rate state being Republican affiliated.
 
 ## Average Abortion Rate by Age group 
 
@@ -64,7 +64,7 @@ abortionDataClean %>%
   scale_color_viridis_d(option = "turbo")
 ```
 
-Stuff about Average Abortion Rate by Age group
+This is another interesting graph, where it looks nothing to its average pregnancy rate counterpart that we made in Blog Post 4. In general, it seems that the average abortion rate of all age groups has decreased as we get closer to present day from 1973. in 1973 the highest average abortion rate belonged to the 18-19 year old age group and the lowest average abortion rate belonged to the 40> year old age group. In 2017, the highest average abortion rate belonged to the 20-24 year old age group and the lowest average abortion rate belonged to the <15 year old age group.Average abortion rate peaked around 1988 in the 18-19 year old age group.
 
 ## Average Pregnancy Rate by Age group for Different Political Affiliations
 
@@ -81,7 +81,7 @@ abortionDataClean %>%
   labs(title = 'Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
 ```
 
-Stuff about Average Pregnancy Rate by Age Group for Differnet Political Affiliations
+This graph shows that there is not a very big difference in average pregnancy rate depending on political affiliation of the state. The overall shape of both graphs is the same. 
 
 ## Average Abortion Rate by Age group for Different Political Affiliations
 
@@ -98,7 +98,7 @@ abortionDataClean %>%
   labs(title = 'Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
 ```
 
-Stuff about Average Abortion Rate by Age Group for Different Political Affiliations
+Now, this graph shows a very drastic difference in average abortion rate by age group depending on the political affiliation of the state. In general, a Democrat affiliated state has higher average abortion rate over the last 50 years. The distribution of age group is still almost the same no matter the state political affiliation.
 
 ## Political Affiliation by State
 ```{r readshapefile, echo = FALSE, warning = FALSE, message = FALSE}
@@ -160,7 +160,7 @@ tm_shape(state_data) +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
 ```
 
-Stuff about map 1
+Next, we wanted to create a visualization of political affiliation by state. We color coded each state by political affiliation, red for Republican, blue for Democrat, and gray for divided. When you hover over a state, it gives you the name. When you click on a state, it gives you the affiliation of the state.
 
 ## Overall Abortion Rate by Region
 
@@ -204,4 +204,4 @@ tm_shape(region_data) +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 2, legend.text.size = 1.5)
 ```
 
-Stuff about map 2
+For our next visualization, we wanted to show overall abortion rate for states by region. We color coded by overall abortion rate, yellow for 0.010 to 0.015, light orange for 0.015 to 0.020, orange for 0.020 to 0.025, and red for 0.025 to 0.030. We also added region for when you hover over a state. When you click on the state it gives you the precise overall abortion rate.
