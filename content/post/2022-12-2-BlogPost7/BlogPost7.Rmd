@@ -76,7 +76,7 @@ abortionDataClean %>%
   inner_join(MaxStateAff) %>% 
   filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
   ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
-  geom_line() + 
+  geom_point(alpha = .3) + 
   facet_wrap(~ as.factor(Affiliation)) +
   labs(title = 'Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
 ```
@@ -93,7 +93,7 @@ abortionDataClean %>%
   inner_join(MaxStateAff) %>% 
   filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN")) %>% 
   ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
-  geom_line() + 
+  geom_point(alpha = .3) + 
   facet_wrap(~ as.factor(Affiliation)) +
   labs(title = 'Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
 ```
