@@ -1,0 +1,19 @@
+---
+title: Blog Post 8
+author: Transformers
+date: '2022-12-09'
+slug: []
+categories: []
+tags: []
+description: ~
+toc: yes
+authors: []
+series: []
+lastmod: '2022-12-09T07:38:30-04:00'
+featuredVideo: ~
+featuredImage: ~
+---
+
+What is your tentative thesis? Note that a thesis is not a hypothesis or a question. It should in some ways answer a question. (Eg. rather than, “What are the patterns of housing prices in Boston?“, something like, “Housing prices in Boston are rising rapidly, especially near T stations and along the water.“) The rest of the project should work to support that thesis. That doesn’t mean there won’t be any caveats or uncertainty, but you should try to accurately  provide details that provide evidence for your thesis.
+
+How do you plan to polish your visualizations and tables? Think about titles, captions, annotations, highlights. Look into ggpubr for tools to improve your figures and look into some of the options for displaying tables using https://gallery.htmlwidgets.org/.
