@@ -26,8 +26,8 @@ featuredImage: ~
 
 # Impact of Politcal Affiliation AND Age of Childbearer
 * When we integrated the impact of our 2 variables of interest, we noticed that there was no significant difference in pregnancy rate over the years by political affiliation for any age group.
-* However, when we did the same for abortion rate, there was a clear difference. That is, we noticed that the a
+* However, when we did the same for abortion rate, there was a clear difference. That is, we noticed that the ...
 
-
+ 
 # Plans to polish our visualizations and tables: 
 * Overall, we plan to look through all of our work and standardize our format so that it is consistent and readable for all public users. We will plan to add informative titles, captions, axis labels, etc to make sure our plots are digestable and easily interpretable. For some of our plots, we have utilized the Economist theme from the package, ggthemes to add professional engagement with the audience. We plan to use the theme throughout our website to keep things consistent and professional.
