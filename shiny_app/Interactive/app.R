@@ -18,6 +18,8 @@ usaLat <- 36.5588659
 usaLon <- -107.6660877
 usaZoom <- 3
 
+colours <- c("#00AEF3", "#808080", "#E81B23")
+
 # Load Dataset
 us_states <- st_read("../../dataset/cb_2019_us_state_20m/cb_2019_us_state_20m.shp", quiet = TRUE)
 
@@ -28,6 +30,18 @@ not_included <-
 us_states <- us_states %>%
   filter(!(NAME %in% not_included))
 
+epsg_us <- 
+  2163
+
+us_states <- 
+  st_transform(us_states, epsg_us)
+
+load(here::here("dataset", "StateAff.RData"))
+
+aff_year <- stateAff_data_clean %>% filter(year == 1976)
+
+us_states_aff <- inner_join(us_states, aff_year, by = c("STUSPS" = "state")) %>% 
+  select(NAME, STUSPS, Affiliation, geometry)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -38,17 +52,18 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            sliderInput("year",
+                        "Year:",
+                        min = 1976,
+                        max = 2020,
+                        value = 1976, 
+                        step = 4)
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
            # plotOutput("distPlot")
-          tags$h2("TMAP"),
+          tags$h2("Political Affiliation of each state by Year"),
           tmapOutput(outputId = "tmapMap")
         )
     )
@@ -57,10 +72,17 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
+  data <- reactive({
+    aff_year <- stateAff_data_clean %>% filter(year == input$year)
+    
+    us_states_aff <- inner_join(us_states, aff_year, by = c("STUSPS" = "state")) %>% 
+      select(NAME, STUSPS, Affiliation, geometry)
+  })
+  
   output$tmapMap <- renderTmap({
-    tm_shape(us_states) +
+    tm_shape(data()) +
       tm_view(set.view = c(usaLon, usaLat, usaZoom)) + 
-      tm_polygons()
+      tm_polygons(col = "Affiliation", title = "Political Affiliation by State", palette = colours)
   })
 
     # output$distPlot <- renderPlot({
