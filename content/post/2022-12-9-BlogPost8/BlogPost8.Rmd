@@ -26,7 +26,7 @@ featuredImage: ~
 
 # Impact of Politcal Affiliation AND Age of Childbearer
 * When we integrated the impact of our 2 variables of interest, we noticed that there was no significant difference in pregnancy rate over the years by political affiliation for any age group.
-* However, when we did the same for abortion rate, there was a clear difference. That is, we noticed that the ...
+* However, when we did the same for abortion rate, there was a clear difference. That is, we noticed that the abortion rate of 15-17 year olds and people older that 35 are similar between the two political affiliations, but for the ages groups between those, 18-34 years old, have much higher average abortion rates in Democratic states than Republican states.
 
  
 # Plans to polish our visualizations and tables: 
