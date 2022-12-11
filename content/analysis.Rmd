@@ -87,7 +87,9 @@ abortionDataClean %>%
   scale_color_viridis_d(option = "turbo")
 ```
 
+
 * Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years. 
+
 
 * From our graph, we can see each age group as its own line that we can look at individually or all together. If we look at the plot as a whole, we can see that there was a shift in almost every adjacent line crosses each other around the years 1995 to 2002. Prior to 2002, 20-24 year olds had a higher average pregnancy rate than 25-29 year olds, but after 2002, 25-29 year olds started having a higher average pregnancy rate than 20-24 year olds. Prior to 2002, 18-19 year olds had a higher average pregnancy rate than 30-34 year olds, but after 2002, 30-34 year olds started having a higher average pregnancy rate than 18-19 year olds. Prior to 1998, 15-17 year olds had a higher average pregnancy rate than 35-39 year olds, but after 1998, 35-39 year olds started having a higher average pregnancy rate than 15-17 year olds. Lastly, prior to 1996, <15 year olds had a higher average pregnancy rate than 40> year olds, but after 1996, 40> year olds started having a higher average pregnancy rate than <15 year olds.
 
