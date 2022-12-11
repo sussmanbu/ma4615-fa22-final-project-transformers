@@ -2,7 +2,7 @@
 title: Big Picture
 description:
 toc: true
-featuredImage: /images/The_Big_Picture_2.jpeg
+featuredImage: /images/Big Pic.jpeg
 featuredVideo:
 draft: false
 ---
