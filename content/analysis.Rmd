@@ -33,7 +33,7 @@ This comes from the file `content/analysis.Rmd`.
 
 ## Initial Analysis
 
-### Graph 1: Average Abortion Rate By State Affiliation
+### Impact of Political Affiliation on Abortion Rate
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
@@ -43,8 +43,8 @@ abortionDataClean %>%
   ggplot() + 
   stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
   coord_flip() + 
-  scale_fill_viridis_d(option = "cividis") + 
-  labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
+  scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
+  labs(title = 'Graph 1. Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
   ggthemes::theme_economist() +
   theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
 ```
@@ -53,7 +53,7 @@ abortionDataClean %>%
 
 * From our plot, we saw some noticeable trends. The states with the highest average abortion rates were almost entirely Democratically affiliated. The states with the lowest average abortion rates were almost entirely Republican affiliated. Some exceptions to these trends are Nevada and Florida, which are states with high abortion rate but are not fully Democratically affiliated. More exceptions to the trend of low abortion rate states being fully Republican affiliated are Wisconsin, Iowa, Minnesota, Maine, and Ohio. Wisconsin, Minnesota, and Ohio are divided states who have low abortion rates, while Iowa and Maine are Democratic Affiliated states with low abortion rates.
 
-### Graph 2: Average Pregnancy Rate By State Affiliation
+### Impact of Political Affiliation on Pregnancy Rate
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
@@ -63,8 +63,8 @@ abortionDataClean %>%
   ggplot() + 
   stat_summary(aes(x = reorder(state, AveragePregnancyRate), y = AveragePregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
   coord_flip() + 
-  scale_fill_viridis_d(option = "cividis") + 
-  labs(title = 'Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
+  scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
+  labs(title = 'Graph 2. Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
   ggthemes::theme_economist() +
   theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
 ```
@@ -73,7 +73,7 @@ abortionDataClean %>%
 
 * The states with the highest average pregnancy rate are Nevada, New Jersey, California, Hawaii, New York, and Alaska. All of these states except for Nevada, a divided state, and Alaska, a Republican affiliated state, are Democratically affiliated. The states with the lowest average pregnancy rate are Maine, West Virginia, Wisconsin, Vermont, Massachusetts, and Rhode Island. All of these states except for West Virginia, a Republican affiliated state, and Wisconsin, a divided state, are Democratically affiliated. A majority of the Republican affiliated states are centralized on this graph, meaning they stand in the middle, with a few Democratically affiliated states and divided states sprinkled between them.
 
-### Graph 3: Average Pregnancy Rate by Age group 
+### Impact of Age of Childbearer over the Years on Pregnancy Rate 
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
@@ -81,7 +81,7 @@ abortionDataClean %>%
   summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
   ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
   geom_line() + 
-  labs(title = 'Average Pregnancy Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group") + 
+  labs(title = 'Graph 3. Average Pregnancy Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group") + 
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) +
   scale_color_viridis_d(option = "turbo")
@@ -97,7 +97,7 @@ abortionDataClean %>%
 
 * In 1973, the order of highest to lowest pregnancy by age group was 20-24 year olds, 25-29 year olds, 28-19 year olds, 30-34 year olds, 15-17 year olds, 35-39 year olds, <15 year olds, then 40> year olds. In 2017, the order of highest to lowest pregnancy rate became 25-29 year olds, 30-34 year olds, 20-24 year olds, 35-39 year olds, 18-19 year olds, 40> year olds, 15-17 year olds, then <15 year olds. From this trend we can say that as years have gone by on average, less teenagers have been getting pregnant and more adult women have been getting pregnant. 
 
-### Graph 4: Average Abortion Rate by Age group 
+### Impact of Age of Childbearer over the Years on Abortion Rate
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
@@ -105,7 +105,7 @@ abortionDataClean %>%
   summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
   ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
   geom_line() + 
-  labs(title = 'Average Abortion Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Abortion Rate', color = "Age Group") + 
+  labs(title = 'Graph 4. Average Abortion Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Abortion Rate', color = "Age Group") + 
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) +
   scale_color_viridis_d(option = "turbo")
@@ -117,7 +117,7 @@ abortionDataClean %>%
 
 * Now looking at the lines individually, we can see that the average abortion rate of 18-19 year olds, 20-24 year olds, 15-17 year old, and <15 year olds has been in a general decline since around 1988. The average abortion rate of 25-29 year olds, 30-34 year olds, 35-39 year olds, and 40> year olds has stayed fairly consistent for the last 50 years. With these trends we can say that on average young women and teenagers have been getting less abortions since 1988, while women over the age if 25 have not really changed the frequency of abortions.
 
-### Graph 5: Average Pregnancy Rate by Age group for Different Political Affiliations
+### Impact of Politcal Affiliation AND Age of Childbearer on Pregnancy Rate
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
@@ -129,7 +129,7 @@ abortionDataClean %>%
   ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
   geom_point(alpha = .3) + 
   facet_wrap(~ as.factor(Affiliation)) +
-  labs(title = 'Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
+  labs(title = 'Graph 5. Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
 ```
 
 * Next, we wanted to see if political affiliation of state had any affect on average pregnancy rate by age group.
@@ -138,7 +138,7 @@ abortionDataClean %>%
 
 * In 2017, for Democrat affiliated states, the average pregnancy rate of 25-29 year olds and 30-34 year olds overlap each other as the age group with the highest average abortion rate, while for Republican affiliated states, the average pregnancy rate of 25-29 year olds is higher than 30-34 year olds. Another difference is that in 2017, the average abortion rate for 35-39 year olds in Democrat affiliated states is higher than 18-19 year olds, while the opposite is true in Republican affiliated states. In 2017, the average pregnancy rate of 40> year olds is higher than 15-17 year olds in Democrat affiliated states, while these two group overlap in Republican affiliated states.
 
-### Graph 6: Average Abortion Rate by Age group for Different Political Affiliations
+### Impact of Politcal Affiliation AND Age of Childbearer on Abortion Rate
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 abortionDataClean %>% 
@@ -150,7 +150,7 @@ abortionDataClean %>%
   ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
   geom_point(alpha = .3) + 
   facet_wrap(~ as.factor(Affiliation)) +
-  labs(title = 'Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
+  labs(title = 'Graph 6. Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
 ```
 
 * Next, we wanted to see if political affiliation of state had any affect on average abortion rate by age group.
@@ -159,7 +159,7 @@ abortionDataClean %>%
 
 ## Modeling
 
-### Graph 7: Average Pregnancy Rate of Teenagers over the last 50 years
+### Average Pregnancy Rate of Teenagers over the last 50 years
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 
@@ -191,7 +191,7 @@ teenPregData %>%
 
 * We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. However, paired with our other visualizations, this linear model provides foundational information regarding the potential relationships between teen pregnancies, abortion, and abortion laws. Importantly, the trend line helps us to visualize what we might see in years to come.
 
-### Graph 8: Residuals for Teen Pregnancy Model
+### Residuals for Teen Pregnancy Model
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 teenPregData %>% 
