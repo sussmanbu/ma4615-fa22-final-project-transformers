@@ -7,68 +7,83 @@ featuredVideo:
 draft: false
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 
 </div>
 
-<p>This comes from the file <code>content/big_picture.Rmd</code>.</p>
-<p>Think of this page as your 538/Upshot style article. This means that you should try to tell a story through the data and your analysis. Read articles from those sites and similar sites to get a feeling for what they are like. Importantly, these should be geared towards the general public. You shouldn’t assume the reader understands how to interpret a linear regression. Focus on interpretation and visualizations.</p>
-<hr />
-<div id="rubric-on-this-page" class="section level2">
-<h2>Rubric: On this page</h2>
-<p>You will</p>
+<div id="pregnancy-and-abortion-rates-trends-over-time" class="section level1">
+<h1>Pregnancy and Abortion Rates: Trends Over Time</h1>
+<div id="abortion-rate-is-impacted-by-political-affiliation" class="section level2">
+<h2>Abortion Rate is Impacted by Political Affiliation</h2>
 <ul>
-<li>Title
-<ul>
-<li>Your big picture page should have a creative/click-baity title/headline that provides a hint about your thesis.</li>
-</ul></li>
-<li>Clarity of Explanation
-<ul>
-<li>You should have a clear thesis/goal for this page. What are you trying to show? Make sure that you explain your analysis in detail but don’t go into top much mathematics or statistics. The audience for this page is the general public (to the extent possible).</li>
-</ul></li>
-<li>Quality of Figures
-<ul>
-<li>Each figure should be very polished and also not too complicated. There should be a clear interpretation of the figure so the figure has a clear purpose. Even something like a histogram can be difficult to interpret for non-experts.</li>
-</ul></li>
-<li>Creativity
-<ul>
-<li>Do your best to make things interesting. Think of a story. Think of how each part of your analysis supports the previous part or provides a different perspective.</li>
-</ul></li>
+<li>Based on the limited exploratory data analysis that we have conducted, it seems that pregnancy rate is not impacted by political affiliation, but abortion rate is. This is supported by the graphs 1 and 2 on our analysis page that show Average Pregnancy and Abortion Rate by State Affiliation. On the Abortion rate graph, there is a clear pattern where Democratic states have higher abortion rates as compared to Republican states. However, on the Pregnancy rate graph, this distinction is not as apparent.</li>
 </ul>
-<p><strong>Note</strong>: This page should have no code visible, i.e. use <code>echo=FALSE</code>.</p>
-<hr />
+<p><img src="/big_picture_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/big_picture_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
-<div id="rubric-other-components" class="section level2">
-<h2>Rubric: Other components</h2>
-<div id="interactive" class="section level3">
-<h3>Interactive</h3>
-<p>You will also be required to make an interactive dashboard like <a href="/flex/flex.html">this one</a>.</p>
-<p>Your Big Data page should include a link to an interactive dashboard. The dashboard should be created either using Shiny or FlexDashboard (or another tool with professor’s approval). This interactive component should in some way support your thesis from your big picture page. Good interactives often provide both high-level understanding of the data while allowing a user to investigate specific scenarios, observations, subgroups, etc.</p>
+<div id="over-the-years-less-teenage-pregnancy.-more-waiting-til-the-30s" class="section level2">
+<h2>Over the Years, Less Teenage Pregnancy. More Waiting Til the 30s</h2>
 <ul>
-<li>Quality and ease of use of the interactive components.
-Is it clear what can be explored using your interactive components?
-Does it enhance and reinforce your conclusions from the Big Picture?
-Plotly with default hover text will get no credit. Be creative!</li>
+<li>Over the last 30 years, it seems that the pregnancy rate for age groups 15-24 has significantly decreased, while the pregnancy rate for age groups 30-39 have increased. That is, childbearers seems to be getting pregnant later in life in recent years, as compared to teenagers.</li>
+</ul>
+<div id="is-this-why-there-are-fewer-abortions-for-teens" class="section level3">
+<h3>Is this why there are fewer abortions for Teens?</h3>
+<ul>
+<li>For the abortion rate graph, we noticed an overall increase in abortions between years 1970-1980. This aligns with the legalization of abortion (the Supreme Court ruling of Roe v. Wade) in the US in 1973. After 1990, we notice a decrease in abortion rate for age groups 15-24.</li>
+<li>Or could it be other driving factors? Is it the political climate?</li>
+</ul>
+<p><img src="/big_picture_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="/big_picture_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<div id="putting-it-all-together" class="section level2">
+<h2>Putting it All Together</h2>
+<div id="pregnancy-rate-not-impacted-by-political-affilation-across-all-age-groups" class="section level3">
+<h3>Pregnancy Rate Not Impacted by Political Affilation Across All Age Groups</h3>
+<ul>
+<li>When we integrated the impact of our 2 variables of interest, we noticed that there was no significant difference in pregnancy rate over the years by political affiliation for any age group.</li>
 </ul>
 </div>
-<div id="video-recording" class="section level3">
-<h3>Video Recording</h3>
-<p>Make a video recording (probably using Zoom) demonstrating your interactive components.
-You should provide a quick explanation of your data and demonstrate some of the conclusions from your EDA.
-This video should be no longer than 4 minutes.
-Include a link to your video (and password if needed) in your README.md file on your Github repository. You are not required to provide a link on the website.
-This can be presented by any subset of the team members.</p>
+<div id="abortion-rate-is-impacted-for-childbearers-aged-18-34-in-republican-states" class="section level3">
+<h3>Abortion Rate IS Impacted for Childbearers Aged 18-34 in Republican States</h3>
+<ul>
+<li>However, when we did the same for abortion rate, there was a clear difference. That is, we noticed that the abortion rate of 15-17 year olds and people older that 35 are similar between the two political affiliations, but for the ages groups between those, 18-34 years old, have much higher average abortion rates in Democratic states than Republican states.</li>
+</ul>
+<p><img src="/big_picture_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/big_picture_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+—</p>
 </div>
-<div id="rest-of-the-site" class="section level3">
-<h3>Rest of the Site</h3>
-<p>Finally, here are important things to keep in mind for the rest of the site.</p>
-<p>The main title of your page is informative.
-Each post has an author/description/informative title.
-All lab required posts are present.
-Each page (including the home page) has a nice featured image associated with it.
-Your about page is up to date and clean.
-You have removed the generic posts from the initial site template.</p>
+</div>
+<div id="link-to-interactive-here" class="section level2">
+<h2>Link to Interactive Here</h2>
+<ul>
+<li>In progress</li>
+</ul>
+</div>
+<div id="link-to-video-here" class="section level2">
+<h2>Link to Video Here</h2>
+<ul>
+<li>In progress</li>
+</ul>
+</div>
+<div id="in-summary" class="section level2">
+<h2>In Summary</h2>
+<ul>
+<li>Age of childbearer and time seem to impact pregnancy, but political affiliation may not.</li>
+<li>Over time, fewer teenagers are getting pregnant: instead it seems like people are waiting until their 30s.<br />
+</li>
+<li>Political affiliation, age of childbearer, and time all seem to impact abortion rates.</li>
+<li>Abortion rates peaked after 1973 after the ruling of Roe v Wade. They decreased after 1990 for teens and young adults. When broken down by political affiliation, ages groups 18-34 have much higher average abortion rates in Democratic states than Republican states.</li>
+</ul>
+</div>
+<div id="other-factors-to-consider" class="section level2">
+<h2>Other Factors to Consider</h2>
+<ul>
+<li>Birth control: this analysis did not include prevalence of birth control usage over time, age group, or location. We imagine that this information would influence both pregnancy rates, and therefore abortion rates. Future analysis should include this information to tell the full story.</li>
+<li>Births and Miscarriages: To simplify our interpretation due to the time constraints of this project, we did not visualize the variables of births and miscarriages. If we had more time, our next steps would be to include these variables. We know that the decision to have an abortion may be multifaceted, and it is not uncommon for childbearers to require abortions due to birth complications and even miscarriages.</li>
+<li>Socio-economic status and demographics: Our data did not include this information, but we know that these factors can significantly impact access to healthcare (aka, birth control, education surrounding safe sex, and care during pregnancy). Future research should include these variables to better serve the full public.</li>
+<li>Today’s Political Climate: On June 24, 2022, Roe v. Wade was overturned. Unfortunately, our data were only collected until 2017. Given the recent changes in federal law, we know that state-specific laws have played a larger role in pregnancy and abortion-related decisions. Our story is not complete: given the initial spike in abortion rate that aligned with the historic ruling in 1973, we imagine that there would be some significant change and perhaps interaction between our variables of interest as a result of the recent policy changes.</li>
+</ul>
 </div>
 </div>
