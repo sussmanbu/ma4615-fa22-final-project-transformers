@@ -121,8 +121,6 @@ server <-
         tm_polygons(col = "Affiliation", title = "Political Affiliation by State", palette = colours)
       })
     
-    
-
     output$abortionPlot <- 
       renderPlot({
         data <- graphData() 
@@ -146,14 +144,14 @@ server <-
         data <- graphData()
           
         if(!is.null(input$tmapMap_shape_click)){
-          clickedState <- input$tmapMap_shape_click
+          clickedState <- input$tmapMap_shape_click$id
           
           #Output error message for missing data
           validate(
             need( nrow(data) > 0, "No data for plot")
           )
           
-          stateName <- tolower(substr(input$tmapMap_shape_click, 1, nchar(input$tmapMap_shape_click) - 2))
+          stateName <- tolower(substr(clickedState, 1, nchar(clickedState) - 2))
         
           data %>% 
             filter(tolower(stateFull) == stateName) %>% 
@@ -206,9 +204,9 @@ server <-
         data <- graphData() 
         
         if(!is.null(input$tmapMap_shape_click)){
-          clickedState <- input$tmapMap_shape_click
+          clickedState <- input$tmapMap_shape_click$id
           
-          stateName <- tolower(substr(input$tmapMap_shape_click, 1, nchar(input$tmapMap_shape_click) - 2))
+          stateName <- tolower(substr(clickedState, 1, nchar(clickedState) - 2))
           
           print(stateName)
           
