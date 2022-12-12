@@ -106,24 +106,33 @@ server <-
       reactive({
         us_states_aff %>% 
         filter(year == input$year)
-        })
+      })
   
     graphData <- 
       reactive({
         gData %>% 
         filter(year == input$year)
-        })
+      })
   
     output$tmapMap <- 
       renderTmap({
         tm_shape(data()) +
         tm_view(set.view = c(usaLon, usaLat, usaZoom)) + 
         tm_polygons(col = "Affiliation", title = "Political Affiliation by State", palette = colours)
-        })
+      })
+    
+    
 
     output$abortionPlot <- 
       renderPlot({
-        graphData() %>%
+        data <- graphData() 
+        
+        #Output error message for missing data
+        validate(
+          need( nrow(data) > 0, "No data for plot")
+        )
+        
+        data %>%
           ggplot() +
           stat_summary(aes(x = reorder(state, AbortionRate), y = AbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
           coord_flip() + 
@@ -134,10 +143,20 @@ server <-
     
     output$abortionAgePlot <- 
       renderPlot({
+        data <- graphData()
+          
         if(!is.null(input$tmapMap_shape_click)){
           clickedState <- input$tmapMap_shape_click
-          graphData() %>% 
-            filter(tolower(stateFull) == tolower(substr(input$tmapMap_shape_click, 1, nchar(input$tmapMap_shape_click) - 2))) %>% 
+          
+          #Output error message for missing data
+          validate(
+            need( nrow(data) > 0, "No data for plot")
+          )
+          
+          stateName <- tolower(substr(input$tmapMap_shape_click, 1, nchar(input$tmapMap_shape_click) - 2))
+        
+          data %>% 
+            filter(tolower(stateFull) == stateName) %>% 
             ggplot() + 
             stat_summary(aes(x = Age, y = AbortionRate, fill = as.factor(Age)), geom = "bar") + 
             coord_flip() + 
@@ -146,9 +165,16 @@ server <-
             ggthemes::theme_economist()
         }
         
-        if(!is.null(clickedState)){
-          graphData() %>% 
-            filter(tolower(stateFull) == tolower(substr(clickedState, 1, nchar(clickedState) - 2))) %>% 
+        if(!is.null(clickedState)) {
+          data <- data %>% 
+            filter(tolower(stateFull) == stateName)
+          
+          #Output error message for missing data
+          validate(
+            need( nrow(data) > 0, "No data for plot")
+          )
+          
+          data %>% 
             ggplot() + 
             stat_summary(aes(x = Age, y = AbortionRate, fill = as.factor(Age)), geom = "bar") + 
             coord_flip() + 
@@ -159,7 +185,14 @@ server <-
     
     output$pregPlot <- 
       renderPlot({
-        graphData() %>% 
+        data <- graphData() 
+        
+        #Output error message for missing data
+        validate(
+          need( nrow(data) > 0, "No data for plot")
+        )
+        
+        data %>%
           ggplot() + 
           stat_summary(aes(x = reorder(state, PregnancyRate),  y = PregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
           coord_flip() + 
@@ -170,10 +203,24 @@ server <-
     
     output$pregAgePlot <- 
       renderPlot({
+        data <- graphData() 
+        
         if(!is.null(input$tmapMap_shape_click)){
           clickedState <- input$tmapMap_shape_click
-          graphData() %>% 
-            filter(tolower(stateFull) == tolower(substr(input$tmapMap_shape_click, 1, nchar(input$tmapMap_shape_click) - 2))) %>% 
+          
+          stateName <- tolower(substr(input$tmapMap_shape_click, 1, nchar(input$tmapMap_shape_click) - 2))
+          
+          print(stateName)
+          
+          data <- data %>% 
+            filter(tolower(stateFull) == stateName)
+          
+          #Output error message for missing data
+          validate(
+            need( nrow(data) > 0, "No data for plot")
+          )
+          
+          data %>% 
             ggplot() + 
             stat_summary(aes(x = Age, y = PregnancyRate, fill = as.factor(Age)), geom = "bar") + 
             coord_flip() + 
@@ -183,8 +230,13 @@ server <-
         }
         
         if(!is.null(clickedState)){
-          graphData() %>% 
-            filter(tolower(stateFull) == tolower(substr(clickedState, 1, nchar(clickedState) - 2))) %>% 
+          #Output error message for missing data
+          validate(
+            need( nrow(data) > 0, "No data for plot")
+          )
+          
+          data %>% 
+            filter(tolower(stateFull) == stateName) %>% 
             ggplot() + 
             stat_summary(aes(x = Age, y = PregnancyRate, fill = as.factor(Age)), geom = "bar") + 
             coord_flip() + 
