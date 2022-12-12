@@ -93,11 +93,6 @@ save(abortionDataClean, file = here::here("dataset/abortionDataClean.RData"))
 
 
 ## CLEANING THE PRESIDENTIAL DATA
-presidential_data <- 
-  read_csv(here::here("dataset", "1976-2020-president.csv"))
-
-stateAff_data_clean <- 
-  presidential_data
 
 stateAff_data_clean <- 
   read_csv(here::here("dataset", "1976-2020-president.csv"), 
@@ -135,6 +130,10 @@ stateAff_data_clean <-
   stateAff_data_clean %>% 
   rename("stateFull" = "state") %>% 
   rename("state" = "state_po")
+
+stateAff_data_clean <-
+  stateAff_data_clean %>% 
+  distinct(year, state, Affiliation, .keep_all = TRUE)
 
 write_csv(stateAff_data_clean, file = here::here("dataset", "stateAffData.csv"))
 
