@@ -134,7 +134,7 @@ server <-
           ggplot() +
           stat_summary(aes(x = reorder(state, AbortionRate), y = AbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
           coord_flip() + 
-          scale_fill_viridis_d(option = "cividis") + 
+          scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
           labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
           ggthemes::theme_economist()
         })  
@@ -194,7 +194,7 @@ server <-
           ggplot() + 
           stat_summary(aes(x = reorder(state, PregnancyRate),  y = PregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
           coord_flip() + 
-          scale_fill_viridis_d(option = "cividis") + 
+          scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
           labs(title = 'Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
           ggthemes::theme_economist()
         })
