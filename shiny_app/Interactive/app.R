@@ -136,7 +136,8 @@ server <-
           coord_flip() + 
           scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
           labs(title = 'Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
-          ggthemes::theme_economist()
+          ggthemes::theme_economist() +
+          theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
         })  
     
     output$abortionAgePlot <- 
@@ -196,7 +197,8 @@ server <-
           coord_flip() + 
           scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
           labs(title = 'Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
-          ggthemes::theme_economist()
+          ggthemes::theme_economist()+
+          theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
         })
     
     output$pregAgePlot <- 
