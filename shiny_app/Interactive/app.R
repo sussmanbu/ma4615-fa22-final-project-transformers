@@ -8,7 +8,7 @@ library(tidyverse)
 
 # Loading the Datasets and files
 load("abortionDataClean.RData")
-load("StateAff.RData")
+load("stateAff.RData")
 us_states <- st_read("cb_2019_us_state_20m/cb_2019_us_state_20m.shp", quiet = TRUE)
 
 # Initial setup for map
