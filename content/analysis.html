@@ -92,56 +92,10 @@ draft: false
 </div>
 <div id="linear-model-using-year-age-group-and-political-affiliation-as-predictors-for-abortion-rates" class="section level3">
 <h3>Linear Model using Year, Age Group, and Political Affiliation as Predictors for Abortion Rates</h3>
-<pre class="r"><code>AvgAbortionRateData &lt;- abortionDataClean %&gt;% 
-   group_by(state, year, Age) %&gt;% 
-   summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %&gt;% 
-   ungroup() %&gt;% 
-   inner_join(MaxStateAff) %&gt;% 
-   filter(Affiliation %in% c(&quot;DEMOCRAT&quot;, &quot;REPUBLICAN&quot;))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;state&#39;, &#39;year&#39;. You can override using the
-## `.groups` argument.
-## Joining, by = &quot;state&quot;</code></pre>
-<pre class="r"><code>AbortionRateMod1 &lt;- 
-   lm(AverageAbortionRate ~ year, data = AvgAbortionRateData)
- 
- beta &lt;- 
-   coef(AbortionRateMod1)
- 
- AbortionRateData &lt;- 
-   AvgAbortionRateData %&gt;% 
-   add_predictions(AbortionRateMod1)
- 
- AbortionRateData %&gt;%
-   ggplot(aes(x = year)) + 
-   geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
-   geom_line(aes(y = pred), data = AbortionRateData, color = &quot;red&quot;, size = 1) + 
-   labs(title = &#39;Average Abortion Rate from 1973 to 2017&#39;, x = &#39;\nYear&#39;, y = &#39;Average Abortion Rate\n&#39;, color = &quot;Age Group&quot;) + 
-   ggthemes::theme_economist() +
-   theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + 
-   scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
-<pre><code>## Warning: Removed 190 rows containing missing values (geom_point).</code></pre>
-<p><img src="/analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" />
-* Here, we modeled the same predictor (Year) with a different response variable (Abortion). We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre vs. post legalization of abortion.</p>
-<pre class="r"><code>AbortionRateMod2 &lt;- 
-   lm(AverageAbortionRate ~ Affiliation * year + Age, data = AvgAbortionRateData)
- 
- beta &lt;- 
-   coef(AbortionRateMod2)
- 
- AbortionRateData &lt;- 
-   AvgAbortionRateData %&gt;% 
-   add_predictions(AbortionRateMod2)
- 
- AbortionRateData %&gt;%
-   ggplot(aes(x = year)) + 
-   geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
-   facet_wrap(~ as.factor(Affiliation)) +
-   geom_line(aes(y = pred), data = AbortionRateData, color = &quot;red&quot;, size = 1) + 
-   labs(title = &#39;Average Abortion Rate from 1973 to 2017&#39;, x = &#39;\nYear&#39;, y = &#39;Average Abortion Rate\n&#39;, color = &quot;Age Group&quot;) + 
-   ggthemes::theme_economist() +
-   theme(legend.position = &#39;right&#39;, legend.text = element_text(size = 8)) + 
-   scale_color_viridis_d(option = &quot;plasma&quot;)</code></pre>
-<pre><code>## Warning: Removed 190 rows containing missing values (geom_point).</code></pre>
+<p><img src="/analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<ul>
+<li>Here, we modeled the same predictor (Year) with a different response variable (Abortion). We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre vs. post legalization of abortion.</li>
+</ul>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <ul>
 <li>Here we included year, age group, and affiliation as predictors for abortion rate.</li>

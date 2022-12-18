@@ -208,7 +208,7 @@ teenPregData %>%
 
 ### Linear Model using Year, Age Group, and Political Affiliation as Predictors for Abortion Rates
 
-```{r}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 AvgAbortionRateData <- abortionDataClean %>% 
    group_by(state, year, Age) %>% 
    summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
@@ -235,11 +235,12 @@ AbortionRateMod1 <-
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
 ```
+
 * Here, we modeled the same predictor (Year) with a different response variable (Abortion). We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre vs. post legalization of abortion.
 
-```{r}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 AbortionRateMod2 <- 
-   lm(AverageAbortionRate ~ Affiliation * year + Age, data = AvgAbortionRateData)
+   lm(AverageAbortionRate ~ year * Affiliation + Age, data = AvgAbortionRateData)
  
  beta <- 
    coef(AbortionRateMod2)
