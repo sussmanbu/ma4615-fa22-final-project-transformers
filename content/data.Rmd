@@ -43,21 +43,24 @@ This dataset is collected by the MIT Election Data and Science Lab, 2017, and is
 
 Because Roe v. Wade is a highly politicized issue with largely Democratic support for Roe v. Wade (Pro-choice) and Republican support against Roe v. Wade (Pro-life), we wanted to include political affiliations in our analysis. This additional dataset allowed for us to investigate state-level pregnancy and abortion data based on the dominating political affiliation as determined by state-wide presidential election results. 
 
-## Cleaning Our Data
+# Cleaning Our Data
 
 Cleaning script [load_and_clean_data.R](/load_and_clean_data.R) file: We used tidyverse and modelr packages for cleaning and exploratory data analysis.
 
-```{r}
+```{r echo = FALSE, warning = FALSE, message = FALSE, results = 'hide'}
 source(
-  here::here("static", "load_and_clean_data.R"),
-  echo = FALSE # Use echo=FALSE or omit it to avoid code output  
+  here::here("static", "load_and_clean_data.R")
 )
 ```
-<br><br>
-Our steps for cleaning the data included:
-<br><br>
-For dataset 1
 <br>
+Our steps for cleaning the data included:
+
+## For dataset 1
+
+In the original dataset, age is not a separate column. For example: pregnancyratelt15, this column has the pregnancy rate of individuals less than 15. We cleaned this data and made age a separate column. We also changed lt15 to <15. So that, it is easy to understand for anyone who looks at the data for the first time. Furthermore, there are some overlaps between age groups like pregnancyrate1517, pregnancyrate1819, pregnancyrate1519. These are the pregnancy rate of individual ages 15-17, 18-19 and 15-19. We removed these redundant data.
+
+<br>
+
 1. Remove overlaps in age column
 
 2. Split the columns with age in it to create a column for age. 
@@ -65,14 +68,49 @@ For dataset 1
 3. Make age as a factor.
 
 4. Modify age data so that it is more easily interpretable (Added hyphen to separate the the upper and lower limits)
-<br><br>
-For dataset 2
+
+## For dataset 2
+
 1. Select presidential candidates belonging to the Democrat and Republican party. This is because, historically, candidates from these 2 parties get the majority of the votes from the people.
 
 2. For each year and each state, we compared the percentage of people who voted for the Democrat and the Republican candidate. If the difference in the percentages was greater than or equal to 5%, then the party with more votes is selected as the dominating political party for that state. Otherwise, that state is considered to be divided for that year. This data is saved in stateAffData.csv.
 
 3. To get the overall political affiliation of all the states, we compared the number of years the state was Democrat, Republican or divided over the years, and took the affiliation with the largest number. This data is saved in MaxStateAffData.csv.
 <br><br>
+
 Combining Datasets
 <br>
+
 1. Combine MaxStateAff dataset with dataset 1 to create a new State Affiliation dataset with two columns; one for state abbreviations and the second for political affiliation (Democrat, Republican, or Divided). To do this, we used a join with the shared state column and used this new dataset of three columns, state, average abortion rate, and affiliation.
+
+## Summary of variables in our cleaned datasets
+Dataset 1 (abourtionDataClean.RData)
+<br>
+<br>
+
+| Variable Name   | Description                                                               |
+| --------------- | --------------------------------------------------------------------------|
+| state           | Abbreviation of State of residence                                        |
+| year            | Year                                                                      |
+| Age             | Age of the Individual                                                     |
+| PregnancyRate   | Pregnancy Rate among individuals of that age                              |
+| AbortionRate    | Abortion Rate among individuals of that age                               |
+| BirthRate       | Birth Rate among women of that age                                        |
+| AbortionRatio   | Number of Abortions per 1000 births among individuals of that age         |
+| Pregnancies     | Number of pregnancies to individuals of that age(Rounded to nearest 10)   |
+| Abortions       | Number of abortions to individuals of that age(Rounded to nearest 10)     |
+| Births          | Number of births to individuals of that age                               |
+| Micarriage      | Number of miscarriages to individuals of that age                         |
+| Population      | Population of women of that age                                           |
+
+<br>
+Dataset 2 (stateAff.RData)
+<br>
+<br>
+
+| Variable Name   | Description                           |
+| --------------- | --------------------------------------|
+| year            | Year                                  |
+| stateFull       | Full Name of the State                |
+| state           | Abbreviation of the state             |
+| Affiliation     | Political Affiliation of that state   |
