@@ -23,7 +23,6 @@ us_regions <-
   st_read(here::here("dataset","cb_2018_us_division_20m/cb_2018_us_division_20m.shp"), quiet = TRUE)
 ```
 
-This comes from the file `content/analysis.Rmd`.
 
 # Data Analysis 
 
@@ -205,6 +204,58 @@ teenPregData %>%
   scale_color_viridis_d(option = "plasma")
 ```
 
-* This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. 
+* This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. We see that this model is not adding much to the analysis of our project. Here, we are only using age as a predictor for pregnancy rates. Instead, we decided to try including more of our variables of interest as predictors, and to switch to abortion rates as our response variable, given our findings from our exploratory data analysis. 
 
+### Linear Model using Year, Age Group, and Political Affiliation as Predictors for Abortion Rates
 
+```{r}
+AvgAbortionRateData <- abortionDataClean %>% 
+   group_by(state, year, Age) %>% 
+   summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+   ungroup() %>% 
+   inner_join(MaxStateAff) %>% 
+   filter(Affiliation %in% c("DEMOCRAT", "REPUBLICAN"))
+
+AbortionRateMod1 <- 
+   lm(AverageAbortionRate ~ year, data = AvgAbortionRateData)
+ 
+ beta <- 
+   coef(AbortionRateMod1)
+ 
+ AbortionRateData <- 
+   AvgAbortionRateData %>% 
+   add_predictions(AbortionRateMod1)
+ 
+ AbortionRateData %>%
+   ggplot(aes(x = year)) + 
+   geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
+   geom_line(aes(y = pred), data = AbortionRateData, color = "red", size = 1) + 
+   labs(title = 'Average Abortion Rate from 1973 to 2017', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   ggthemes::theme_economist() +
+   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
+   scale_color_viridis_d(option = "plasma")
+```
+* Here, we modeled the same predictor (Year) with a different response variable (Abortion). We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre vs. post legalization of abortion.
+
+```{r}
+AbortionRateMod2 <- 
+   lm(AverageAbortionRate ~ Affiliation * year + Age, data = AvgAbortionRateData)
+ 
+ beta <- 
+   coef(AbortionRateMod2)
+ 
+ AbortionRateData <- 
+   AvgAbortionRateData %>% 
+   add_predictions(AbortionRateMod2)
+ 
+ AbortionRateData %>%
+   ggplot(aes(x = year)) + 
+   geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
+   geom_line(aes(y = pred), data = AbortionRateData, color = "red", size = 1) + 
+   labs(title = 'Average Abortion Rate from 1973 to 2017', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   ggthemes::theme_economist() +
+   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
+   scale_color_viridis_d(option = "plasma")
+```
+
+* Here we included year, age group, and affiliation as predictors for abortion rate. 
