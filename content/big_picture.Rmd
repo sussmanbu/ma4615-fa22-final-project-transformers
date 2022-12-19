@@ -43,10 +43,10 @@ abortionDataClean %>%
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
-abortionDataClean %>% blo
+abortionDataClean %>% 
   group_by(state) %>% 
   summarise(AveragePregnancyRate = mean(PregnancyRate, na.rm=TRUE)) %>% 
-  inner_join(MaxStateAff) %>% 
+  inner_join(MaxStateAff) %>%  
   ggplot() + 
   stat_summary(aes(x = reorder(state, AveragePregnancyRate), y = AveragePregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
   coord_flip() + 
@@ -123,7 +123,7 @@ abortionDataClean %>%
 * [Interactive](https://sjchen23.shinyapps.io/Interactive/)
 
 ## Link to Video Here
-* [Video](https://drive.google.com/file/d/162Pudjml1FVzSfz8dXjh5LHjfba39VuB/view?usp=sharing) 
+* [Video](https://drive.google.com/file/d/162Pudjml1FVzSfz8dXjh5LHjfba39VuB/view?usp=sharing)  
 
 ## In Summary 
 * Age of childbearer and time seem to impact pregnancy, but political affiliation may not.
