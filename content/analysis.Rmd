@@ -43,7 +43,7 @@ abortionDataClean %>%
   stat_summary(aes(x = reorder(state, AverageAbortionRate), y = AverageAbortionRate, fill = as.factor(Affiliation)), geom = "bar") + 
   coord_flip() + 
   scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
-  labs(title = 'Graph 1. Average Abortion Rate by State Affiliation', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
+  labs(title = 'Graph 1. Average Abortion Rate by State Affiliation\n', x = 'State\n', y = '\nAverage Abortion Rate', fill = "Affliation") + 
   ggthemes::theme_economist() +
   theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
 ```
@@ -63,7 +63,7 @@ abortionDataClean %>%
   stat_summary(aes(x = reorder(state, AveragePregnancyRate), y = AveragePregnancyRate, fill = as.factor(Affiliation)), geom = "bar") + 
   coord_flip() + 
   scale_fill_manual(values = c('#00214d', '#7c7b78', '#e91515')) + 
-  labs(title = 'Graph 2. Average Pregnancy Rate by State Affiliation', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
+  labs(title = 'Graph 2. Average Pregnancy Rate by State Affiliation\n', x = 'State\n', y = '\nAverage Pregnancy Rate', fill = "Affliation") + 
   ggthemes::theme_economist() +
   theme(axis.text.y = element_text(size = 7), axis.title = element_text(size = 10), legend.position = 'right', legend.text = element_text(size = 8))
 ```
@@ -80,7 +80,7 @@ abortionDataClean %>%
   summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
   ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
   geom_line() + 
-  labs(title = 'Graph 3. Average Pregnancy Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group") + 
+  labs(title = 'Graph 3. Average Pregnancy Rate by Age Group from 1973 to 2017\n', x = 'Year', y = 'Average Pregnancy Rate\n', color = "Age Group") + 
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) +
   scale_color_viridis_d(option = "turbo")
@@ -88,7 +88,6 @@ abortionDataClean %>%
 
 
 * Next, we wanted to see the average pregnancy rate for different age groups over the last 50 years. 
-
 
 * From our graph, we can see each age group as its own line that we can look at individually or all together. If we look at the plot as a whole, we can see that there was a shift in almost every adjacent line crosses each other around the years 1995 to 2002. Prior to 2002, 20-24 year olds had a higher average pregnancy rate than 25-29 year olds, but after 2002, 25-29 year olds started having a higher average pregnancy rate than 20-24 year olds. Prior to 2002, 18-19 year olds had a higher average pregnancy rate than 30-34 year olds, but after 2002, 30-34 year olds started having a higher average pregnancy rate than 18-19 year olds. Prior to 1998, 15-17 year olds had a higher average pregnancy rate than 35-39 year olds, but after 1998, 35-39 year olds started having a higher average pregnancy rate than 15-17 year olds. Lastly, prior to 1996, <15 year olds had a higher average pregnancy rate than 40> year olds, but after 1996, 40> year olds started having a higher average pregnancy rate than <15 year olds.
 
@@ -104,7 +103,7 @@ abortionDataClean %>%
   summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
   ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
   geom_line() + 
-  labs(title = 'Graph 4. Average Abortion Rate by Age Group from 1973 to 2017', x = 'Year', y = 'Average Abortion Rate', color = "Age Group") + 
+  labs(title = 'Graph 4. Average Abortion Rate by Age Group from 1973 to 2017\n', x = 'Year', y = 'Average Abortion Rate\n', color = "Age Group") + 
   ggthemes::theme_economist() +
   theme(legend.position = 'right', legend.text = element_text(size = 8)) +
   scale_color_viridis_d(option = "turbo")
@@ -128,7 +127,7 @@ abortionDataClean %>%
   ggplot(aes(x = year, y = AveragePregRate, color = as.factor(Age))) + 
   geom_point(alpha = .3) + 
   facet_wrap(~ as.factor(Affiliation)) +
-  labs(title = 'Graph 5. Average Pregnancy Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Pregnancy Rate', color = "Age Group")
+  labs(title = 'Graph 5. Average Pregnancy Rate by Age Group for Different Political Affiliations\n', x = 'Year', y = 'Average Pregnancy Rate\n', color = "Age Group")
 ```
 
 * Next, we wanted to see if political affiliation of state had any affect on average pregnancy rate by age group.
@@ -149,7 +148,7 @@ abortionDataClean %>%
   ggplot(aes(x = year, y = AverageAbortionRate, color = as.factor(Age))) + 
   geom_point(alpha = .3) + 
   facet_wrap(~ as.factor(Affiliation)) +
-  labs(title = 'Graph 6. Average Abortion Rate by Age Group for Different Political Affiliations', x = 'Year', y = 'Average Abortion Rate', color = "Age Group")
+  labs(title = 'Graph 6. Average Abortion Rate by Age Group for Different Political Affiliations\n', x = 'Year', y = 'Average Abortion Rate\n', color = "Age Group")
 ```
 
 * Next, we wanted to see if political affiliation of state had any affect on average abortion rate by age group.
@@ -206,7 +205,7 @@ teenPregData %>%
 
 * This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. We see that this model is not adding much to the analysis of our project. Here, we are only using age as a predictor for pregnancy rates. Instead, we decided to try including more of our variables of interest as predictors, and to switch to abortion rates as our response variable, given our findings from our exploratory data analysis. 
 
-### Linear Model using Year, Age Group, and Political Affiliation as Predictors for Abortion Rates
+### Predicting Abortion Rate using Year, Age Group, and Political Affiliation as Predictors 
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 AvgAbortionRateData <- abortionDataClean %>% 
@@ -230,7 +229,7 @@ AbortionRateMod1 <-
    ggplot(aes(x = year)) + 
    geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
    geom_line(aes(y = pred), data = AbortionRateData, color = "red", size = 1) + 
-   labs(title = 'Average Abortion Rate from 1973 to 2017', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   labs(title = 'Average Abortion Rate from 1973 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
    ggthemes::theme_economist() +
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
@@ -254,10 +253,55 @@ AbortionRateMod2 <-
    geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
    facet_wrap(~ as.factor(Affiliation)) +
    geom_line(aes(y = pred), data = AbortionRateData, color = "red", size = 1) + 
-   labs(title = 'Average Abortion Rate from 1973 to 2017', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   labs(title = 'Average Abortion Rate from 1973 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
    ggthemes::theme_economist() +
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
 ```
 
 * Here we included year, age group, and affiliation as predictors for abortion rate. 
+
+### Predicting Abortion Rates before and after 1990s
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+before1990 <- abortionDataClean %>% 
+  group_by(year, Age) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+  filter(year < 1990)
+
+before1990Mod <- 
+   lm(AverageAbortionRate ~ year, data = before1990)
+
+before1990 <- 
+   before1990 %>% 
+   add_predictions(before1990Mod)
+
+before1990 %>%
+   ggplot(aes(x = year)) + 
+   geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
+   geom_line(aes(y = pred), data = before1990, color = "red", size = 1) +
+   labs(title = 'Average Abortion Rate from 1973 to 1989\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   ggthemes::theme_economist() +
+   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
+   scale_color_viridis_d(option = "plasma")
+  
+after1990 <- abortionDataClean %>% 
+  group_by(year, Age) %>% 
+  summarise(AverageAbortionRate = mean(AbortionRate, na.rm = TRUE)) %>% 
+  filter(year >= 1990)
+
+after1990Mod <- 
+   lm(AverageAbortionRate ~ year, data = after1990)
+
+after1990 <- 
+   after1990 %>% 
+   add_predictions(after1990Mod)
+
+after1990 %>%
+   ggplot(aes(x = year)) + 
+   geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
+   geom_line(aes(y = pred), data = after1990, color = "red", size = 1) + 
+   labs(title = 'Average Abortion Rate from 1990 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   ggthemes::theme_economist() +
+   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
+   scale_color_viridis_d(option = "plasma")
+```
