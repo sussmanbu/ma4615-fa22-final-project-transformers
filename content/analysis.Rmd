@@ -253,7 +253,7 @@ AbortionRateMod2 <-
    geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
    facet_wrap(~ as.factor(Affiliation)) +
    geom_line(aes(y = pred), data = AbortionRateData, color = "red", size = 1) + 
-   labs(title = 'Average Abortion Rate from 1973 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   labs(title = 'Average Abortion Rate from 1987 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
    ggthemes::theme_economist() +
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
