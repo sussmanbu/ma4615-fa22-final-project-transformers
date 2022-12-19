@@ -2,7 +2,7 @@
 title: MA 415 Final Project
 draft: false
 role: Transformers
-bio: This is our data science project. We were interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the mother within the context of political affiliation. 
+bio: This is our data science project. We were interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the childbearer within the context of political affiliation. 
 
 organization:
   name: Boston University
