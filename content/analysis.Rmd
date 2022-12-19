@@ -306,7 +306,7 @@ after1990 %>%
    scale_color_viridis_d(option = "plasma")
 ```
 
-* Here, we investigated our response variable (abortion rates) with year broken down by pre vs post-1990s. This helped to fit our model, given the change in trend before and after the 90s.
+* Here, we investigated our response variable (abortion rates) with year broken down by pre vs post-1990s. This helped to fit our model, given the change in trend before and after the 90s. 
 
 ### Predicting Pregnancy Rates before and after 1990s
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}

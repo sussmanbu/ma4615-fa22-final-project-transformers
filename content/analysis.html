@@ -16,7 +16,7 @@ draft: false
 <h1>Data Analysis</h1>
 <ul>
 <li>Because Roe v. Wade is a highly politicized issue that has gained media attention that has varied over the years, we wanted to analyze pregnancy and abortion rates in the context of political affiliation and chronological year. In addition to political affiliation and changes over time, we are also interested in how these changing factors influence pregnancy and abortion rates by year.</li>
-<li>We are interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the mother within the context of political affiliation.</li>
+<li>We are interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the childbearer within the context of political affiliation.</li>
 <li>Our main questions that we hope to answer with our analysis and data modeling are: How does state’s party affiliation affect abortion and pregnancy rates? How have the age of pregnant mothers and abortion rates changed over time?</li>
 </ul>
 <div id="initial-analysis" class="section level2">
@@ -80,34 +80,40 @@ draft: false
 <h3>Average Pregnancy Rate of Teenagers over the last 50 years</h3>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <ul>
-<li>We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. However, paired with our other visualizations, this linear model provides foundational information regarding the potential relationships between teen pregnancies, abortion, and abortion laws. Importantly, the trend line helps us to visualize what we might see in years to come.</li>
+<li>We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. Another is that the trend line does not visually fit the model well.</li>
 </ul>
 </div>
 <div id="residuals-for-teen-pregnancy-model" class="section level3">
 <h3>Residuals for Teen Pregnancy Model</h3>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <ul>
-<li>This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. We see that this model is not adding much to the analysis of our project. Here, we are only using age as a predictor for pregnancy rates. Instead, we decided to try including more of our variables of interest as predictors, and to switch to abortion rates as our response variable, given our findings from our exploratory data analysis.</li>
+<li>This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. We see that this model is not adding much to the analysis of our project. Not only does the trend line not fit the data well, but here, we are only using age as a predictor for pregnancy rates. Instead, we decided to try including more of our variables of interest as predictors, and to switch to abortion rates as our response variable, given our findings from our exploratory data analysis.</li>
 </ul>
 </div>
 <div id="predicting-abortion-rate-using-year-age-group-and-political-affiliation-as-predictors" class="section level3">
 <h3>Predicting Abortion Rate using Year, Age Group, and Political Affiliation as Predictors</h3>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <ul>
-<li>Here, we modeled the same predictor (Year) with a different response variable (Abortion). We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre vs. post legalization of abortion.</li>
+<li>Here, we modeled the same predictor (Year) with a different response variable (Abortion). We notice that the trend line fits the data better than the prior visualization. Importantly, this graph does not include data from the 1970s-mid 1980s, which is where we noticed an increase in abortion rates. This is likely why we see a better fit. We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre-1990s vs post-1990s.</li>
 </ul>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <ul>
-<li>Here we included year, age group, and affiliation as predictors for abortion rate.</li>
+<li>Here we included year, age group, and affiliation as predictors for abortion rate. Again, we are only able to plot from 1987-2017 because of a limitation in the data (the state and political affiliation variable is only included after 1987). Ideally, we would have likely fit our best model with abortion as the response variable and year, age group, affiliation, and pre/post-1990s. However, given the limitation in our data, we decided to include models below that took pre/post-1990s into account without incorporating the political affiliation variable.</li>
 </ul>
 </div>
 <div id="predicting-abortion-rates-before-and-after-1990s" class="section level3">
 <h3>Predicting Abortion Rates before and after 1990s</h3>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="/analysis_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<ul>
+<li>Here, we investigated our response variable (abortion rates) with year broken down by pre vs post-1990s. This helped to fit our model, given the change in trend before and after the 90s.</li>
+</ul>
 </div>
-<div id="predicting-abortion-rates-before-and-after-1990s-1" class="section level3">
-<h3>Predicting Abortion Rates before and after 1990s</h3>
+<div id="predicting-pregnancy-rates-before-and-after-1990s" class="section level3">
+<h3>Predicting Pregnancy Rates before and after 1990s</h3>
 <p><img src="/analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" /><img src="/analysis_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<ul>
+<li>Here, we investigated our response variable (pregnancy rates) with year broken down by pre vs post-1990s. Again, this helped to fit our model, given the change in trend before and after the 90s.</li>
+</ul>
 </div>
 </div>
 </div>
