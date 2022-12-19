@@ -2,7 +2,8 @@
 title: MA 415 Final Project
 draft: false
 role: Transformers
-bio: This is my data science project. Check out the links at the top. You can update this in `content/homepage/info.md`. You can change the image above by changing `content/homepage/feature_image.md`.
+bio: This is our data science project. We were interested in investigating the degree to which pregnancy and abortion rates have changed over time and how these trends have changed depending on age group of the mother within the context of political affiliation. 
+
 organization:
   name: Boston University
   url: https://www.bu.edu/
