@@ -187,7 +187,7 @@ teenPregData %>%
   scale_color_viridis_d(option = "plasma")
 ```
 
-* We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. However, paired with our other visualizations, this linear model provides foundational information regarding the potential relationships between teen pregnancies, abortion, and abortion laws. Importantly, the trend line helps us to visualize what we might see in years to come.
+* We wanted to see the trend of teen pregnancy, so we created a model which predicts the Average Pregnancy Rate among teenagers. One limitation of this model is that it does not include any information on abortion or political affiliation. Another is that the trend line does not visually fit the model well.
 
 ### Residuals for Teen Pregnancy Model
 
@@ -203,7 +203,7 @@ teenPregData %>%
   scale_color_viridis_d(option = "plasma")
 ```
 
-* This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. We see that this model is not adding much to the analysis of our project. Here, we are only using age as a predictor for pregnancy rates. Instead, we decided to try including more of our variables of interest as predictors, and to switch to abortion rates as our response variable, given our findings from our exploratory data analysis. 
+* This supplementary graph shows us how well our model is predicting Average Teen Pregnancy Rates. We see that this model is not adding much to the analysis of our project. Not only does the trend line not fit the data well, but here, we are only using age as a predictor for pregnancy rates. Instead, we decided to try including more of our variables of interest as predictors, and to switch to abortion rates as our response variable, given our findings from our exploratory data analysis. 
 
 ### Predicting Abortion Rate using Year, Age Group, and Political Affiliation as Predictors 
 
@@ -229,13 +229,13 @@ AbortionRateMod1 <-
    ggplot(aes(x = year)) + 
    geom_point(aes(y = AverageAbortionRate, color = as.factor(Age))) + 
    geom_line(aes(y = pred), data = AbortionRateData, color = "red", size = 1) + 
-   labs(title = 'Average Abortion Rate from 1973 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
+   labs(title = 'Average Abortion Rate from 1987 to 2017\n', x = '\nYear', y = 'Average Abortion Rate\n', color = "Age Group") + 
    ggthemes::theme_economist() +
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
 ```
 
-* Here, we modeled the same predictor (Year) with a different response variable (Abortion). We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre vs. post legalization of abortion.
+* Here, we modeled the same predictor (Year) with a different response variable (Abortion).  We notice that the trend line fits the data better than the prior visualization. Importantly, this graph does not include data from the 1970s-mid 1980s, which is where we noticed an increase in abortion rates. This is likely why we see a better fit. We will compare this model with additional models that include multiple other predictor variables, including age, affiliation, and pre-1990s vs post-1990s.
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 AbortionRateMod2 <- 
@@ -259,7 +259,7 @@ AbortionRateMod2 <-
    scale_color_viridis_d(option = "plasma")
 ```
 
-* Here we included year, age group, and affiliation as predictors for abortion rate. 
+* Here we included year, age group, and affiliation as predictors for abortion rate. Again, we are only able to plot from 1987-2017 because of a limitation in the data (the state and political affiliation variable is only included after 1987). Ideally, we would have likely fit our best model with abortion as the response variable and year, age group, affiliation, and pre/post-1990s. However, given the limitation in our data, we decided to include models below that took pre/post-1990s into account without incorporating the political affiliation variable.
 
 ### Predicting Abortion Rates before and after 1990s
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -306,8 +306,9 @@ after1990 %>%
    scale_color_viridis_d(option = "plasma")
 ```
 
+* Here, we investigated our response variable (abortion rates) with year broken down by pre vs post-1990s. This helped to fit our model, given the change in trend before and after the 90s.
 
-### Predicting Abortion Rates before and after 1990s
+### Predicting Pregnancy Rates before and after 1990s
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 before1990 <- abortionDataClean %>% 
   group_by(year, Age) %>% 
@@ -351,3 +352,5 @@ after1990 %>%
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
 ```
+
+* Here, we investigated our response variable (pregnancy rates) with year broken down by pre vs post-1990s. Again, this helped to fit our model, given the change in trend before and after the 90s.
