@@ -305,3 +305,49 @@ after1990 %>%
    theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
    scale_color_viridis_d(option = "plasma")
 ```
+
+
+### Predicting Abortion Rates before and after 1990s
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+before1990 <- abortionDataClean %>% 
+  group_by(year, Age) %>% 
+  summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
+  filter(year < 1990)
+
+before1990Mod <- 
+   lm(AveragePregRate ~ year, data = before1990)
+
+before1990 <- 
+   before1990 %>% 
+   add_predictions(before1990Mod)
+
+before1990 %>%
+   ggplot(aes(x = year)) + 
+   geom_point(aes(y = AveragePregRate, color = as.factor(Age))) + 
+   geom_line(aes(y = pred), data = before1990, color = "red", size = 1) +
+   labs(title = 'Average Pregnancy Rate from 1973 to 1989\n', x = '\nYear', y = 'Average Pregnancy Rate\n', color = "Age Group") + 
+   ggthemes::theme_economist() +
+   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
+   scale_color_viridis_d(option = "plasma")
+  
+after1990 <- abortionDataClean %>% 
+  group_by(year, Age) %>% 
+  summarise(AveragePregRate = mean(PregnancyRate, na.rm = TRUE)) %>% 
+  filter(year >= 1990)
+
+after1990Mod <- 
+   lm(AveragePregRate ~ year, data = after1990)
+
+after1990 <- 
+   after1990 %>% 
+   add_predictions(after1990Mod)
+
+after1990 %>%
+   ggplot(aes(x = year)) + 
+   geom_point(aes(y = AveragePregRate, color = as.factor(Age))) + 
+   geom_line(aes(y = pred), data = after1990, color = "red", size = 1) + 
+   labs(title = 'Average Pregnancy Rate from 1990 to 2017\n', x = '\nYear', y = 'Average Pregnancy Rate\n', color = "Age Group") + 
+   ggthemes::theme_economist() +
+   theme(legend.position = 'right', legend.text = element_text(size = 8)) + 
+   scale_color_viridis_d(option = "plasma")
+```
