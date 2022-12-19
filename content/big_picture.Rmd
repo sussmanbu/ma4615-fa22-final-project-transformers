@@ -43,7 +43,7 @@ abortionDataClean %>%
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
-abortionDataClean %>% 
+abortionDataClean %>% blo
   group_by(state) %>% 
   summarise(AveragePregnancyRate = mean(PregnancyRate, na.rm=TRUE)) %>% 
   inner_join(MaxStateAff) %>% 
