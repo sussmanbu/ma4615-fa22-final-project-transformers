@@ -13,6 +13,7 @@ suppressPackageStartupMessages(library(modelr))
 suppressPackageStartupMessages(library(sf))
 suppressPackageStartupMessages(library(tmap))
 suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(broom))
 load(here::here("dataset", "abortionDataClean.RData"))
 load(here::here("dataset", "MaxStateAff.RData"))
 us_states <- 
@@ -354,3 +355,14 @@ after1990 %>%
 ```
 
 * Here, we investigated our response variable (pregnancy rates) with year broken down by pre vs post-1990s. Again, this helped to fit our model, given the change in trend before and after the 90s.
+
+## Model Selection
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+mod_list <- list(AbortionRateMod1, AbortionRateMod2)
+
+mod_list %>% map_df(glance) %>% select(AIC)
+
+```
+
+TODO: Add explanation for model selection
